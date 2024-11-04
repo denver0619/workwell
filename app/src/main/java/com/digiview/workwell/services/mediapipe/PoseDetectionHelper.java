@@ -128,7 +128,7 @@ public class PoseDetectionHelper {
     public Float minPoseDetectionConfidence;
     public Float minPosePresenceConfidence;
     public Float minTrackingConfidence;
-    public MODEL_BUNDLE currentModel;
+    public MODEL_BUNDLE currentModel = MODEL_BUNDLE.FULL;
     public DELEGATE_HARDWARE currentDelegate;
     public RunningMode runningMode;
     public  Context context;
