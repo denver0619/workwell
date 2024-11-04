@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Custom shape appearance overlay for rounded corners -->
+    <style name="Widget.Custom.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.TextInputLayout.Rounded</item>
+    </style>
+
+    <style name="ShapeAppearance.TextInputLayout.Rounded" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <!-- Define corner radius -->
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">6dp</item> <!-- Set your desired corner radius here -->
+    </style>
+
+    <style name="Widget.Custom.TextButtonLayout" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">16dp</item> <!-- Set desired corner radius -->
+    </style>
+</resources>

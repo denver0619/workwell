@@ -12,8 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WorkWell"
         tools:targetApi="31">
+<!--        <activity-->
+<!--            android:name=".AuthLoginActivity"-->
+<!--            android:exported="false" />-->
         <activity
-            android:name=".MainActivity"
+            android:name=".AuthLoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
