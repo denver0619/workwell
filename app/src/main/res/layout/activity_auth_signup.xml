@@ -11,9 +11,10 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="348dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:paddingHorizontal="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
@@ -171,50 +172,35 @@
             <RelativeLayout
                 android:id="@+id/relativeLayout"
                 android:layout_width="match_parent"
-                android:layout_height="27dp"
+                android:layout_height="26dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.483"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-                app:layout_constraintVertical_bias="0.0">
-
-                <!-- Horizontal Line -->
+                android:gravity="center_horizontal">
 
                 <View
-
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginTop="13dp"
+                    android:layout_marginTop="12dp"
                     android:layout_marginBottom="12dp"
                     android:background="@color/neutral_dark_color" />
 
                 <TextView
-
-                    android:layout_width="40dp"
-                    android:layout_height="18dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="120dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="120dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:paddingHorizontal="8dp"
+                    android:maxWidth="200dp"
+                    android:layout_centerInParent="true"
                     android:background="@color/white"
                     android:backgroundTint="@color/neutral_white_color"
                     android:gravity="center"
                     android:text="@string/google_alternative"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <!-- Text on Top -->
-
-
+                    android:textSize="12sp" />
             </RelativeLayout>
+
 
             <Button
                 android:id="@+id/buttonGoogleLogin"
