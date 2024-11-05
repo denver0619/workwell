@@ -28,7 +28,7 @@
             android:layout_height="200dp"
             android:contentDescription="@string/login_img_description"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/login" />
+            app:srcCompat="@drawable/img_login" />
 
         <TextView
             android:id="@+id/textViewLoginHeading"

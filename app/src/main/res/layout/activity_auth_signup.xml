@@ -28,7 +28,7 @@
             android:layout_height="197dp"
             android:contentDescription="@string/sign_up_img_description"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/register" />
+            app:srcCompat="@drawable/img_signup" />
 
         <TextView
             android:id="@+id/textViewLoginHeading"
