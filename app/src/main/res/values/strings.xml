@@ -1,14 +1,18 @@
 <resources>
     <string name="app_name">WorkWell</string>
-    <string name="welcome_msg">Welcome Back</string>
+    <string name="welcome_msg1">Welcome Back!</string>
+    <string name="welcome_msg2">Welcome Aboard!</string>
     <string name="login_img_description">Login Image</string>
+    <string name="sign_up_img_description">Signup Image</string>
     <string name="login_header">Login</string>
+    <string name="sign_up_header">Sign up</string>
     <string name="login_sub_header">Please login to continue</string>
+    <string name="sign_up_sub_header">Please signup to login</string>
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
-    <string name="re_renter_password_hint">Re-enter password</string>
+    <string name="re_enter_password_hint">Re-enter password</string>
     <string name="login_alternative">Don\'t have an account?</string>
-    <string name="sign_up_header">Sign up</string>
+    <string name="sign_up_alternative">Already have an account?</string>
     <string name="google_alternative">OR</string>
     <string name="login_google">Continue with Google</string>
 </resources>

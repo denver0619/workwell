@@ -5,8 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AuthLoginActivity"
+    tools:context=".AuthSignupActivity"
     android:background="@color/neutral_white_color">
+
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -24,15 +25,15 @@
             android:id="@+id/imageViewLogin"
             android:layout_width="244dp"
             android:layout_height="197dp"
-            android:contentDescription="@string/login_img_description"
+            android:contentDescription="@string/sign_up_img_description"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/login" />
+            app:srcCompat="@drawable/register" />
 
         <TextView
             android:id="@+id/textViewLoginHeading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/welcome_msg1"
+            android:text="@string/welcome_msg2"
             android:textColor="@color/neutral_dark_color"
             android:textSize="32sp"
             app:fontVariationSettings="'wght' 600" />
@@ -41,7 +42,7 @@
             android:id="@+id/textViewLoginSubheading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/login_sub_header"
+            android:text="@string/sign_up_sub_header"
             android:textSize="16sp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -89,6 +90,28 @@
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Custom.TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:textColorHint="@color/neutral_dark_color"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeColor="@color/neutral_dark_color"
+            app:hintTextColor="@color/primary_color"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputLoginPasswordConfirmation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/re_enter_password_hint"
+                android:inputType="textPassword"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <Button
             android:id="@+id/buttonEmailLogin"
             style="@style/Widget.Material3.Button.TextButton"
@@ -96,7 +119,7 @@
             android:layout_height="64dp"
             android:layout_marginTop="24dp"
             android:backgroundTint="@color/primary_color"
-            android:text="@string/login_header"
+            android:text="@string/sign_up_header"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:cornerRadius="8dp"
@@ -114,11 +137,11 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
-                android:id="@+id/textViewDontHaveAccount"
+                android:id="@+id/textViewAlreadyHaveAccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:text="@string/login_alternative"
+                android:text="@string/sign_up_alternative"
                 android:textSize="14sp" />
 
             <Button
@@ -130,7 +153,7 @@
                 android:gravity="center"
                 android:minHeight="0dp"
                 android:padding="0dp"
-                android:text="@string/sign_up_header"
+                android:text="@string/login_header"
                 android:textColor="@color/primary_color"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -212,6 +235,5 @@
 
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
