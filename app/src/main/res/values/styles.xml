@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Custom shape appearance overlay for rounded corners -->
     <style name="Widget.Custom.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.TextInputLayout.Rounded</item>
@@ -13,5 +13,23 @@
 
     <style name="Widget.Custom.TextButtonLayout" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerSize">16dp</item> <!-- Set desired corner radius -->
+    </style>
+
+    <!-- Bottom Navigation Style -->
+    <style name="Widget.Custom.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+    </style>
+
+    <style name="Widget.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/accent_color2</item> <!--ACTIVE INDICATOR-->
+    </style>
+
+
+    <!-- Theme Overlay for Bottom Navigation -->
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+        <item name="colorOnSurfaceVariant">@color/gray</item> <!--Icon & LABEL INACTIVE-->
+        <item name="colorOnSecondaryContainer">@color/neutral_dark_color</item> <!--Icon ACTIVE-->
+        <item name="colorOnSurface">@color/neutral_dark_color</item> <!--Label ACTIVE-->
+
     </style>
 </resources>

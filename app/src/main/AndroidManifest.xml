@@ -13,13 +13,13 @@
         android:theme="@style/Theme.WorkWell"
         tools:targetApi="31">
         <activity
-            android:name=".AuthSignupActivity"
+            android:name=".ui.auth.AuthSignupActivity"
             android:exported="false" />
-        <!-- <activity -->
-        <!-- android:name=".AuthLoginActivity" -->
-        <!-- android:exported="false" /> -->
+         <activity
+         android:name=".ui.main.MainActivity"
+         android:exported="false" />
         <activity
-            android:name=".AuthLoginActivity"
+            android:name=".ui.auth.AuthLoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

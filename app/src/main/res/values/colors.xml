@@ -5,6 +5,12 @@
     <color name="primary_color">#4A90E2</color>
     <color name="secondary_color">#B3E5FC</color>
     <color name="accent_color">#00BCD4</color>
+    <color name="accent_color2">#C0E1F6</color>
     <color name="neutral_dark_color">#263238</color>
     <color name="neutral_white_color">#ECEFF1</color>
+    <color name="gray">#A9A9A9</color>
+
+
+
 </resources>
+

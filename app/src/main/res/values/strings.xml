@@ -15,4 +15,13 @@
     <string name="sign_up_alternative">Already have an account?</string>
     <string name="google_alternative">OR</string>
     <string name="login_google">Continue with Google</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_routine">Routine</string>
+    <string name="menu_activity_log">Activity Log</string>
+    <string name="menu_profile">Profile</string>
+    <string name="avatar_desc">User Avatar</string>
+    <string name="user_name">Username</string>
+    <string name="hero_text">Start Your Ergonomic\nJourney</string>
+    <string name="hero_button_text">Start Routine</string>
+    <string name="hero_img_desc">Hero Image - Lady Stretching</string>
 </resources>
