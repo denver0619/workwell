@@ -28,12 +28,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         app:itemActiveIndicatorStyle="@style/Widget.Custom.Indicator"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navigation_menu" />
+        app:menu="@menu/bottom_navigation_menu"
+        app:elevation="8dp"/>
     <!--        app:itemIconTint="@color/navigation_bar_selector"-->
     <!--        app:itemTextColor="@color/navigation_bar_selector"-->
 

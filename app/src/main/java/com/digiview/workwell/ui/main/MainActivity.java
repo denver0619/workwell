@@ -11,6 +11,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.digiview.workwell.R;
 import com.digiview.workwell.ui.home.HomeFragment;
+import com.digiview.workwell.ui.profile.ProfileFragment;
+import com.digiview.workwell.ui.routine.RoutineFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,12 +39,14 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             } else if (item.getItemId() == R.id.menu_routine) {
                 Log.d(TAG, "routine");
+                replaceFragment(new RoutineFragment());
                 return true;
             } else if (item.getItemId() == R.id.menu_activity_log) {
                 Log.d(TAG, "activity log");
                 return true;
             } else if (item.getItemId() == R.id.menu_profile) {
                 Log.d(TAG, "profile");
+                replaceFragment(new ProfileFragment());
                 return true;
             } else {
                 return false;

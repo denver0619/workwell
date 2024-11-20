@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "150453512409",
+    "project_id": "workwell-1306b",
+    "storage_bucket": "workwell-1306b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150453512409:android:14842de1628776d32df6c8",
+        "android_client_info": {
+          "package_name": "com.digiview.workwell"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCF9b94_uvoUp-Yq2MrABHFtlLzGjph-BY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
