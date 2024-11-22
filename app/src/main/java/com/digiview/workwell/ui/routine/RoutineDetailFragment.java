@@ -17,12 +17,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.digiview.workwell.R;
+import com.digiview.workwell.models.Routine;
+import com.digiview.workwell.models.RoutineExercise;
 import com.digiview.workwell.ui.routine.adapter.RoutineDetailAdapter;
 import com.digiview.workwell.ui.routine.viewmodel.RoutineDetailViewModel;
 
 import java.util.ArrayList;
 
-public class RoutineDetailFragment extends Fragment implements RoutineDetailAdapter.OnRoutineClickListener {
+public class RoutineDetailFragment extends Fragment implements RoutineDetailAdapter.OnExerciseClickListener {
 
     private String routineTitle;
     private RecyclerView rvRoutineDetail;
@@ -38,9 +40,16 @@ public class RoutineDetailFragment extends Fragment implements RoutineDetailAdap
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_routine_detail, container, false);
 
-        // Retrieve the title from arguments
+        // Retrieve the Routine object from arguments
+        Routine routine = null;
         if (getArguments() != null) {
-            routineTitle = getArguments().getString("ROUTINE_TITLE");
+            routine = (Routine) getArguments().getSerializable("ROUTINE");
+        }
+
+        // Set the title
+        TextView tvRoutineTitle = view.findViewById(R.id.tvRoutineTitle);
+        if (routine != null && routine.getName() != null) {
+            tvRoutineTitle.setText(routine.getName());
         }
 
         // Find the back button and set up the listener
@@ -57,12 +66,18 @@ public class RoutineDetailFragment extends Fragment implements RoutineDetailAdap
         routineDetailAdapter = new RoutineDetailAdapter(new ArrayList<>(), this);
         rvRoutineDetail.setAdapter(routineDetailAdapter);
 
+        // Pass the Routine to the ViewModel to populate exercises
+        if (routine != null) {
+            mViewModel.setRoutine(routine);
+        }
+
         mViewModel.getDataList().observe(getViewLifecycleOwner(), routineDetailList -> {
             routineDetailAdapter.updateDataList(routineDetailList);
         });
 
         return view;
     }
+
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -76,7 +91,7 @@ public class RoutineDetailFragment extends Fragment implements RoutineDetailAdap
     }
 
     @Override
-    public void onExerciseClicked(String exerciseTitle) {
+    public void onExerciseClicked(RoutineExercise exercise) {
 
     }
 }

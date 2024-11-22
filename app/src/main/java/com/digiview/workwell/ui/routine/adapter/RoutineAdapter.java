@@ -10,19 +10,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.digiview.workwell.R;
+import com.digiview.workwell.models.Routine;
 
 import java.util.List;
 
 public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.ViewHolder> {
-    private List<String> routineList;
-    private OnRoutineClickListener onRoutineClickListener;
+    private List<Routine> routineList;
+    private final OnRoutineClickListener onRoutineClickListener;
 
-    public RoutineAdapter(List<String> routineList, OnRoutineClickListener onRoutineClickListener){
+    public RoutineAdapter(List<Routine> routineList, OnRoutineClickListener onRoutineClickListener) {
         this.routineList = routineList;
         this.onRoutineClickListener = onRoutineClickListener;
     }
 
-    public void updateDataList(List<String> newDataList){
+    public void updateDataList(List<Routine> newDataList) {
         this.routineList = newDataList;
         notifyDataSetChanged();
     }
@@ -37,12 +38,14 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull RoutineAdapter.ViewHolder holder, int position) {
-        String routineTitle = routineList.get(position);
-        holder.itemTitle.setText(routineTitle);
+        Routine routine = routineList.get(position);
+        holder.itemTitle.setText(routine.getName());
+
         holder.button.setOnClickListener(v -> {
-            onRoutineClickListener.onRoutineClicked(routineTitle);
+            onRoutineClickListener.onRoutineClicked(routine); // Pass the Routine object
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -51,15 +54,19 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView itemTitle;
+//        public TextView itemDescription; // Added a field for description
         public Button button;
-        public ViewHolder(View view){
+
+        public ViewHolder(View view) {
             super(view);
             itemTitle = view.findViewById(R.id.tvItemTitle);
+//            itemDescription = view.findViewById(R.id.tvItemDescription); // Assuming description TextView ID
             button = view.findViewById(R.id.btnStartRoutine);
         }
     }
 
     public interface OnRoutineClickListener {
-        void onRoutineClicked(String routineTitle);
+        void onRoutineClicked(Routine routine); // Pass Routine object
     }
+
 }

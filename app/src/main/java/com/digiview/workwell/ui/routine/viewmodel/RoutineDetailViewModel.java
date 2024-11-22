@@ -4,31 +4,33 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.digiview.workwell.models.Routine;
+import com.digiview.workwell.models.RoutineExercise;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class RoutineDetailViewModel extends ViewModel {
-    private MutableLiveData<List<String>> routineDetailList;
+    private final MutableLiveData<List<RoutineExercise>> routineDetailList;
 
     public RoutineDetailViewModel() {
-        routineDetailList = new MutableLiveData<>();
-
-        List<String> dummyData = new ArrayList<>();
-        dummyData.add("Pelvic Tilts");
-        dummyData.add("Cat-Cow\nStretch");
-        dummyData.add("Knee-to-Chest\nStretch");
-        dummyData.add("Sphinx stretch");
-        routineDetailList.setValue(dummyData);
+        routineDetailList = new MutableLiveData<>(new ArrayList<>());
     }
 
-    public LiveData<List<String>> getDataList() {
+    public LiveData<List<RoutineExercise>> getDataList() {
         return routineDetailList;
     }
 
-    public void addRoutine(String routine) {
-        List<String> currentList = routineDetailList.getValue();
+    public void setRoutine(Routine routine) {
+        if (routine != null && routine.getExercises() != null) {
+            routineDetailList.setValue(routine.getExercises()); // Update the LiveData with exercises
+        }
+    }
+
+    public void addExercise(RoutineExercise exercise) {
+        List<RoutineExercise> currentList = routineDetailList.getValue();
         if (currentList != null) {
-            currentList.add(routine);
+            currentList.add(exercise);
             routineDetailList.setValue(currentList); // Notify observers
         }
     }

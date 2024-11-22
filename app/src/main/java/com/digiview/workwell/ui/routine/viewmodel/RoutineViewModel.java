@@ -4,29 +4,48 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.ArrayList;
+import com.digiview.workwell.models.Routine;
+import com.digiview.workwell.services.ui.RoutineService;
+
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class RoutineViewModel extends ViewModel {
-    private MutableLiveData<List<String>> routineList;
+
+    private final MutableLiveData<List<Routine>> routineList;
+    private final MutableLiveData<Boolean> isLoading; // Optional: To track loading state
+    private final RoutineService routineService;
 
     public RoutineViewModel() {
+        routineService = new RoutineService();
         routineList = new MutableLiveData<>();
-
-        List<String> dummyData = new ArrayList<>();
-        dummyData.add("Lower Back\nRoutine 1");
-        dummyData.add("Neck\nRoutine 1");
-        dummyData.add("Shoulder\nRoutine 1");
-        dummyData.add("Wrist\nRoutine 1");
-        routineList.setValue(dummyData);
+        isLoading = new MutableLiveData<>(false);
     }
 
-    public LiveData<List<String>> getDataList() {
+    public LiveData<List<Routine>> getRoutineList() {
         return routineList;
     }
 
-    public void addRoutine(String routine) {
-        List<String> currentList = routineList.getValue();
+    public LiveData<Boolean> getIsLoading() {
+        return isLoading; // Optional: Expose loading state
+    }
+
+    public void fetchRoutines() {
+        isLoading.setValue(true); // Set loading state to true
+        routineService.fetchAndManipulateRoutinesForCurrentUser()
+                .thenAccept(routines -> {
+                    routineList.postValue(routines); // Update the LiveData with fetched routines
+                    isLoading.postValue(false); // Set loading state to false
+                })
+                .exceptionally(e -> {
+                    isLoading.postValue(false); // Set loading state to false on failure
+                    // Log or handle the error as needed
+                    return null;
+                });
+    }
+
+    public void addRoutine(Routine routine) {
+        List<Routine> currentList = routineList.getValue();
         if (currentList != null) {
             currentList.add(routine);
             routineList.setValue(currentList); // Notify observers
