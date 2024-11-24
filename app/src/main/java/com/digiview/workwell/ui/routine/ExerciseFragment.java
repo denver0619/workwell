@@ -13,7 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.digiview.workwell.R;
-import com.digiview.workwell.models.RoutineExercise;
+import com.digiview.workwell.data.models.RoutineExercise;
 
 public class ExerciseFragment extends Fragment {
 

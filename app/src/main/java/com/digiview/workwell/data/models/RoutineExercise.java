@@ -1,4 +1,4 @@
-package com.digiview.workwell.models;
+package com.digiview.workwell.data.models;
 
 import java.io.Serializable;
 

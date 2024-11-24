@@ -16,16 +16,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.digiview.workwell.R;
-import com.digiview.workwell.models.Routine;
-import com.digiview.workwell.models.RoutineExercise;
+import com.digiview.workwell.data.models.Routine;
+import com.digiview.workwell.data.models.RoutineExercise;
 import com.digiview.workwell.ui.routine.adapter.RoutineDetailAdapter;
 import com.digiview.workwell.ui.routine.viewmodel.RoutineDetailViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GetTokenResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class RoutineDetailFragment extends Fragment implements RoutineDetailAdapter.OnExerciseClickListener {
 
@@ -80,25 +84,40 @@ public class RoutineDetailFragment extends Fragment implements RoutineDetailAdap
             routineDetailAdapter.updateDataList(routineDetailList);
         });
 
-        fabPlay.setOnClickListener(v -> {
-            List<RoutineExercise> exercises = mViewModel.getRoutineExercises();
-
-            if (!exercises.isEmpty()) {
-                for (RoutineExercise exercise : exercises) {
-                    Log.d("RoutineDetailFragment", "Exercise: " + exercise.getExerciseName() +
-                            ", Id: " + exercise.getExerciseId() +
-                            ", Description: " + exercise.getExerciseDescription() +
-                            ", Reps: " + exercise.getReps() +
-                            ", Duration: " + exercise.getDuration());
-                }
-            } else {
-                Log.d("RoutineDetailFragment", "No exercises found in the current routine.");
-            }
-        });
-
-
+        fabPlay.setOnClickListener(v -> handleFabClick());
 
         return view;
+    }
+
+    private void handleFabClick() {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid(); // Get user ID
+        List<RoutineExercise> exercises = mViewModel.getRoutineExercises();
+
+        if (exercises.isEmpty()) {
+            Toast.makeText(getContext(), "No exercises found in the routine.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Create RoutineLog and handle success or failure
+        mViewModel.createRoutineLog(uid).thenAccept(routineLogId -> {
+            Log.d("RoutineDetailFragment", "RoutineLog created with ID: " + routineLogId);
+
+            // TODO: Pass RoutineLogId and RoutineExercises
+
+            Log.d("RoutineDetailFragment", "RoutineLogId: " + routineLogId);
+            for (RoutineExercise exercise : exercises) {
+                Log.d("RoutineDetailFragment", "Exercise: " + exercise.getExerciseName() +
+                        ", Id: " + exercise.getExerciseId() +
+                        ", Description: " + exercise.getExerciseDescription() +
+                        ", Reps: " + exercise.getReps() +
+                        ", Duration: " + exercise.getDuration());
+            }
+
+        }).exceptionally(e -> {
+            Log.e("RoutineDetailFragment", "Failed to create RoutineLog: " + e.getMessage());
+            Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            return null;
+        });
     }
 
 

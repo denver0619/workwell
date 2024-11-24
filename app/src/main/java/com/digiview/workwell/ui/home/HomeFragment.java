@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +14,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.digiview.workwell.R;
-import com.digiview.workwell.models.Routine;
-import com.digiview.workwell.models.RoutineExercise;
-import com.digiview.workwell.services.ui.RoutineService;
-
-import java.text.MessageFormat;
 
 public class HomeFragment extends Fragment {
 

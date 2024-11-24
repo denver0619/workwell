@@ -1,4 +1,4 @@
-package com.digiview.workwell.models;
+package com.digiview.workwell.data.models;
 
 import com.google.firebase.firestore.PropertyName;
 
@@ -45,6 +45,6 @@ public class Exercise {
 
     @PropertyName("TargetArea")
     public void setTargetArea(Long targetAreaValue) {
-        this.TargetArea = com.digiview.workwell.models.TargetArea.fromValue(targetAreaValue);
+        this.TargetArea = com.digiview.workwell.data.models.TargetArea.fromValue(targetAreaValue);
     }
 }

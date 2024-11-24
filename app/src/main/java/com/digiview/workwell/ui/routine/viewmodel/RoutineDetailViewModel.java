@@ -4,18 +4,22 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.digiview.workwell.models.Routine;
-import com.digiview.workwell.models.RoutineExercise;
+import com.digiview.workwell.data.models.Routine;
+import com.digiview.workwell.data.models.RoutineExercise;
+import com.digiview.workwell.data.service.RoutineLogService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class RoutineDetailViewModel extends ViewModel {
     private final MutableLiveData<List<RoutineExercise>> routineDetailList;
     private Routine currentRoutine; // Store the current Routine object
+    private final RoutineLogService routineLogService; // Service for RoutineLogs
 
     public RoutineDetailViewModel() {
         routineDetailList = new MutableLiveData<>(new ArrayList<>());
+        routineLogService = new RoutineLogService();
     }
 
     // LiveData for observing the list of exercises
@@ -44,12 +48,23 @@ public class RoutineDetailViewModel extends ViewModel {
         return new ArrayList<>(); // Return an empty list if no exercises are found
     }
 
-    // Add an exercise to the routine
-    public void addExercise(RoutineExercise exercise) {
-        List<RoutineExercise> currentList = routineDetailList.getValue();
-        if (currentList != null) {
-            currentList.add(exercise);
-            routineDetailList.setValue(currentList); // Notify observers
+    /**
+     * Creates a RoutineLog in Firebase using the RoutineLogService.
+     *
+     * @param uid The user ID of the creator.
+     * @return A CompletableFuture containing the generated RoutineLogId or an exception.
+     */
+    public CompletableFuture<String> createRoutineLog(String uid) {
+        if (currentRoutine == null) {
+            CompletableFuture<String> future = new CompletableFuture<>();
+            future.completeExceptionally(new IllegalStateException("Routine is not set."));
+            return future;
         }
+
+        return routineLogService.createRoutineLog(
+                currentRoutine.getRoutineId(),
+                currentRoutine.getName(),
+                uid
+        );
     }
 }

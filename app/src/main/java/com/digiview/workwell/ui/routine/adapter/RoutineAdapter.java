@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.digiview.workwell.R;
-import com.digiview.workwell.models.Routine;
+import com.digiview.workwell.data.models.Routine;
 
 import java.util.List;
 

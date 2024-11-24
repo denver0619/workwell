@@ -1,14 +1,9 @@
-package com.digiview.workwell.models;
+package com.digiview.workwell.data.models;
 
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.PropertyName;
-import com.google.firebase.Timestamp;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class Routine implements Serializable {
     private String RoutineId;

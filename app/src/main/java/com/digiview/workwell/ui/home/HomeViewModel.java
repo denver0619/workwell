@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.digiview.workwell.services.ui.UserService;
+import com.digiview.workwell.data.service.UserService;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 public class HomeViewModel extends ViewModel {

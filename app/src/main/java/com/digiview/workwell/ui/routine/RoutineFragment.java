@@ -15,11 +15,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.digiview.workwell.R;
-import com.digiview.workwell.models.Routine;
-import com.digiview.workwell.models.RoutineExercise;
-import com.digiview.workwell.services.ui.RoutineService;
+import com.digiview.workwell.data.models.Routine;
 import com.digiview.workwell.ui.routine.adapter.RoutineAdapter;
 import com.digiview.workwell.ui.routine.viewmodel.RoutineViewModel;
 
@@ -30,6 +29,7 @@ public class RoutineFragment extends Fragment implements RoutineAdapter.OnRoutin
     private RecyclerView rvRoutine;
     private RoutineAdapter routineAdapter;
     private RoutineViewModel routineViewModel;
+    private ProgressBar progressBar; // ProgressBar to show loading state
 
     public static RoutineFragment newInstance() {
         return new RoutineFragment();
@@ -40,8 +40,9 @@ public class RoutineFragment extends Fragment implements RoutineAdapter.OnRoutin
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_routine, container, false);
 
-        // Initialize RecyclerView
+        // Initialize views
         rvRoutine = view.findViewById(R.id.rvRoutine);
+        progressBar = view.findViewById(R.id.progressBar); // Initialize ProgressBar
         rvRoutine.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Initialize ViewModel
@@ -58,16 +59,14 @@ public class RoutineFragment extends Fragment implements RoutineAdapter.OnRoutin
             }
         });
 
-        RoutineService routineService = new RoutineService();
-
-        // Observe loading state (optional)
+        // Observe loading state
         routineViewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
             if (isLoading != null && isLoading) {
-                Log.d("RoutineFragment", "Loading routines...");
-                // Show a loading indicator if necessary
+                progressBar.setVisibility(View.VISIBLE); // Show ProgressBar
+                rvRoutine.setVisibility(View.GONE);     // Hide RecyclerView
             } else {
-                Log.d("RoutineFragment", "Finished loading routines.");
-                // Hide the loading indicator
+                progressBar.setVisibility(View.GONE);   // Hide ProgressBar
+                rvRoutine.setVisibility(View.VISIBLE); // Show RecyclerView
             }
         });
 
@@ -96,5 +95,4 @@ public class RoutineFragment extends Fragment implements RoutineAdapter.OnRoutin
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
 }
