@@ -55,7 +55,7 @@ public class RoutineDetailAdapter extends RecyclerView.Adapter<RoutineDetailAdap
         public ViewHolder(View view) {
             super(view);
             itemTitle = view.findViewById(R.id.tvItemTitle);
-            button = view.findViewById(R.id.btnStartExercise);
+            button = view.findViewById(R.id.btnViewExercise);
         }
     }
 

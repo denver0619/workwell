@@ -1,20 +1,21 @@
 package com.digiview.workwell.models;
 
-public class RoutineExercise {
+import java.io.Serializable;
+
+public class RoutineExercise implements Serializable{
     private String ExerciseId;
     private int Reps;
-    private int Sets;
-    private int Rest;
-    private String ExerciseName;
-    private String ExerciseDescription;
+    private int Duration;
+    private String ExerciseName;        // New field
+    private String ExerciseDescription; // New field
 
-    // Getters and setters
+    // Getters and Setters
     public String getExerciseId() {
         return ExerciseId;
     }
 
     public void setExerciseId(String exerciseId) {
-        this.ExerciseId = exerciseId;
+        ExerciseId = exerciseId;
     }
 
     public int getReps() {
@@ -22,23 +23,15 @@ public class RoutineExercise {
     }
 
     public void setReps(int reps) {
-        this.Reps = reps;
+        Reps = reps;
     }
 
-    public int getSets() {
-        return Sets;
+    public int getDuration() {
+        return Duration;
     }
 
-    public void setSets(int sets) {
-        this.Sets = sets;
-    }
-
-    public int getRest() {
-        return Rest;
-    }
-
-    public void setRest(int rest) {
-        this.Rest = rest;
+    public void setDuration(int duration) {
+        Duration = duration;
     }
 
     public String getExerciseName() {
@@ -46,7 +39,7 @@ public class RoutineExercise {
     }
 
     public void setExerciseName(String exerciseName) {
-        this.ExerciseName = exerciseName;
+        ExerciseName = exerciseName;
     }
 
     public String getExerciseDescription() {
@@ -54,7 +47,7 @@ public class RoutineExercise {
     }
 
     public void setExerciseDescription(String exerciseDescription) {
-        this.ExerciseDescription = exerciseDescription;
+        ExerciseDescription = exerciseDescription;
     }
 
     @Override
@@ -62,10 +55,10 @@ public class RoutineExercise {
         return "RoutineExercise{" +
                 "ExerciseId='" + ExerciseId + '\'' +
                 ", Reps=" + Reps +
-                ", Sets=" + Sets +
-                ", Rest=" + Rest +
+                ", Sets=" + Duration +
                 ", ExerciseName='" + ExerciseName + '\'' +
                 ", ExerciseDescription='" + ExerciseDescription + '\'' +
                 '}';
     }
 }
+

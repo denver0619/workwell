@@ -15,16 +15,13 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.digiview.workwell.ui.main.MainActivity;
 import com.digiview.workwell.R;
-import com.digiview.workwell.services.ui.UserService;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Map;
 
 public class AuthLoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -91,58 +88,67 @@ public class AuthLoginActivity extends AppCompatActivity implements View.OnClick
                         FirebaseUser user = mAuth.getCurrentUser();
                         Log.d("FirebaseAuthTest", "Login successful! UID: " + user.getUid());
 
-                        // Now, check the user's role in Firestore
-                        checkUserRole(user);
+                        // Fetch and log token claims
+                        fetchAndCheckUserClaims(user);
                     } else {
                         // Login failed, handle errors
-                        try {
-                            throw task.getException();
-                        } catch (FirebaseAuthInvalidCredentialsException e) {
-                            Log.e("FirebaseAuthTest", "Invalid credentials");
-                            Toast.makeText(AuthLoginActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
-                        } catch (FirebaseAuthUserCollisionException e) {
-                            Log.e("FirebaseAuthTest", "User already exists");
-                            Toast.makeText(AuthLoginActivity.this, "User already exists", Toast.LENGTH_SHORT).show();
-                        } catch (Exception e) {
-                            Log.e("FirebaseAuthTest", "Login failed: " + e.getMessage());
-                            Toast.makeText(AuthLoginActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
-                        }
+                        handleLoginError(task.getException());
                     }
                 });
     }
 
-    private void checkUserRole(FirebaseUser user) {
+    private void fetchAndCheckUserClaims(FirebaseUser user) {
         if (user != null) {
-            // Get the user ID
-            String userId = user.getUid();
+            user.getIdToken(true) // Force refresh to ensure latest claims
+                    .addOnCompleteListener(tokenTask -> {
+                        if (tokenTask.isSuccessful()) {
+                            Map<String, Object> claims = tokenTask.getResult().getClaims();
+                            Log.d("AuthDebug", "Claims: " + claims.toString());
 
-            // Reference to the users collection in Firestore
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("users").document(userId)
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document != null && document.exists()) {
-                                // Get the user's role
-                                Long role = document.getLong("Role");
-                                if (role != null && role == 1) {
-                                    // Role is 1, allow user to proceed to the app
+                            // Check the Role claim
+                            if (claims.containsKey("Role")) {
+                                Object roleObj = claims.get("Role");
+                                long role = -1;
+
+                                // Handle Integer and Long cases for the Role claim
+                                if (roleObj instanceof Integer) {
+                                    role = ((Integer) roleObj).longValue();
+                                } else if (roleObj instanceof Long) {
+                                    role = (Long) roleObj;
+                                }
+
+                                if (role == 1) {
+                                    Log.d("AuthDebug", "User role: Standard User");
                                     proceedToApp();
+                                } else if (role == 0) {
+                                    Log.d("AuthDebug", "User role: Admin");
+                                    denyAccess("Admins are not allowed to access this app.");
                                 } else {
-                                    // Role is not 1 (admin), deny access
-                                    denyAccess();
+                                    denyAccess("Invalid role detected.");
                                 }
                             } else {
-                                // No document found, deny access
-                                denyAccess();
+                                denyAccess("Role claim not found.");
                             }
                         } else {
-                            // Error fetching user data
-                            Log.e("FirebaseAuthTest", "Error fetching user role: " + task.getException());
-                            denyAccess();
+                            Log.e("AuthDebug", "Error fetching token: " + tokenTask.getException().getMessage());
+                            denyAccess("Failed to verify user role.");
                         }
                     });
+        } else {
+            denyAccess("User is not authenticated.");
+        }
+    }
+
+
+    private void handleLoginError(Exception exception) {
+        try {
+            throw exception;
+        } catch (FirebaseAuthInvalidCredentialsException e) {
+            Log.e("FirebaseAuthTest", "Invalid credentials");
+            Toast.makeText(AuthLoginActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.e("FirebaseAuthTest", "Login failed: " + e.getMessage());
+            Toast.makeText(AuthLoginActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -153,9 +159,9 @@ public class AuthLoginActivity extends AppCompatActivity implements View.OnClick
         finish();
     }
 
-    private void denyAccess() {
+    private void denyAccess(String message) {
         // Inform the user they cannot access the app
-        Log.d("FirebaseAuthTest", "User is not authorized to access the app.");
-        Toast.makeText(AuthLoginActivity.this, "You are not authorized to use this app.", Toast.LENGTH_SHORT).show();
+        Log.d("FirebaseAuthTest", "Access denied: " + message);
+        Toast.makeText(AuthLoginActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 }

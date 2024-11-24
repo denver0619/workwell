@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 
 import com.digiview.workwell.R;
 import com.digiview.workwell.models.Routine;
+import com.digiview.workwell.models.RoutineExercise;
+import com.digiview.workwell.services.ui.RoutineService;
 import com.digiview.workwell.ui.routine.adapter.RoutineAdapter;
 import com.digiview.workwell.ui.routine.viewmodel.RoutineViewModel;
 
@@ -55,6 +57,8 @@ public class RoutineFragment extends Fragment implements RoutineAdapter.OnRoutin
                 routineAdapter.updateDataList(routineList);
             }
         });
+
+        RoutineService routineService = new RoutineService();
 
         // Observe loading state (optional)
         routineViewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {

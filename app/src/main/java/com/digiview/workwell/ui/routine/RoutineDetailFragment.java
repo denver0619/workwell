@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +22,10 @@ import com.digiview.workwell.models.Routine;
 import com.digiview.workwell.models.RoutineExercise;
 import com.digiview.workwell.ui.routine.adapter.RoutineDetailAdapter;
 import com.digiview.workwell.ui.routine.viewmodel.RoutineDetailViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RoutineDetailFragment extends Fragment implements RoutineDetailAdapter.OnExerciseClickListener {
 
@@ -30,6 +33,7 @@ public class RoutineDetailFragment extends Fragment implements RoutineDetailAdap
     private RecyclerView rvRoutineDetail;
     private RoutineDetailAdapter routineDetailAdapter;
     private RoutineDetailViewModel mViewModel;
+    private FloatingActionButton fabPlay;
 
     public static RoutineDetailFragment newInstance() {
         return new RoutineDetailFragment();
@@ -62,6 +66,7 @@ public class RoutineDetailFragment extends Fragment implements RoutineDetailAdap
         rvRoutineDetail = view.findViewById(R.id.rvRoutineDetail);
         rvRoutineDetail.setLayoutManager(new LinearLayoutManager(getContext()));
         mViewModel = new ViewModelProvider(this).get(RoutineDetailViewModel.class);
+        fabPlay = view.findViewById(R.id.fabPlay);
 
         routineDetailAdapter = new RoutineDetailAdapter(new ArrayList<>(), this);
         rvRoutineDetail.setAdapter(routineDetailAdapter);
@@ -74,6 +79,24 @@ public class RoutineDetailFragment extends Fragment implements RoutineDetailAdap
         mViewModel.getDataList().observe(getViewLifecycleOwner(), routineDetailList -> {
             routineDetailAdapter.updateDataList(routineDetailList);
         });
+
+        fabPlay.setOnClickListener(v -> {
+            List<RoutineExercise> exercises = mViewModel.getRoutineExercises();
+
+            if (!exercises.isEmpty()) {
+                for (RoutineExercise exercise : exercises) {
+                    Log.d("RoutineDetailFragment", "Exercise: " + exercise.getExerciseName() +
+                            ", Id: " + exercise.getExerciseId() +
+                            ", Description: " + exercise.getExerciseDescription() +
+                            ", Reps: " + exercise.getReps() +
+                            ", Duration: " + exercise.getDuration());
+                }
+            } else {
+                Log.d("RoutineDetailFragment", "No exercises found in the current routine.");
+            }
+        });
+
+
 
         return view;
     }
@@ -92,6 +115,17 @@ public class RoutineDetailFragment extends Fragment implements RoutineDetailAdap
 
     @Override
     public void onExerciseClicked(RoutineExercise exercise) {
+// Create the ExerciseFragment and pass the RoutineExercise object
+        ExerciseFragment exerciseFragment = ExerciseFragment.newInstance();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("EXERCISE", exercise); // Pass the RoutineExercise object
+        exerciseFragment.setArguments(bundle);
 
+        // Navigate to the ExerciseFragment
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.flFragmentContainer, exerciseFragment) // Replace with the correct container ID
+                .addToBackStack(null)
+                .commit();
     }
 }

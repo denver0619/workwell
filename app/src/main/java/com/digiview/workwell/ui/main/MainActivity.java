@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
             replaceFragment(new HomeFragment());
         }
 
+
         navigationBarView = findViewById(R.id.bottomNav);
 
         navigationBarView.setOnItemSelectedListener(item -> {

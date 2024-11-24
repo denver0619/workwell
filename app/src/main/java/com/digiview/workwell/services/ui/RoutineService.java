@@ -12,93 +12,117 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class RoutineService {
+    private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+    private final CollectionReference routinesRef = firestore.collection("routines");
+    private final CollectionReference usersRef = firestore.collection("users");
+    private final ExerciseService exerciseService = new ExerciseService();
+    private final String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-    private final FirebaseFirestore firestore;
-    private final CollectionReference routinesRef;
+    // Fetch routines for the current logged-in user with exercise details
+    public CompletableFuture<List<Routine>> getUserRoutinesWithDetails() {
+        FirebaseAuth.getInstance().getCurrentUser().getIdToken(true)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Map<String, Object> claims = task.getResult().getClaims();
+                        Log.d("AuthDebug", "Claims: " + claims.toString());
+                    } else {
+                        Log.e("AuthDebug", "Failed to fetch claims: " + task.getException().getMessage());
+                    }
+                });
 
-    public RoutineService() {
-        firestore = FirebaseFirestore.getInstance();
-        routinesRef = firestore.collection("routines");
+        return getUserRoutineIds() // Fetch routine IDs from the user document
+                .thenCompose(this::getRoutinesByIds) // Fetch routines by IDs
+                .thenCompose(routines -> {
+                    List<CompletableFuture<Routine>> updatedRoutines = new ArrayList<>();
+
+                    for (Routine routine : routines) {
+                        updatedRoutines.add(enrichRoutineExercises(routine));
+                    }
+
+                    return CompletableFuture.allOf(updatedRoutines.toArray(new CompletableFuture[0]))
+                            .thenApply(v -> {
+                                List<Routine> enrichedRoutines = new ArrayList<>();
+                                for (CompletableFuture<Routine> routineFuture : updatedRoutines) {
+                                    enrichedRoutines.add(routineFuture.join());
+                                }
+                                return enrichedRoutines;
+                            });
+                });
     }
 
-    public CompletableFuture<List<Routine>> fetchRoutinesForCurrentUser() {
-        CompletableFuture<List<Routine>> future = new CompletableFuture<>();
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    // Fetch routine IDs from the current user's document
+    private CompletableFuture<List<String>> getUserRoutineIds() {
+        CompletableFuture<List<String>> future = new CompletableFuture<>();
+        DocumentReference userDoc = usersRef.document(currentUserId);
 
-        routinesRef.whereEqualTo("AssignedTo", userId)
+        userDoc.get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists() && documentSnapshot.contains("Routines")) {
+                        List<String> routineIds = (List<String>) documentSnapshot.get("Routines");
+                        future.complete(routineIds != null ? routineIds : new ArrayList<>());
+                    } else {
+                        future.complete(new ArrayList<>()); // No routines for this user
+                    }
+                })
+                .addOnFailureListener(future::completeExceptionally);
+
+        return future;
+    }
+
+    // Fetch routines by their IDs
+    private CompletableFuture<List<Routine>> getRoutinesByIds(List<String> routineIds) {
+        CompletableFuture<List<Routine>> future = new CompletableFuture<>();
+        Log.d("FirestoreDebug", "Routine IDs: " + routineIds);
+
+        if (routineIds.isEmpty()) {
+            future.complete(new ArrayList<>());
+            return future;
+        }
+
+        // Query to fetch routines where the current user ID is in the "Users" array
+        routinesRef.whereArrayContains("Users", currentUserId)
                 .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
+                .addOnSuccessListener(querySnapshot -> {
                     List<Routine> routines = new ArrayList<>();
-                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                        Routine routine = doc.toObject(Routine.class);
+                    for (QueryDocumentSnapshot document : querySnapshot) {
+                        Log.d("RoutineService", "Fetched routine: " + document.getData());
+                        Routine routine = document.toObject(Routine.class);
+                        routine.setRoutineId(document.getId());
                         routines.add(routine);
                     }
                     future.complete(routines);
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("RoutineService", "Error fetching routines: " + e.getMessage(), e);
+                    Log.e("RoutineService", "Failed to fetch routines: ", e);
                     future.completeExceptionally(e);
                 });
 
         return future;
     }
 
-    public CompletableFuture<Routine> fetchRoutineDetails(Routine routine) {
-        CompletableFuture<Routine> future = new CompletableFuture<>();
 
-        routine.fetchAssignedName().thenAccept(assignedName -> {
-            routine.setAssignedName(assignedName);
-            List<RoutineExercise> exercises = routine.getExercises();
-            if (exercises != null && !exercises.isEmpty()) {
-                CompletableFuture<?>[] exerciseFutures = exercises.stream()
-                        .map(this::fetchExerciseDetails)
-                        .toArray(CompletableFuture[]::new);
-                CompletableFuture.allOf(exerciseFutures).thenRun(() -> future.complete(routine));
-            } else {
-                Log.d("RoutineService", "No exercises found for routine: " + routine.getName());
-                future.complete(routine);
-            }
-        }).exceptionally(e -> {
-            Log.e("RoutineService", "Error fetching assigned name: " + e.getMessage(), e);
-            future.completeExceptionally(e);
-            return null;
-        });
 
-        return future;
-    }
 
-    private CompletableFuture<Void> fetchExerciseDetails(RoutineExercise exercise) {
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        DocumentReference exerciseRef = firestore.collection("exercises").document(exercise.getExerciseId());
+    // Enrich routine exercises with additional exercise details
+    private CompletableFuture<Routine> enrichRoutineExercises(Routine routine) {
+        List<CompletableFuture<Void>> tasks = new ArrayList<>();
 
-        exerciseRef.get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        exercise.setExerciseName(documentSnapshot.getString("Name"));
-                        exercise.setExerciseDescription(documentSnapshot.getString("Description"));
-                    } else {
-                        Log.d("RoutineService", "Exercise not found with ID: " + exercise.getExerciseId());
-                    }
-                    future.complete(null);
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("RoutineService", "Error fetching exercise details: " + e.getMessage(), e);
-                    future.completeExceptionally(e);
-                });
+        for (RoutineExercise routineExercise : routine.getExercises()) {
+            tasks.add(exerciseService.getExerciseById(routineExercise.getExerciseId())
+                    .thenAccept(exercise -> {
+                        if (exercise != null) {
+                            routineExercise.setExerciseName(exercise.getName());
+                            routineExercise.setExerciseDescription(exercise.getDescription());
+                        }
+                    }));
+        }
 
-        return future;
-    }
-
-    public CompletableFuture<List<Routine>> fetchAndManipulateRoutinesForCurrentUser() {
-        return fetchRoutinesForCurrentUser().thenCompose(routines -> {
-            CompletableFuture<?>[] routineFutures = routines.stream()
-                    .map(this::fetchRoutineDetails)
-                    .toArray(CompletableFuture[]::new);
-
-            return CompletableFuture.allOf(routineFutures).thenApply(v -> routines);
-        });
+        return CompletableFuture.allOf(tasks.toArray(new CompletableFuture[0]))
+                .thenApply(v -> routine);
     }
 }
+

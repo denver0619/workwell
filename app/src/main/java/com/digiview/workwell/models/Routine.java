@@ -14,9 +14,8 @@ public class Routine implements Serializable {
     private String RoutineId;
     private String Name;
     private TargetArea TargetArea;
-    private String AssignedTo;
+    private List<String> Users;
     private List<RoutineExercise> Exercises;
-    private Timestamp CreatedAt;
     private String AssignedName;
 
     // Getters and setters
@@ -46,13 +45,14 @@ public class Routine implements Serializable {
         this.TargetArea = TargetArea.fromValue(targetAreaValue);
     }
 
-    public String getAssignedTo() {
-        return AssignedTo;
+    public List<String> getUsers() {
+        return Users;
     }
 
-    public void setAssignedTo(String assignedTo) {
-        this.AssignedTo = assignedTo;
+    public void setUsers(List<String> users) {
+        this.Users = users;
     }
+
 
     public List<RoutineExercise> getExercises() {
         return Exercises;
@@ -60,14 +60,6 @@ public class Routine implements Serializable {
 
     public void setExercises(List<RoutineExercise> exercises) {
         this.Exercises = exercises;
-    }
-
-    public Timestamp getCreatedAt() {
-        return CreatedAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.CreatedAt = createdAt;
     }
 
     public String getAssignedName() {
@@ -78,36 +70,34 @@ public class Routine implements Serializable {
         this.AssignedName = assignedName;
     }
 
-    // Fetch assigned name asynchronously
-    public CompletableFuture<String> fetchAssignedName() {
-        CompletableFuture<String> future = new CompletableFuture<>();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users")
-                .document(AssignedTo)
-                .get()
-                .addOnSuccessListener(document -> {
-                    if (document.exists()) {
-                        String firstName = document.getString("FirstName");
-                        String lastName = document.getString("LastName");
-                        future.complete(firstName + " " + lastName);
-                    } else {
-                        future.complete("Unknown User");
-                    }
-                })
-                .addOnFailureListener(e -> future.completeExceptionally(e));
-
-        return future;
-    }
+//    // Fetch assigned name asynchronously
+//    public CompletableFuture<String> fetchAssignedName() {
+//        CompletableFuture<String> future = new CompletableFuture<>();
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        db.collection("users")
+//                .document(Users)
+//                .get()
+//                .addOnSuccessListener(document -> {
+//                    if (document.exists()) {
+//                        String firstName = document.getString("FirstName");
+//                        String lastName = document.getString("LastName");
+//                        future.complete(firstName + " " + lastName);
+//                    } else {
+//                        future.complete("Unknown User");
+//                    }
+//                })
+//                .addOnFailureListener(e -> future.completeExceptionally(e));
+//
+//        return future;
+//    }
 
     @Override
     public String toString() {
         return "Routine{" +
                 "RoutineId='" + RoutineId + '\'' +
                 ", Name='" + Name + '\'' +
-                ", AssignedTo='" + AssignedTo + '\'' +
-                ", AssignedName='" + (AssignedName != null ? AssignedName : "Not available") + '\'' +
+                ", Users='" + Users + '\'' +
                 ", TargetArea=" + TargetArea +
-                ", CreatedAt=" + (CreatedAt != null ? CreatedAt.toDate() : "Not available") +
                 ", Exercises=" + (Exercises != null ? Exercises.toString() : "No exercises available") +
                 '}';
     }

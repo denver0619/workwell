@@ -1,7 +1,5 @@
 package com.digiview.workwell.ui.routine;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,12 +9,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.digiview.workwell.R;
+import com.digiview.workwell.models.RoutineExercise;
 
 public class ExerciseFragment extends Fragment {
-
-    private ExerciseViewModel mViewModel;
 
     public static ExerciseFragment newInstance() {
         return new ExerciseFragment();
@@ -29,10 +28,29 @@ public class ExerciseFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ExerciseViewModel.class);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+        // Retrieve the RoutineExercise object from arguments
+        RoutineExercise exercise = null;
+        if (getArguments() != null) {
+            exercise = (RoutineExercise) getArguments().getSerializable("EXERCISE");
+        }
+
+        // Set up the back button
+        ImageButton btnBack = view.findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> {
+            // Navigate back to the previous fragment
+            getParentFragmentManager().popBackStack();
+        });
+
+        // Populate the UI with the exercise details
+        TextView tvExerciseTitle = view.findViewById(R.id.tvExerciseTitle);
+        TextView tvExerciseDetail = view.findViewById(R.id.tvExerciseDetail);
+
+        if (exercise != null) {
+            tvExerciseTitle.setText(exercise.getExerciseName()); // Set exercise name
+            tvExerciseDetail.setText(exercise.getExerciseDescription()); // Set exercise description
+        }
     }
-
 }
