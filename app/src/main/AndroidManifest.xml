@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <!-- Declare features -->
+    <uses-feature android:name="android.hardware.camera" /> <!-- Declare permissions -->
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -13,11 +16,14 @@
         android:theme="@style/Theme.WorkWell"
         tools:targetApi="31">
         <activity
+            android:name=".ui.routine.execution.RoutineActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.auth.AuthSignupActivity"
             android:exported="false" />
-         <activity
-         android:name=".ui.main.MainActivity"
-         android:exported="false" />
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.auth.AuthLoginActivity"
             android:exported="true">

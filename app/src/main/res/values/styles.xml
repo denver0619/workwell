@@ -32,4 +32,9 @@
         <item name="colorOnSurface">@color/neutral_dark_color</item> <!--Label ACTIVE-->
 
     </style>
+
+    <!--    MediaPipe-->
+    <style name="BottomSheetSpinnerItemStyle" parent="Widget.AppCompat.Light.DropDownItem.Spinner">
+        <item name="android:textSize">@dimen/bottom_sheet_text_size</item>
+    </style>
 </resources>

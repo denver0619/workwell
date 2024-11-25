@@ -2,6 +2,7 @@ package com.digiview.workwell.ui.routine;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.digiview.workwell.R;
 import com.digiview.workwell.data.models.Routine;
 import com.digiview.workwell.data.models.RoutineExercise;
 import com.digiview.workwell.ui.routine.adapter.RoutineDetailAdapter;
+import com.digiview.workwell.ui.routine.execution.RoutineActivity;
 import com.digiview.workwell.ui.routine.viewmodel.RoutineDetailViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -114,14 +116,17 @@ public class RoutineDetailFragment extends Fragment implements RoutineDetailAdap
             }
 
             // Navigate to the SelfAssessmentFragment
-            SelfAssessmentFragment assessmentFragment = SelfAssessmentFragment.newInstance();
+//            SelfAssessmentFragment assessmentFragment = SelfAssessmentFragment.newInstance();
 
             // Perform the fragment transaction
-            requireActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.flFragmentContainer, assessmentFragment) // Replace with the correct container ID
-                    .addToBackStack(null)
-                    .commit();
+//            requireActivity().getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.flFragmentContainer, assessmentFragment) // Replace with the correct container ID
+//                    .addToBackStack(null)
+//                    .commit();
+
+            Intent intent = new Intent(requireActivity(), RoutineActivity.class);
+            requireActivity().startActivity(intent);
 
         }).exceptionally(e -> {
             Log.e("RoutineDetailFragment", "Failed to create RoutineLog: " + e.getMessage());

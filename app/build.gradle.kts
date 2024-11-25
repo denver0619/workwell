@@ -1,16 +1,17 @@
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.gms.google-services")
+    alias(libs.plugins.jetbrains.kotlin.android)
 }
 
 android {
     namespace = "com.digiview.workwell"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.digiview.workwell"
         minSdk = 28
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -30,6 +31,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    viewBinding {
+        enable = true
+    }
 }
 
 dependencies {
@@ -43,6 +51,7 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
+    implementation(libs.core.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -59,8 +68,18 @@ dependencies {
     // CameraX View class
     implementation ("androidx.camera:camera-view:$camerax_version")
 
+    // CameraX video capture library
+    implementation ("androidx.camera:camera-video:$camerax_version")
+
+    implementation ("com.arthenica:ffmpeg-kit-full:4.5")
+
     // WindowManager
     implementation("androidx.window:window:1.1.0-alpha03")
+
+    // Navigation library
+    val nav_version = "2.5.3"
+    implementation ("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation ("androidx.navigation:navigation-ui-ktx:$nav_version")
 
     // Unit testing
     testImplementation("junit:junit:4.13.2")

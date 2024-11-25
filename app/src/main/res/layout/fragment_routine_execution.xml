@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.routine.execution.RoutineExecutionFragment">
+
+    <LinearLayout
+        android:id="@+id/top_debug_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/counter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Count: 0" />
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Status: "/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/angle1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Angle3d: "/>
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/time_left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Time Left: "/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/angle2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Knee: "/>
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/angle3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Hip: "/>
+        </LinearLayout>
+        <androidx.fragment.app.FragmentContainerView
+            android:layout_weight="1"
+            android:id="@+id/camera_fragment_container"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:background="@android:color/transparent"
+            android:keepScreenOn="true"
+            app:defaultNavHost="true"
+            app:layout_constraintTop_toBottomOf="@id/top_debug_data"
+            app:navGraph="@navigation/nav_graph"
+            tools:layout_editor_absoluteX="16dp" />
+    </LinearLayout>
+
+</FrameLayout>
