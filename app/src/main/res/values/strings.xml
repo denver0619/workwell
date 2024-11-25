@@ -33,7 +33,20 @@
     <string name="placeholder_exercise_detail">Loading exercise detail....</string>
     <string name="start_exercise">View Exercise</string>
 
+    <!--    Self Assessment -->
+    <string name="asmt_title">Self-Assessment</string>
+    <string name="asmt_category1">Stiffness</string>
+    <string name="asmt_category2">Pain</string>
+    <string name="asmt_category3">Difficulty</string>
+    <string name="asmt_category4">Posture Awareness</string>
+    <string name="asmt_question1">How stiff or restricted did your body feel?</string>
+    <string name="asmt_question2">How much discomfort or pain did you feel during the session?</string>
+    <string name="asmt_question3">How difficult did you find completing the exercises?</string>
+    <string name="asmt_question4">How aware were you of your posture during the session?</string>
+    <string name="asmt_initial_value">Value: 0</string>
+
     <string name="back_button">Back Button</string>
+    <string name="submit_button">Submit</string>
     <string name="logout_btn">Logout</string>
     <string name="image_desc">Image</string>
 </resources>

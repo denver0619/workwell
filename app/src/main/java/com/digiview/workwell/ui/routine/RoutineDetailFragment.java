@@ -113,6 +113,16 @@ public class RoutineDetailFragment extends Fragment implements RoutineDetailAdap
                         ", Duration: " + exercise.getDuration());
             }
 
+            // Navigate to the SelfAssessmentFragment
+            SelfAssessmentFragment assessmentFragment = SelfAssessmentFragment.newInstance();
+
+            // Perform the fragment transaction
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.flFragmentContainer, assessmentFragment) // Replace with the correct container ID
+                    .addToBackStack(null)
+                    .commit();
+
         }).exceptionally(e -> {
             Log.e("RoutineDetailFragment", "Failed to create RoutineLog: " + e.getMessage());
             Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();

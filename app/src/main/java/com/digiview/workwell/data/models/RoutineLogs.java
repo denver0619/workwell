@@ -1,16 +1,26 @@
 package com.digiview.workwell.data.models;
 
+import com.google.firebase.firestore.PropertyName;
 import com.google.firebase.firestore.ServerTimestamp;
 
 import java.util.Date;
 
 public class RoutineLogs {
 
-    private String RoutineLogId;
-    private String RoutineId;
-    private String RoutineLogName;
-    private String Uid;
-    private Date CreatedAt;
+    @PropertyName("RoutineLogId")
+    private String routineLogId;
+
+    @PropertyName("RoutineId")
+    private String routineId;
+
+    @PropertyName("RoutineLogName")
+    private String routineLogName;
+
+    @PropertyName("Uid")
+    private String uid;
+
+    @PropertyName("CreatedAt")
+    private Date createdAt;
 
     // Default constructor for Firestore
     public RoutineLogs() {
@@ -18,63 +28,73 @@ public class RoutineLogs {
 
     // Constructor with all fields
     public RoutineLogs(String routineLogId, String routineId, String routineLogName, String uid, Date createdAt) {
-        this.RoutineLogId = routineLogId;
-        this.RoutineId = routineId;
-        this.RoutineLogName = routineLogName;
-        this.Uid = uid;
-        this.CreatedAt = createdAt;
+        this.routineLogId = routineLogId;
+        this.routineId = routineId;
+        this.routineLogName = routineLogName;
+        this.uid = uid;
+        this.createdAt = createdAt;
     }
 
     // Getters and Setters
+    @PropertyName("RoutineLogId")
     public String getRoutineLogId() {
-        return RoutineLogId;
+        return routineLogId;
     }
 
+    @PropertyName("RoutineLogId")
     public void setRoutineLogId(String routineLogId) {
-        this.RoutineLogId = routineLogId;
+        this.routineLogId = routineLogId;
     }
 
+    @PropertyName("RoutineId")
     public String getRoutineId() {
-        return RoutineId;
+        return routineId;
     }
 
+    @PropertyName("RoutineId")
     public void setRoutineId(String routineId) {
-        this.RoutineId = routineId;
+        this.routineId = routineId;
     }
 
+    @PropertyName("RoutineLogName")
     public String getRoutineLogName() {
-        return RoutineLogName;
+        return routineLogName;
     }
 
+    @PropertyName("RoutineLogName")
     public void setRoutineLogName(String routineLogName) {
-        this.RoutineLogName = routineLogName;
+        this.routineLogName = routineLogName;
     }
 
+    @PropertyName("Uid")
     public String getUid() {
-        return Uid;
+        return uid;
     }
 
+    @PropertyName("Uid")
     public void setUid(String uid) {
-        this.Uid = uid;
+        this.uid = uid;
     }
 
+    @PropertyName("CreatedAt")
     @ServerTimestamp
     public Date getCreatedAt() {
-        return CreatedAt;
+        return createdAt;
     }
 
+    @PropertyName("CreatedAt")
     public void setCreatedAt(Date createdAt) {
-        this.CreatedAt = createdAt;
+        this.createdAt = createdAt;
     }
 
     @Override
     public String toString() {
         return "RoutineLogs{" +
-                "RoutineLogId='" + RoutineLogId + '\'' +
-                ", RoutineId='" + RoutineId + '\'' +
-                ", RoutineLogName='" + RoutineLogName + '\'' +
-                ", Uid='" + Uid + '\'' +
-                ", CreatedAt=" + CreatedAt +
+                "RoutineLogId='" + routineLogId + '\'' +
+                ", RoutineId='" + routineId + '\'' +
+                ", RoutineLogName='" + routineLogName + '\'' +
+                ", Uid='" + uid + '\'' +
+                ", CreatedAt=" + createdAt +
                 '}';
     }
 }
