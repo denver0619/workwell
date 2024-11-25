@@ -26,7 +26,7 @@ public class RoutineExercise implements Serializable{
         Reps = reps;
     }
 
-    public int getDuration() {
+    public long getDuration() {
         return Duration;
     }
 

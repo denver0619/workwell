@@ -37,9 +37,9 @@ public class ExerciseLongusColliStretch extends  Exercise {
         double[] angles = {angle3D , angle3D};
 
         STATUS position;
-        if (angle3D >=11.7) {
+        if (angle3D >=13) {
             position = STATUS.RESTING;
-        } else if (angle3D < 10) {
+        } else if (angle3D < 12) {
             position = STATUS.ALIGNED;
         } else {
             position = STATUS.TRANSITIONING;

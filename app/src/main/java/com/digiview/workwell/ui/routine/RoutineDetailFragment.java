@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.digiview.workwell.R;
 import com.digiview.workwell.data.models.Routine;
 import com.digiview.workwell.data.models.RoutineExercise;
+import com.digiview.workwell.ui.main.MainActivity;
 import com.digiview.workwell.ui.routine.adapter.RoutineDetailAdapter;
 import com.digiview.workwell.ui.routine.execution.RoutineActivity;
 import com.digiview.workwell.ui.routine.viewmodel.RoutineDetailViewModel;
@@ -92,7 +93,7 @@ public class RoutineDetailFragment extends Fragment implements RoutineDetailAdap
     }
 
     private void handleFabClick() {
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid(); // Get user ID
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         List<RoutineExercise> exercises = mViewModel.getRoutineExercises();
 
         if (exercises.isEmpty()) {
@@ -100,40 +101,22 @@ public class RoutineDetailFragment extends Fragment implements RoutineDetailAdap
             return;
         }
 
-        // Create RoutineLog and handle success or failure
         mViewModel.createRoutineLog(uid).thenAccept(routineLogId -> {
             Log.d("RoutineDetailFragment", "RoutineLog created with ID: " + routineLogId);
 
-            // TODO: Pass RoutineLogId and RoutineExercises
-
-            Log.d("RoutineDetailFragment", "RoutineLogId: " + routineLogId);
             for (RoutineExercise exercise : exercises) {
-                Log.d("RoutineDetailFragment", "Exercise: " + exercise.getExerciseName() +
-                        ", Id: " + exercise.getExerciseId() +
-                        ", Description: " + exercise.getExerciseDescription() +
-                        ", Reps: " + exercise.getReps() +
-                        ", Duration: " + exercise.getDuration());
+                Log.d("RoutineDetailFragment", "Exercise: " + exercise.getExerciseName());
             }
 
-            // Navigate to the SelfAssessmentFragment
-//            SelfAssessmentFragment assessmentFragment = SelfAssessmentFragment.newInstance();
-
-            // Perform the fragment transaction
-//            requireActivity().getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.flFragmentContainer, assessmentFragment) // Replace with the correct container ID
-//                    .addToBackStack(null)
-//                    .commit();
-
-            Intent intent = new Intent(requireActivity(), RoutineActivity.class);
-            requireActivity().startActivity(intent);
-
+            ((MainActivity) requireActivity()).startRoutineActivity(routineLogId, new ArrayList<>(exercises));
         }).exceptionally(e -> {
             Log.e("RoutineDetailFragment", "Failed to create RoutineLog: " + e.getMessage());
             Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             return null;
         });
     }
+
+
 
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -29,6 +30,7 @@ import android.widget.Toast;
 import com.arthenica.ffmpegkit.FFmpegKit;
 import com.digiview.workwell.R;
 
+import com.digiview.workwell.data.models.RoutineExercise;
 import com.digiview.workwell.databinding.FragmentRoutineLooperBinding;
 import com.digiview.workwell.services.exercises.Exercise;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -60,19 +62,20 @@ public class RoutineLooperFragment extends Fragment {
 
     private ProcessCameraProvider cameraProvider;
 
-
-
+    private String routineLogId;
+    private List<RoutineExercise> exercises;
+    private OnRoutineFinishedListener onRoutineFinishedListener;
 
     // SAMPLE DATABASE MOCK DATA
-    private List<RoutineExerciseEntity> routine = new ArrayList<>(
-            Arrays.asList(
-                    new RoutineExerciseEntity(
-                            "",
-                            "Longus Colli Stretch",
-                            "",
-                            2,
-                            3000L
-                    )
+//    private List<RoutineExerciseEntity> routine = new ArrayList<>(
+//            Arrays.asList(
+//                    new RoutineExerciseEntity(
+//                            "",
+//                            "Longus Colli Stretch",
+//                            "",
+//                            2,
+//                            3000L
+//                    )
 //                    new RoutineExerciseEntity(
 //                            "",
 //                            "Latissimus Dorsi, Teres Major Stretch Left",
@@ -87,13 +90,45 @@ public class RoutineLooperFragment extends Fragment {
 //                            1,
 //                            10000L
 //                    )
-            )
-    );
-    private String logID;
+//            )
+//    );
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof OnRoutineFinishedListener) {
+            onRoutineFinishedListener = (OnRoutineFinishedListener) context;
+        } else {
+            throw new RuntimeException(context.toString() + " must implement OnRoutineFinishedListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        onRoutineFinishedListener = null;
+    }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Retrieve data from arguments
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            routineLogId = arguments.getString("ROUTINE_LOG_ID");
+            exercises = (ArrayList<RoutineExercise>) arguments.getSerializable("EXERCISES");
+            Log.d("RoutineLooperFragment", "RoutineLogId: " + routineLogId);
+
+            if (exercises != null) {
+                for (RoutineExercise exercise : exercises) {
+                    Log.d("RoutineLooperFragment", "Exercise: " + exercise.getExerciseName());
+                }
+            }
+        } else {
+            Log.e("RoutineLooperFragment", "No arguments provided to the fragment.");
+        }
     }
 
     @Nullable
@@ -114,7 +149,6 @@ public class RoutineLooperFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        logID = String.valueOf(System.currentTimeMillis());
         //initialize view model
         routineViewModel = new ViewModelProvider(requireActivity()).get(RoutineLooperViewModel.class);
         routineExecutionViewModel = new ViewModelProvider(requireActivity()).get(RoutineExecutionViewModel.class);
@@ -122,74 +156,67 @@ public class RoutineLooperFragment extends Fragment {
         cameraViewModel = new ViewModelProvider(requireActivity()).get(CameraViewModel.class);
 
         // initialize values
-        cameraViewModel.setFitnessLogID(logID);
-        cameraViewModel.setSaveDirectory(requireContext(),logID);
+        cameraViewModel.setFitnessLogID(routineLogId);
+        cameraViewModel.setSaveDirectory(requireContext(), routineLogId);
 
         //perform things
 //        routineViewModel.setTtsHelper(getContext());
-        routineViewModel.setRoutine(routine);
-        routineViewModel.getDestination().observe(getViewLifecycleOwner(), new Observer<Class<? extends Fragment>>() {
-            @Override
-            public void onChanged(Class<? extends Fragment> destinationFragment) {
-                try {
-                    Fragment destination = destinationFragment.newInstance();
-                    FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-                    transaction.setCustomAnimations(
-                            android.R.anim.slide_in_left,
-                            android.R.anim.slide_out_right
-                    );
-                    transaction.replace(R.id.routine_fragment_container, destination)
-                            .commit();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        routineViewModel.setRoutine(exercises);
+        // Observe destination changes
+        routineViewModel.getDestination().observe(getViewLifecycleOwner(), destinationFragment -> {
+            try {
+                Fragment destination = destinationFragment.newInstance();
+                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(
+                        android.R.anim.slide_in_left,
+                        android.R.anim.slide_out_right
+                );
+                transaction.replace(R.id.routine_fragment_container, destination)
+                        .commit();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 
-        routineViewModel.getCurrentExercise().observe(getViewLifecycleOwner(), new Observer<Exercise>() {
-            @Override
-            public void onChanged(Exercise exercise) {
-                RoutineLooperFragment.this.routineExecutionViewModel.setExercise(exercise);
-            }
+        // Observe current exercise
+        routineViewModel.getCurrentExercise().observe(getViewLifecycleOwner(), exercise -> {
+            routineExecutionViewModel.setExercise(exercise);
         });
 
-        routineExecutionViewModel.getExecutionState().observe(getViewLifecycleOwner(), new Observer<RoutineConstants.EXECUTION_STATE>() {
-            @Override
-            public void onChanged(RoutineConstants.EXECUTION_STATE executionState) {
-                RoutineLooperFragment.this.routineViewModel.setExecutionState(executionState);
-                RoutineLooperFragment.this.routineViewModel.setExecutionState(RoutineConstants.EXECUTION_STATE.NONE);
-            }
+        // Observe execution state
+        routineExecutionViewModel.getExecutionState().observe(getViewLifecycleOwner(), executionState -> {
+            routineViewModel.setExecutionState(executionState);
+            routineViewModel.setExecutionState(RoutineConstants.EXECUTION_STATE.NONE);
         });
 
-
+        // Execute the routine
         routineViewModel.executeRoutine();
 
-        exerciseTransitionViewModel.getTransitionState().observe(getViewLifecycleOwner(), new Observer<RoutineConstants.TRANSITION_STATE>() {
-            @Override
-            public void onChanged(RoutineConstants.TRANSITION_STATE transitionState) {
-                routineViewModel.setTransitionState(transitionState);
-            }
-        });
+        // Observe transition state
+        exerciseTransitionViewModel.getTransitionState().observe(getViewLifecycleOwner(), routineViewModel::setTransitionState);
 
-        // DEBUG CODE
-        routineViewModel.getToastMsg().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
-            }
-        });
+        // Debugging: Show Toast messages
+        routineViewModel.getToastMsg().observe(getViewLifecycleOwner(), s -> Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show());
 
-        // SELF ASSESSMENT ENTRY POINT
-        routineViewModel.getIsRoutineFinished().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isRoutineFinished) {
-                if(isRoutineFinished) {
-                    requireActivity().finish();
-//                    Intent intent = new Intent(requireActivity(), SelfAssessmentActivity.class);
-//                    requireActivity().startActivity(intent);
+        // Self-assessment entry point
+        routineViewModel.getIsRoutineFinished().observe(getViewLifecycleOwner(), isRoutineFinished -> {
+            if (isRoutineFinished) {
+                // Pass data to the parent activity using the callback
+                if (onRoutineFinishedListener != null) {
+                    onRoutineFinishedListener.onRoutineFinished(routineLogId, exercises);
                 }
+
+                // Close the RoutineLooperFragment
+                requireActivity().getSupportFragmentManager().popBackStack();
             }
         });
+
     }
+
+    public interface OnRoutineFinishedListener {
+        void onRoutineFinished(String routineLogId, List<RoutineExercise> exercises);
+    }
+
+
 
 }

@@ -97,7 +97,7 @@ public class RoutineExecutionFragment extends Fragment {
             public void onChanged(double[] angles) {
                 routineExecutionBinding.angle1.setText("ANGLE1: " + String.format("%.2f", angles[0]));
                 routineExecutionBinding.angle2.setText("ANGLE1: " + String.format("%.2f", angles[1]));
-                routineExecutionBinding.angle3.setText("ANGLE1: " + String.format("%.2f", angles[2]));
+//                routineExecutionBinding.angle3.setText("ANGLE1: " + String.format("%.2f", angles[2]));
 
             }
         });

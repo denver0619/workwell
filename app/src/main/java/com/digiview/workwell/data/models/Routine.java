@@ -37,7 +37,7 @@ public class Routine implements Serializable {
 
     @PropertyName("TargetArea")
     public void setTargetArea(Long targetAreaValue) {
-        this.TargetArea = TargetArea.fromValue(targetAreaValue);
+        this.TargetArea = com.digiview.workwell.data.models.TargetArea.fromValue(targetAreaValue);
     }
 
     public List<String> getUsers() {

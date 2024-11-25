@@ -1,6 +1,7 @@
 package com.digiview.workwell.data.models;
 
 import com.google.firebase.firestore.PropertyName;
+import com.digiview.workwell.data.models.TargetArea;
 
 public class Exercise {
 

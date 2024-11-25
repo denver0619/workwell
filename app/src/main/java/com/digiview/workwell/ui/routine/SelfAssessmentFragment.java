@@ -1,6 +1,7 @@
 package com.digiview.workwell.ui.routine;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.digiview.workwell.R;
+import com.digiview.workwell.data.models.RoutineExercise;
 import com.digiview.workwell.ui.routine.viewmodel.SelfAssessmentViewModel;
+
+import java.util.List;
 
 public class SelfAssessmentFragment extends Fragment {
 
@@ -24,8 +28,16 @@ public class SelfAssessmentFragment extends Fragment {
     private TextView tvStiffnessValue, tvPainValue, tvDifficultyValue, tvAwarenessValue;
     private Button btnSubmit;
 
-    public static SelfAssessmentFragment newInstance() {
-        return new SelfAssessmentFragment();
+    private String routineLogId;
+    private List<RoutineExercise> exercises;
+
+    public static SelfAssessmentFragment newInstance(String routineLogId, List<RoutineExercise> exercises) {
+        SelfAssessmentFragment fragment = new SelfAssessmentFragment();
+        Bundle args = new Bundle();
+        args.putString("ROUTINE_LOG_ID", routineLogId);
+        args.putSerializable("EXERCISES", (java.io.Serializable) exercises);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Nullable
@@ -50,20 +62,32 @@ public class SelfAssessmentFragment extends Fragment {
 
         btnSubmit = view.findViewById(R.id.btnSubmit);
 
-        // Observe ViewModel
+        // Setup listeners and observers
+        setupSeekBarListeners();
         setupObservers();
 
-        // SeekBar Listeners
-        setupSeekBarListeners();
-
         // Submit Button
-        btnSubmit.setOnClickListener(v -> {
-            // Prepare data for submission
-            viewModel.submitData();
-            Toast.makeText(requireContext(), "Data submitted", Toast.LENGTH_SHORT).show();
-        });
+        btnSubmit.setOnClickListener(v -> handleSubmit());
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Retrieve arguments
+        if (getArguments() != null) {
+            routineLogId = getArguments().getString("ROUTINE_LOG_ID");
+            exercises = (List<RoutineExercise>) getArguments().getSerializable("EXERCISES");
+
+            Log.d("SelfAssessmentFragment", "RoutineLogId: " + routineLogId);
+            if (exercises != null) {
+                for (RoutineExercise exercise : exercises) {
+                    Log.d("SelfAssessmentFragment", "Exercise: " + exercise.getExerciseName());
+                }
+            }
+        }
     }
 
     private void setupSeekBarListeners() {
@@ -73,8 +97,12 @@ public class SelfAssessmentFragment extends Fragment {
                 tvStiffnessValue.setText("Value: " + progress);
                 viewModel.setStiffness(progress);
             }
-            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override public void onStopTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
         seekBarPain.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -83,8 +111,12 @@ public class SelfAssessmentFragment extends Fragment {
                 tvPainValue.setText("Value: " + progress);
                 viewModel.setPain(progress);
             }
-            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override public void onStopTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
         seekBarDifficulty.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -93,8 +125,12 @@ public class SelfAssessmentFragment extends Fragment {
                 tvDifficultyValue.setText("Value: " + progress);
                 viewModel.setDifficulty(progress);
             }
-            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override public void onStopTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
         seekBarAwareness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -103,8 +139,12 @@ public class SelfAssessmentFragment extends Fragment {
                 tvAwarenessValue.setText("Value: " + progress);
                 viewModel.setAwareness(progress);
             }
-            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override public void onStopTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
     }
 
@@ -120,5 +160,15 @@ public class SelfAssessmentFragment extends Fragment {
 
         viewModel.getAwareness().observe(getViewLifecycleOwner(), value ->
                 tvAwarenessValue.setText("Value: " + value));
+    }
+
+    private void handleSubmit() {
+        
+        viewModel.submitData(routineLogId);
+
+        Toast.makeText(requireContext(), "Data submitted successfully!", Toast.LENGTH_SHORT).show();
+
+        // Navigate back to previous activity or show confirmation
+        requireActivity().getSupportFragmentManager().popBackStack();
     }
 }
