@@ -68,18 +68,18 @@ public class RoutineLooperFragment extends Fragment {
             Arrays.asList(
                     new RoutineExerciseEntity(
                             "",
-                            "Latissimus Dorsi, Teres Major Stretch Right",
-                            "",
-                            2,
-                            3000L
-                    ),
-                    new RoutineExerciseEntity(
-                            "",
-                            "Latissimus Dorsi, Teres Major Stretch Left",
+                            "Longus Colli Stretch",
                             "",
                             2,
                             3000L
                     )
+//                    new RoutineExerciseEntity(
+//                            "",
+//                            "Latissimus Dorsi, Teres Major Stretch Left",
+//                            "",
+//                            2,
+//                            3000L
+//                    )
 //                    new RoutineExerciseEntity(
 //                            "",
 //                            "Quadriceps Stretch Left",
