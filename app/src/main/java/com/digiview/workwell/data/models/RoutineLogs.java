@@ -19,6 +19,15 @@ public class RoutineLogs {
     @PropertyName("Uid")
     private String uid;
 
+    @PropertyName("SelfAssessmentId")
+    private String selfAssessmentId;
+
+    @PropertyName("VideoId")
+    private String videoId;
+
+    @PropertyName("JournalId")
+    private String journalId;
+
     @PropertyName("CreatedAt")
     private Date createdAt;
 
@@ -74,6 +83,36 @@ public class RoutineLogs {
     @PropertyName("Uid")
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    @PropertyName("SelfAssessmentId")
+    public String getSelfAssessmentId() {
+        return selfAssessmentId;
+    }
+
+    @PropertyName("SelfAssessmentId")
+    public void setSelfAssessmentId(String selfAssessmentId) {
+        this.selfAssessmentId = selfAssessmentId;
+    }
+
+    @PropertyName("VideoId")
+    public String getVideoId() {
+        return videoId;
+    }
+
+    @PropertyName("VideoId")
+    public void setVideoId(String videoId) {
+        this.videoId = videoId;
+    }
+
+    @PropertyName("JournalId")
+    public String getJournalId() {
+        return journalId;
+    }
+
+    @PropertyName("JournalId")
+    public void setJournalId(String journalId) {
+        this.journalId = journalId;
     }
 
     @PropertyName("CreatedAt")

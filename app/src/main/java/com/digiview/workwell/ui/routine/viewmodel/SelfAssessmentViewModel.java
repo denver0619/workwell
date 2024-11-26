@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.digiview.workwell.data.models.SelfAssessment;
+import com.digiview.workwell.data.service.RoutineLogService;
 import com.digiview.workwell.data.service.SelfAssessmentService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -52,28 +53,6 @@ public class SelfAssessmentViewModel extends ViewModel {
     }
 
     public void submitData(String routineLogId) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (user != null) {
-            user.getIdToken(true).addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    GetTokenResult tokenResult = task.getResult();
-
-                    if (tokenResult != null) {
-                        // Print all claims to logcat
-                        Log.d("Claims", "User Claims:");
-                        for (String key : tokenResult.getClaims().keySet()) {
-                            Object value = tokenResult.getClaims().get(key);
-                            Log.d("Claims", key + ": " + value);
-                        }
-                    }
-                } else {
-                    Log.e("Claims", "Failed to retrieve token: ", task.getException());
-                }
-            });
-        } else {
-            Log.e("Claims", "No user is signed in.");
-        }
 
         SelfAssessment selfAssessment = new SelfAssessment();
         selfAssessment.setRoutineLogId(routineLogId);
@@ -84,7 +63,19 @@ public class SelfAssessmentViewModel extends ViewModel {
 
         selfAssessmentService.addSelfAssessment(selfAssessment).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
+                String selfAssessmentId = selfAssessment.getSelfAssessmentId();
                 Log.d("SelfAssessmentViewModel", "SelfAssessment submitted successfully.");
+
+                // Update RoutineLog with the new SelfAssessmentId
+                RoutineLogService routineLogService = new RoutineLogService();
+                routineLogService.updateRoutineLogSelfAssessment(routineLogId, selfAssessmentId)
+                        .addOnCompleteListener(updateTask -> {
+                            if (updateTask.isSuccessful()) {
+                                Log.d("SelfAssessmentViewModel", "RoutineLog updated with SelfAssessmentId.");
+                            } else {
+                                Log.e("SelfAssessmentViewModel", "Error updating RoutineLog: ", updateTask.getException());
+                            }
+                        });
             } else {
                 Log.e("SelfAssessmentViewModel", "Error submitting SelfAssessment: ", task.getException());
             }

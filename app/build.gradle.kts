@@ -97,4 +97,11 @@ dependencies {
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation("com.google.firebase:firebase-analytics")
 
+    // Cloudinary
+    // All:
+    implementation ("com.cloudinary:cloudinary-android:3.0.2")
+
+    // Download + Preprocess:
+    implementation ("com.cloudinary:cloudinary-android-download:3.0.2")
+    implementation ("com.cloudinary:cloudinary-android-preprocess:3.0.2")
 }

@@ -1,6 +1,7 @@
 package com.digiview.workwell.data.repository;
 
 import com.digiview.workwell.data.models.RoutineLogs;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -34,4 +35,19 @@ public class RoutineLogRepository {
 
         return future;
     }
+
+    public Task<Void> updateRoutineLogField(String routineLogId, String fieldName, Object value) {
+        return firestore.collection("routinelogs")
+                .document(routineLogId)
+                .update(fieldName, value);
+    }
+    public Task<Void> updateVideoIdField(String routineLogId, String videoId) {
+        return firestore.collection("routinelogs")
+                .document(routineLogId)
+                .update("VideoId", videoId);
+    }
+
+
+
+
 }

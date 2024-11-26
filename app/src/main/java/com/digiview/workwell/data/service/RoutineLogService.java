@@ -2,6 +2,7 @@ package com.digiview.workwell.data.service;
 
 import com.digiview.workwell.data.models.RoutineLogs;
 import com.digiview.workwell.data.repository.RoutineLogRepository;
+import com.google.android.gms.tasks.Task;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -27,7 +28,20 @@ public class RoutineLogService {
         routineLog.setRoutineLogName(routineLogName);
         routineLog.setUid(uid);
         routineLog.setCreatedAt(null); // Firestore will auto-set this
+        routineLog.setSelfAssessmentId(null); // Placeholder
+        routineLog.setVideoId(null);          // Placeholder
+        routineLog.setJournalId(null);
 
         return repository.createRoutineLog(routineLog);
     }
+
+    public Task<Void> updateRoutineLogSelfAssessment(String routineLogId, String selfAssessmentId) {
+        return repository.updateRoutineLogField(routineLogId, "SelfAssessmentId", selfAssessmentId);
+    }
+    public Task<Void> updateRoutineLogVideoId(String routineLogId, String videoId) {
+        return repository.updateVideoIdField(routineLogId, videoId);
+    }
+
+
+
 }
