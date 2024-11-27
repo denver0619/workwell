@@ -47,7 +47,7 @@ public class VideoRepository {
 
                 // Extract the Cloudinary ID and URL from the response
                 String cloudinaryId = (String) uploadResult.get("public_id");
-                String videoUrl = (String) uploadResult.get("url");
+                String videoUrl = (String) uploadResult.get("secure_url");
 
                 // Create a Video object with the Cloudinary details
                 Video video = new Video();
