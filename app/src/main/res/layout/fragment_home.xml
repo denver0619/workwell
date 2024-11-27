@@ -128,13 +128,13 @@
 
             <ImageView
                 android:id="@+id/ivHero"
-                android:layout_width="wrap_content"
+                android:layout_width="162dp"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/hero_img_desc"
                 android:elevation="8dp"
-                android:translationY="8dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/img_hero"
-                android:contentDescription="@string/hero_img_desc"/>
+                android:src="@drawable/img_hero_3"
+                android:translationY="4dp" />
 
         </FrameLayout>
 
