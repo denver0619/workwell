@@ -43,7 +43,7 @@ public class ExerciseLatissimusDorsiTeresMajorStretchLeft extends Exercise{
 
         Exercise.STATUS position;
 
-        if (leftShoulder >= 150 && rightHip <= 150) {
+        if (leftShoulder >= 150 && rightHip <= 160) {
             position = Exercise.STATUS.RESTING;
         } else if (leftShoulder >= 150 && rightHip >= 170 ) {
             position = Exercise.STATUS.ALIGNED;
