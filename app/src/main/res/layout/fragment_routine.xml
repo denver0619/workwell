@@ -8,17 +8,19 @@
 
     <!-- Sticky TextView at the Top -->
     <TextView
-        android:layout_marginTop="16dp"
         android:id="@+id/tvRoutine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/menu_routine"
-        android:textFontWeight="600"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="8dp"
-        android:textSize="18sp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
+        android:paddingHorizontal="80dp"
+        android:paddingVertical="8dp"
+        android:text="@string/menu_routine"
         android:textColor="@color/neutral_dark_color"
+        android:textFontWeight="600"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar

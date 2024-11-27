@@ -24,11 +24,13 @@
 
             <TextView
                 android:id="@+id/tvItemTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="361dp"
+                android:layout_height="51dp"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
+                android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:gravity="end"
+                android:gravity="start"
                 android:text="@string/placeholder_routine_name"
                 android:textColor="@color/neutral_dark_color"
                 android:textFontWeight="600"
@@ -36,12 +38,12 @@
 
             <Button
                 android:id="@+id/btnStartRoutine"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_alignParentEnd="true"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/accent_color"
                 android:minHeight="48dp"
                 android:text="@string/hero_button_text"
@@ -50,14 +52,14 @@
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
-    <ImageView
-        android:id="@+id/ivHero"
-        android:layout_width="176dp"
-        android:layout_height="184dp"
-        android:elevation="8dp"
-        android:translationY="-8dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/img_lower_back_1"
-        android:contentDescription="@string/hero_img_desc"/>
+<!--    <ImageView-->
+<!--        android:id="@+id/ivHero"-->
+<!--        android:layout_width="176dp"-->
+<!--        android:layout_height="184dp"-->
+<!--        android:elevation="8dp"-->
+<!--        android:translationY="-8dp"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:src="@drawable/img_lower_back_1"-->
+<!--        android:contentDescription="@string/hero_img_desc"/>-->
 
 </FrameLayout>

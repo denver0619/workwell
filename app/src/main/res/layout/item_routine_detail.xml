@@ -25,13 +25,13 @@
             android:clipChildren="true"
             android:clipToPadding="true">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/img_placeholder_box"
-                android:scaleType="centerCrop"
-                android:contentDescription="@string/image_desc"
-                />
+<!--            <ImageView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:src="@drawable/img_placeholder_box"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:contentDescription="@string/image_desc"-->
+<!--                />-->
 
             <RelativeLayout
                 android:layout_width="match_parent"
