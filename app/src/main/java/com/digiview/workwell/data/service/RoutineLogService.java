@@ -1,17 +1,26 @@
 package com.digiview.workwell.data.service;
 
+import android.util.Log;
+
 import com.digiview.workwell.data.models.RoutineLogs;
 import com.digiview.workwell.data.repository.RoutineLogRepository;
 import com.google.android.gms.tasks.Task;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class RoutineLogService {
 
     private final RoutineLogRepository repository;
+    private final SelfAssessmentService selfAssessmentService;
+    private final VideoService videoService;
+    private final JournalService journalService;
 
     public RoutineLogService() {
         this.repository = new RoutineLogRepository();
+        selfAssessmentService = new SelfAssessmentService();
+        videoService = new VideoService();
+        journalService = new JournalService();
     }
 
     /**
@@ -41,6 +50,51 @@ public class RoutineLogService {
     public Task<Void> updateRoutineLogVideoId(String routineLogId, String videoId) {
         return repository.updateVideoIdField(routineLogId, videoId);
     }
+    public Task<Void> updateRoutineLogJournalId(String routineLogId, String journalId) {
+        return repository.updateJournalIdField(routineLogId, journalId);
+    }
+
+    public CompletableFuture<List<RoutineLogs>> fetchRoutineLogsWithDetails(String currentUserId) {
+        return repository.fetchRoutineLogsForCurrentUser(currentUserId)
+                .thenCompose(routineLogs -> {
+                    CompletableFuture<Void> allDetailsFetched = CompletableFuture.allOf(
+                            routineLogs.stream().map(log -> {
+                                CompletableFuture<Void> selfAssessmentFuture = log.getSelfAssessmentId() != null
+                                        ? selfAssessmentService.getSelfAssessment(log.getSelfAssessmentId())
+                                        .thenAccept(log::setSelfAssessment)
+                                        .exceptionally(e -> {
+                                            Log.e("RoutineLogService", "Error fetching SelfAssessment: " + log.getSelfAssessmentId(), e);
+                                            return null;
+                                        })
+                                        : CompletableFuture.completedFuture(null);
+
+                                CompletableFuture<Void> videoFuture = log.getVideoId() != null
+                                        ? videoService.getVideo(log.getVideoId())
+                                        .thenAccept(log::setVideo)
+                                        .exceptionally(e -> {
+                                            Log.e("RoutineLogService", "Error fetching Video: " + log.getVideoId(), e);
+                                            return null;
+                                        })
+                                        : CompletableFuture.completedFuture(null);
+
+                                CompletableFuture<Void> journalFuture = log.getJournalId() != null
+                                        ? journalService.getJournal(log.getJournalId())
+                                        .thenAccept(log::setJournal)
+                                        .exceptionally(e -> {
+                                            Log.e("RoutineLogService", "Error fetching Journal: " + log.getJournalId(), e);
+                                            return null;
+                                        })
+                                        : CompletableFuture.completedFuture(null);
+
+                                return CompletableFuture.allOf(selfAssessmentFuture, videoFuture, journalFuture);
+                            }).toArray(CompletableFuture[]::new)
+                    );
+
+                    return allDetailsFetched.thenApply(ignored -> routineLogs);
+                });
+    }
+
+
 
 
 

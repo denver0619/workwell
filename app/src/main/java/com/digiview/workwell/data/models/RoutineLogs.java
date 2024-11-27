@@ -3,9 +3,11 @@ package com.digiview.workwell.data.models;
 import com.google.firebase.firestore.PropertyName;
 import com.google.firebase.firestore.ServerTimestamp;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Date;
 
-public class RoutineLogs {
+public class RoutineLogs implements Serializable {
 
     @PropertyName("RoutineLogId")
     private String routineLogId;
@@ -34,6 +36,11 @@ public class RoutineLogs {
     // Default constructor for Firestore
     public RoutineLogs() {
     }
+
+    // Associated models for easier handling
+    private SelfAssessment selfAssessment;
+    private Video video;
+    private Journal journal;
 
     // Constructor with all fields
     public RoutineLogs(String routineLogId, String routineId, String routineLogName, String uid, Date createdAt) {
@@ -136,4 +143,28 @@ public class RoutineLogs {
                 ", CreatedAt=" + createdAt +
                 '}';
     }
+    public SelfAssessment getSelfAssessment() {
+        return selfAssessment;
+    }
+
+    public void setSelfAssessment(SelfAssessment selfAssessment) {
+        this.selfAssessment = selfAssessment;
+    }
+
+    public Video getVideo() {
+        return video;
+    }
+
+    public void setVideo(Video video) {
+        this.video = video;
+    }
+
+    public Journal getJournal() {
+        return journal;
+    }
+
+    public void setJournal(Journal journal) {
+        this.journal = journal;
+    }
+
 }

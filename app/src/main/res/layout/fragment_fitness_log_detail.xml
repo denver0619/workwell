@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fitnesslog.FitnessLogDetailFragment">
+
+    <!-- Back Button on the Left Side of TextView -->
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_arrow_left"
+        android:contentDescription="@string/back_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp" />
+    <!-- Sticky TextView at the Top -->
+    <TextView
+        android:layout_marginTop="16dp"
+        android:id="@+id/tvExerciseTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder_exercise_name"
+        android:textFontWeight="600"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textColor="@color/neutral_dark_color"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvVideoContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvExerciseTitle"
+        app:layout_constraintWidth_max="600dp"
+        app:layout_constraintDimensionRatio="16:9"
+        android:padding="4dp"
+        android:backgroundTint="@color/accent_color">
+
+        <ProgressBar
+            android:id="@+id/loadingIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- PlayerView for ExoPlayer -->
+        <androidx.media3.ui.PlayerView
+            android:id="@+id/playerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/tvExerciseTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+
+
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:id="@+id/llCategory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cvVideoContainer"
+        android:padding="0dp"
+        app:layout_constraintWidth_max="600dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="@string/asmt_category1" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="@string/asmt_category2" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="@string/asmt_category3" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="@string/asmt_category4_2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llLikertScore"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llCategory"
+        android:padding="0dp"
+        app:layout_constraintWidth_max="600dp"
+        >
+
+        <TextView
+            android:id="@+id/tvStiffnessLogValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="@string/asmt_category1_score" />
+
+        <TextView
+            android:id="@+id/tvPainLogValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="@string/asmt_category2_score" />
+
+        <TextView
+            android:id="@+id/tvDifficultyLogValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="@string/asmt_category3_score" />
+
+        <TextView
+            android:id="@+id/tvAwarenessLogValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="@string/asmt_category4_score" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvReflectionTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llLikertScore"
+        app:layout_constraintWidth_max="600dp"
+        android:layout_marginTop="56dp"
+        android:text="@string/reflection_title"
+        android:paddingHorizontal="8dp"/>
+
+    <TextView
+        android:id="@+id/tvReflectionContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:text="@string/reflection_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvReflectionTitle"
+        app:layout_constraintWidth_max="600dp"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/etReflectionContentInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:hint="@string/reflection_hint"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:minLines="4"
+        android:maxLines="8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvReflectionTitle"
+        app:layout_constraintWidth_max="600dp" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/accent_color"
+        android:gravity="center"
+        android:text="@string/submit_button"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etReflectionContentInput" />
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

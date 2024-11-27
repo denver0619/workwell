@@ -4,6 +4,8 @@ import com.digiview.workwell.data.models.SelfAssessment;
 import com.digiview.workwell.data.repository.SelfAssessmentRepository;
 import com.google.android.gms.tasks.Task;
 
+import java.util.concurrent.CompletableFuture;
+
 public class SelfAssessmentService {
 
     private final SelfAssessmentRepository repository;
@@ -18,10 +20,10 @@ public class SelfAssessmentService {
         return repository.addSelfAssessment(selfAssessment);
     }
 
-    // Get a self-assessment by ID
-    public Task<SelfAssessment> getSelfAssessment(String selfAssessmentId) {
+    public CompletableFuture<SelfAssessment> getSelfAssessment(String selfAssessmentId) {
         return repository.getSelfAssessment(selfAssessmentId);
     }
+
 
     // Update a self-assessment
     public Task<Void> updateSelfAssessment(SelfAssessment selfAssessment) {

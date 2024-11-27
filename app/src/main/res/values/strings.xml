@@ -28,6 +28,7 @@
     <string name="hero_img_desc">Hero Image - Lady Stretching</string>
     <string name="routine_add_fab">Add Routine Floating Action Button</string>
     <string name="placeholder_routine_name">Target Area\nRoutine 1</string>
+    <string name="placeholder_routine_date">YYYY-MM-DD hh:mm tt</string>
     <string name="placeholder_routine_detail">Routine Name 1</string>
     <string name="placeholder_exercise_name">Exercise Name</string>
     <string name="placeholder_exercise_detail">Loading exercise detail....</string>
@@ -39,17 +40,30 @@
     <string name="asmt_category2">Pain</string>
     <string name="asmt_category3">Difficulty</string>
     <string name="asmt_category4">Posture Awareness</string>
+    <string name="asmt_category4_2">Awareness</string>
     <string name="asmt_question1">How stiff or restricted did your body feel?</string>
     <string name="asmt_question2">How much discomfort or pain did you feel during the session?</string>
     <string name="asmt_question3">How difficult did you find completing the exercises?</string>
     <string name="asmt_question4">How aware were you of your posture during the session?</string>
     <string name="asmt_initial_value">Value: 0</string>
+    <string name="asmt_category1_score">10</string>
+    <string name="asmt_category2_score">10</string>
+    <string name="asmt_category3_score">10</string>
+    <string name="asmt_category4_score">10</string>
+
+    <!-- Fitness Log Button Text -->
+    <string name="fitness_log_card_button_text">View Details</string>
 
     <string name="back_button">Back Button</string>
     <string name="submit_button">Submit</string>
     <string name="logout_btn">Logout</string>
     <string name="image_desc">Image</string>
 
+    <string name="reflection_title">Reflection:</string>
+    <string name="reflection_hint">Input Reflection Here</string>
+    <string name="reflection_content">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."</string>
+
+    <string name="video_player">Exercise Video</string>
     <!--    MediaPipe-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="media_pipe">MediaPipe</string>

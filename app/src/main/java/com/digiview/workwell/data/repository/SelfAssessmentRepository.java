@@ -5,6 +5,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.concurrent.CompletableFuture;
+
 public class SelfAssessmentRepository {
 
     private final CollectionReference selfAssessmentCollection;
@@ -24,11 +26,24 @@ public class SelfAssessmentRepository {
     }
 
     // Retrieve a self-assessment from Firestore
-    public Task<SelfAssessment> getSelfAssessment(String selfAssessmentId) {
-        return selfAssessmentCollection.document(selfAssessmentId)
+    public CompletableFuture<SelfAssessment> getSelfAssessment(String selfAssessmentId) {
+        CompletableFuture<SelfAssessment> future = new CompletableFuture<>();
+
+        selfAssessmentCollection.document(selfAssessmentId)
                 .get()
-                .continueWith(task -> task.getResult().toObject(SelfAssessment.class));
+                .addOnSuccessListener(documentSnapshot -> {
+                    SelfAssessment selfAssessment = documentSnapshot.toObject(SelfAssessment.class);
+                    if (selfAssessment != null) {
+                        future.complete(selfAssessment);
+                    } else {
+                        future.completeExceptionally(new Exception("SelfAssessment not found"));
+                    }
+                })
+                .addOnFailureListener(future::completeExceptionally);
+
+        return future;
     }
+
 
     // Update an existing self-assessment in Firestore
     public Task<Void> updateSelfAssessment(SelfAssessment selfAssessment) {

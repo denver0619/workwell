@@ -24,4 +24,9 @@ public class VideoService {
         return repository.uploadVideoToCloudinary(videoFilePath)
                 .thenCompose(video -> repository.saveVideoMetadata(video));
     }
+
+    public CompletableFuture<Video> getVideo(String videoId) {
+        return repository.getVideo(videoId);
+    }
+
 }

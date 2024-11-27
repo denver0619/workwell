@@ -104,4 +104,9 @@ dependencies {
     // Download + Preprocess:
     implementation ("com.cloudinary:cloudinary-android-download:3.0.2")
     implementation ("com.cloudinary:cloudinary-android-preprocess:3.0.2")
+
+    // ExoPlayer
+    implementation("androidx.media3:media3-exoplayer:1.4.1")
+    implementation("androidx.media3:media3-exoplayer-dash:1.4.1")
+    implementation("androidx.media3:media3-ui:1.4.1")
 }

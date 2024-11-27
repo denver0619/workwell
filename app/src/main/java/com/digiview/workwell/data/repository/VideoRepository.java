@@ -98,4 +98,25 @@ public class VideoRepository {
                 .document(routineLogId)
                 .update("VideoId", videoId);
     }
+
+    public CompletableFuture<Video> getVideo(String videoId) {
+        CompletableFuture<Video> future = new CompletableFuture<>();
+
+        firestore.collection("videos")
+                .document(videoId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    Video video = documentSnapshot.toObject(Video.class);
+                    if (video != null) {
+                        future.complete(video);
+                    } else {
+                        future.completeExceptionally(new Exception("Video not found"));
+                    }
+                })
+                .addOnFailureListener(future::completeExceptionally);
+
+        return future;
+    }
+
+
 }

@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.digiview.workwell.R;
 import com.digiview.workwell.data.models.RoutineExercise;
+import com.digiview.workwell.ui.fitnesslog.FitnessLogFragment;
 import com.digiview.workwell.ui.home.HomeFragment;
 import com.digiview.workwell.ui.profile.ProfileFragment;
 import com.digiview.workwell.ui.routine.RoutineFragment;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             } else if (item.getItemId() == R.id.menu_activity_log) {
                 Log.d(TAG, "activity log");
+                replaceFragment(new FitnessLogFragment());
                 return true;
             } else if (item.getItemId() == R.id.menu_profile) {
                 Log.d(TAG, "profile");

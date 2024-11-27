@@ -2,17 +2,24 @@ package com.digiview.workwell.data.repository;
 
 import com.digiview.workwell.data.models.RoutineLogs;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class RoutineLogRepository {
 
     private final FirebaseFirestore firestore;
+    private final CollectionReference routineLogsRef;
 
     public RoutineLogRepository() {
         this.firestore = FirebaseFirestore.getInstance();
+        routineLogsRef = firestore.collection("routinelogs");
     }
 
     /**
@@ -46,8 +53,34 @@ public class RoutineLogRepository {
                 .document(routineLogId)
                 .update("VideoId", videoId);
     }
+    public Task<Void> updateJournalIdField(String routineLogId, String journalId) {
+        return firestore.collection("routinelogs")
+                .document(routineLogId)
+                .update("JournalId", journalId);
+    }
 
 
 
+    public CompletableFuture<List<RoutineLogs>> fetchRoutineLogsForCurrentUser(String currentUserId) {
+        CompletableFuture<List<RoutineLogs>> future = new CompletableFuture<>();
+
+        routineLogsRef.whereEqualTo("Uid", currentUserId)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    List<RoutineLogs> routineLogs = new ArrayList<>();
+                    if (querySnapshot != null) {
+                        for (DocumentSnapshot document : querySnapshot.getDocuments()) {
+                            RoutineLogs log = document.toObject(RoutineLogs.class);
+                            if (log != null) {
+                                routineLogs.add(log);
+                            }
+                        }
+                    }
+                    future.complete(routineLogs);
+                })
+                .addOnFailureListener(future::completeExceptionally);
+
+        return future;
+    }
 
 }
