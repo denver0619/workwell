@@ -17,4 +17,8 @@ public class RoutineService {
     public CompletableFuture<List<Routine>> getEnrichedRoutinesForUser() {
         return routineRepository.getUserRoutinesWithDetails();
     }
+
+    public CompletableFuture<Routine> getRoutineById(String routineId) {
+        return routineRepository.fetchRoutineById(routineId);
+    }
 }

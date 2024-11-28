@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.digiview.workwell.R;
 import com.digiview.workwell.data.models.Routine;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.ViewHolder> {
@@ -40,6 +42,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.ViewHold
     public void onBindViewHolder(@NonNull RoutineAdapter.ViewHolder holder, int position) {
         Routine routine = routineList.get(position);
         holder.itemTitle.setText(routine.getName());
+        holder.routineDate.setText(String.format("%s - %s", routine.getFormattedStartDate(), routine.getFormattedEndDate()));
 
         holder.button.setOnClickListener(v -> {
             onRoutineClickListener.onRoutineClicked(routine); // Pass the Routine object
@@ -55,12 +58,14 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView itemTitle;
 //        public TextView itemDescription; // Added a field for description
+        public TextView routineDate;
         public Button button;
 
         public ViewHolder(View view) {
             super(view);
             itemTitle = view.findViewById(R.id.tvItemTitle);
 //            itemDescription = view.findViewById(R.id.tvItemDescription); // Assuming description TextView ID
+            routineDate = view.findViewById(R.id.tvRoutineDate);
             button = view.findViewById(R.id.btnStartRoutine);
         }
     }

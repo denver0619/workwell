@@ -3,11 +3,14 @@ package com.digiview.workwell.ui.fitnesslog;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.media3.common.MediaItem;
 import androidx.media3.common.PlaybackException;
 import androidx.media3.common.Player;
 import androidx.media3.exoplayer.ExoPlayer;
 import androidx.media3.ui.PlayerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,18 +30,23 @@ import com.digiview.workwell.data.models.RoutineLogs;
 import com.digiview.workwell.data.models.SelfAssessment;
 import com.digiview.workwell.data.service.JournalService;
 import com.digiview.workwell.data.service.RoutineLogService;
+import com.digiview.workwell.ui.fitnesslog.adapter.FitnessLogDetailAdapter;
+import com.digiview.workwell.ui.fitnesslog.viewmodel.FitnessLogDetailViewModel;
 
 public class FitnessLogDetailFragment extends Fragment {
 
     private RoutineLogs routineLog;
     private JournalService journalService;
     private RoutineLogService routineLogService;
+    private FitnessLogDetailViewModel viewModel;
+    private FitnessLogDetailAdapter adapter;
 
     private TextView tvExerciseTitle;
     private TextView tvReflectionContent;
     private EditText etReflectionContentInput;
     private ImageButton btnBack;
     private Button btnSubmit;
+    private RecyclerView rvExerciseList;
 
     private TextView tvStiffnessLogValue;
     private TextView tvPainLogValue;
@@ -64,7 +72,8 @@ public class FitnessLogDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        // Initialize ViewModel
+        viewModel = new ViewModelProvider(this).get(FitnessLogDetailViewModel.class);
         // Initialize views
         tvExerciseTitle = view.findViewById(R.id.tvExerciseTitle);
         tvReflectionContent = view.findViewById(R.id.tvReflectionContent);
@@ -77,6 +86,10 @@ public class FitnessLogDetailFragment extends Fragment {
         tvAwarenessLogValue = view.findViewById(R.id.tvAwarenessLogValue);
         playerView = view.findViewById(R.id.playerView);
         loadingIndicator = view.findViewById(R.id.loadingIndicator);
+
+        // Initialize RecyclerView
+        rvExerciseList = view.findViewById(R.id.rvExerciseList);
+        rvExerciseList.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         // Initialize services
         journalService = new JournalService();
@@ -95,6 +108,27 @@ public class FitnessLogDetailFragment extends Fragment {
         } else {
             Log.e(TAG, "No arguments provided!");
         }
+
+        // Observe ViewModel
+            viewModel.getExercises().observe(getViewLifecycleOwner(), exercises -> {
+                if (adapter == null) {
+                    adapter = new FitnessLogDetailAdapter(exercises);
+                    rvExerciseList.setAdapter(adapter);
+                } else {
+                    adapter.updateExercises(exercises);
+                }
+            });
+
+        viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
+            loadingIndicator.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        });
+
+        Log.d("RoutineId", routineLog.getRoutineId());
+        // Fetch exercises
+        if (routineLog != null) {
+            viewModel.fetchRoutineExercises(routineLog.getRoutineId());
+        }
+
 
         // Back button click listener
         btnBack.setOnClickListener(v -> requireActivity().onBackPressed());

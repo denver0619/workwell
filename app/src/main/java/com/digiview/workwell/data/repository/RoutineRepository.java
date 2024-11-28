@@ -147,4 +147,35 @@ public class RoutineRepository {
         return CompletableFuture.allOf(tasks.toArray(new CompletableFuture[0]))
                 .thenApply(v -> routine);
     }
+
+    // Fetch a routine by its RoutineId
+    public CompletableFuture<Routine> fetchRoutineById(String routineId) {
+        CompletableFuture<Routine> future = new CompletableFuture<>();
+
+        firestore.collection("routines")
+                .document(routineId)
+                .get()
+                .addOnSuccessListener(document -> {
+                    if (document.exists()) {
+                        Routine routine = document.toObject(Routine.class);
+
+                        // Enrich the routine with detailed exercise information
+                        if (routine != null && routine.getExercises() != null) {
+                            enrichRoutineExercises(routine)
+                                    .thenAccept(future::complete)
+                                    .exceptionally(e -> {
+                                        future.completeExceptionally(e);
+                                        return null;
+                                    });
+                        } else {
+                            future.complete(routine); // Complete if there are no exercises
+                        }
+                    } else {
+                        future.completeExceptionally(new Exception("Routine not found."));
+                    }
+                })
+                .addOnFailureListener(future::completeExceptionally);
+
+        return future;
+    }
 }
