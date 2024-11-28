@@ -36,9 +36,9 @@ public class RoutineLogService {
         routineLog.setRoutineId(routineId);
         routineLog.setRoutineLogName(routineLogName);
         routineLog.setUid(uid);
-        routineLog.setCreatedAt(null); // Firestore will auto-set this
-        routineLog.setSelfAssessmentId(null); // Placeholder
-        routineLog.setVideoId(null);          // Placeholder
+        routineLog.setCreatedAt(null);
+        routineLog.setSelfAssessmentId(null);
+        routineLog.setVideoId(null);
         routineLog.setJournalId(null);
 
         return repository.createRoutineLog(routineLog);

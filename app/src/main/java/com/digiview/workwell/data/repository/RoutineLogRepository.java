@@ -9,7 +9,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class RoutineLogRepository {
@@ -35,13 +37,25 @@ public class RoutineLogRepository {
         // Set the generated ID into the routineLog object
         routineLog.setRoutineLogId(generatedId);
 
-        // Save the object to Firestore with the document ID
-        documentReference.set(routineLog)
+        // Create a map to explicitly include only required fields
+        Map<String, Object> data = new HashMap<>();
+        data.put("RoutineLogId", routineLog.getRoutineLogId());
+        data.put("RoutineId", routineLog.getRoutineId());
+        data.put("RoutineLogName", routineLog.getRoutineLogName());
+        data.put("Uid", routineLog.getUid());
+        data.put("SelfAssessmentId", routineLog.getSelfAssessmentId());
+        data.put("VideoId", routineLog.getVideoId());
+        data.put("JournalId", routineLog.getJournalId());
+        data.put("CreatedAt", routineLog.getCreatedAt());
+
+        // Save the map to Firestore with the document ID
+        documentReference.set(data)
                 .addOnSuccessListener(unused -> future.complete(generatedId))
                 .addOnFailureListener(future::completeExceptionally);
 
         return future;
     }
+
 
     public Task<Void> updateRoutineLogField(String routineLogId, String fieldName, Object value) {
         return firestore.collection("routinelogs")
