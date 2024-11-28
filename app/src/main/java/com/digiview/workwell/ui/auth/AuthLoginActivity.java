@@ -46,27 +46,28 @@ public class AuthLoginActivity extends AppCompatActivity implements View.OnClick
         inputEmail = findViewById(R.id.etLoginEmail);
         inputPassword = findViewById(R.id.etLoginPassword);
         emailLogin = findViewById(R.id.btnLoginEmail);
-        googleLogin = findViewById(R.id.btnLoginGoogle);
-        signupRedirect = findViewById(R.id.btnSignupRedirect);
+//        googleLogin = findViewById(R.id.btnLoginGoogle);
+//        signupRedirect = findViewById(R.id.btnSignupRedirect);
 
-        googleLogin.setOnClickListener(this);
+//        googleLogin.setOnClickListener(this);
         emailLogin.setOnClickListener(this);
-        signupRedirect.setOnClickListener(this);
+//        signupRedirect.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btnSignupRedirect) {
-            redirectToSignup();
-        } else if (v.getId() == R.id.btnLoginEmail) {
+//        if (v.getId() == R.id.btnSignupRedirect) {
+//            redirectToSignup();
+//        } else
+        if (v.getId() == R.id.btnLoginEmail) {
             handleEmailLogin();
         }
     }
 
-    private void redirectToSignup() {
-        Intent intent = new Intent(AuthLoginActivity.this, AuthSignupActivity.class);
-        startActivity(intent);
-    }
+//    private void redirectToSignup() {
+//        Intent intent = new Intent(AuthLoginActivity.this, AuthSignupActivity.class);
+//        startActivity(intent);
+//    }
 
     private void handleEmailLogin() {
         String email = inputEmail.getText().toString().trim();

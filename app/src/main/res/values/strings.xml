@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">WorkWell</string>
+
+    <string name="disclaimer_text">The WorkWell application is designed to support and enhance ergonomic wellness through guided exercises and posture correction tools. However, it is not a substitute for professional medical advice, diagnosis, or treatment to existing medical conditions.</string>
     <string name="welcome_msg1">Welcome Back!</string>
     <string name="welcome_msg2">Welcome Aboard!</string>
     <string name="login_img_description">Login Image</string>

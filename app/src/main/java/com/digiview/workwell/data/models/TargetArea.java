@@ -4,7 +4,7 @@ public enum TargetArea {
     NECK(0),
     SHOULDER(1),
     LOWER_BACK(2),
-    THIGH(23);
+    THIGH(3);
 
     private final int value;
 
