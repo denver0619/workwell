@@ -37,12 +37,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             >
-            <TextView
-                android:layout_weight="1"
-                android:id="@+id/angle1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Angle3d: "/>
+<!--            <TextView-->
+<!--                android:layout_weight="1"-->
+<!--                android:id="@+id/angle1"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:text="Angle3d: "/>-->
             <TextView
                 android:layout_weight="1"
                 android:id="@+id/time_left"
@@ -50,24 +50,24 @@
                 android:layout_height="match_parent"
                 android:text="Time Left: "/>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <TextView
-                android:layout_weight="1"
-                android:id="@+id/angle2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Knee: "/>
-            <TextView
-                android:layout_weight="1"
-                android:id="@+id/angle3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Hip: "/>
-        </LinearLayout>
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            >-->
+<!--            <TextView-->
+<!--                android:layout_weight="1"-->
+<!--                android:id="@+id/angle2"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:text="Knee: "/>-->
+<!--            <TextView-->
+<!--                android:layout_weight="1"-->
+<!--                android:id="@+id/angle3"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:text="Hip: "/>-->
+<!--        </LinearLayout>-->
         <androidx.fragment.app.FragmentContainerView
             android:layout_weight="1"
             android:id="@+id/camera_fragment_container"

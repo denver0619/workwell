@@ -57,7 +57,7 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     // CameraX core library
     val camerax_version = "1.2.0-alpha02"
-    implementation("androidx.camera:camera-core:$camerax_version")
+    implementation("androidx.camera:camera-core:$camerax_version") 
 
     // CameraX Camera2 extensions
     implementation ("androidx.camera:camera-camera2:$camerax_version")
@@ -71,7 +71,7 @@ dependencies {
     // CameraX video capture library
     implementation ("androidx.camera:camera-video:$camerax_version")
 
-    implementation ("com.arthenica:ffmpeg-kit-full:4.5")
+    implementation (libs.ffmpeg.kit.full)
 
     // WindowManager
     implementation("androidx.window:window:1.1.0-alpha03")

@@ -95,15 +95,15 @@ public class RoutineExecutionFragment extends Fragment {
                 routineExecutionBinding.timeLeft.setText("Time Left: " + String.format("%.2f", (double)(timeLeft/1000)))
         );
 
-        routineExecutionViewModel.getAngles().observe(getViewLifecycleOwner(), new Observer<double[]>() {
-            @Override
-            public void onChanged(double[] angles) {
-                routineExecutionBinding.angle1.setText("ANGLE1: " + String.format("%.2f", angles[0]));
-                routineExecutionBinding.angle2.setText("ANGLE1: " + String.format("%.2f", angles[1]));
-//                routineExecutionBinding.angle3.setText("ANGLE1: " + String.format("%.2f", angles[2]));
-
-            }
-        });
+//        routineExecutionViewModel.getAngles().observe(getViewLifecycleOwner(), new Observer<double[]>() {
+//            @Override
+//            public void onChanged(double[] angles) {
+//                routineExecutionBinding.angle1.setText("ANGLE1: " + String.format("%.2f", angles[0]));
+//                routineExecutionBinding.angle2.setText("ANGLE1: " + String.format("%.2f", angles[1]));
+////                routineExecutionBinding.angle3.setText("ANGLE1: " + String.format("%.2f", angles[2]));
+//
+//            }
+//        });
         routineExecutionViewModel.getCounter().observe(getViewLifecycleOwner(), count ->
                 routineExecutionBinding.counter.setText("Counter: " + count)
         );
