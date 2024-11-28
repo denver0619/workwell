@@ -3,6 +3,7 @@ package com.digiview.workwell.ui.routine.execution;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -45,6 +46,8 @@ public class RoutineExecutionFragment extends Fragment {
 
         //initialize some members
         routineExecutionViewModel.setTtsHelper(getContext());
+        routineExecutionViewModel.setMediaPlayer(new MediaPlayer());
+        routineExecutionViewModel.setContext(requireContext());
         routineExecutionViewModel.init();
 
         // perform functions

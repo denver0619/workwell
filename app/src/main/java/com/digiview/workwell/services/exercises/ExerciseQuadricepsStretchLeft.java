@@ -53,6 +53,7 @@ public class ExerciseQuadricepsStretchLeft extends Exercise {
                 // mark new timer as current
                 isTimerReset = false;
                 relaxedCount++;
+                isRepFinished = false;
                 stretchedCount = 0;
                 pauseTimer(); // Pause the timer
                 if (relaxedCount >= stateThreshold && lastStatus != STATUS.RESTING) {
@@ -80,8 +81,11 @@ public class ExerciseQuadricepsStretchLeft extends Exercise {
 
 
 
+        // Check if current rep is Finished
+        STATUS repCheck = (isRepFinished) ? STATUS.REP_FINISHED : position;
+
         // Check if the counter has reached the target value
-        STATUS finalStatus = (counter >= repetition) ? STATUS.FINISHED : position;
+        STATUS finalStatus = (counter >= repetition) ? STATUS.FINISHED : repCheck;
 
         return new ExerciseResult(angles, finalStatus, lastStatus, counter, timeLeft);
     }

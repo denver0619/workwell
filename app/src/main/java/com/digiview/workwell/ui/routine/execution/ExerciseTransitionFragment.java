@@ -3,6 +3,7 @@ package com.digiview.workwell.ui.routine.execution;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -37,7 +38,8 @@ public class ExerciseTransitionFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         exerciseTransitionViewModel = new ViewModelProvider(requireActivity()).get(ExerciseTransitionViewModel.class);
-        // TODO: Use the ViewModel
+        exerciseTransitionViewModel.setContext(requireContext());
+        exerciseTransitionViewModel.setMediaPlayer(new MediaPlayer());
         exerciseTransitionViewModel.getTimeLeft().observe(getViewLifecycleOwner(), new Observer<Long>() {
             @Override
             public void onChanged(Long timeLeft) {

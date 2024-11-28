@@ -1,7 +1,9 @@
 package com.digiview.workwell.ui.routine.execution;
 
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -12,9 +14,23 @@ import com.digiview.workwell.services.TTSHelper;
 import com.digiview.workwell.services.exercises.Exercise;
 import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarkerResult;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class RoutineExecutionViewModel extends ViewModel {// TODO: Implement the ViewModel
+    private MediaPlayer mediaPlayer;
+    public void setMediaPlayer(MediaPlayer mediaPlayer) {
+        this.mediaPlayer = mediaPlayer;
+    }
+    public MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
+
+    private Context context;
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
     private final MutableLiveData<Exercise> exercise = new MutableLiveData<>();
     public void setExercise(Exercise exercise) {
         this.exercise.setValue(exercise);
@@ -120,6 +136,13 @@ public class RoutineExecutionViewModel extends ViewModel {// TODO: Implement the
 //                        Objects.requireNonNull(ttsHelper.getValue()).speak("TRANSITIONING");
 //                    }
                     break;
+
+                case REP_FINISHED:
+                    if(!mediaPlayer.isPlaying()) {
+                        mediaPlayer.start();
+                    }
+                    break;
+
                 case FINISHED:
                     setExecutionState(RoutineConstants.EXECUTION_STATE.FINISHED);
                     break;
@@ -136,6 +159,17 @@ public class RoutineExecutionViewModel extends ViewModel {// TODO: Implement the
 
     public void init() {
         Objects.requireNonNull(exercise.getValue()).init();
+        initPlayer();
+    }
+
+    public void initPlayer() {
+
+        try (AssetFileDescriptor afd = context.getAssets().openFd("sounds/rep_finish.wav")) {
+            mediaPlayer.setDataSource(afd.getFileDescriptor(), afd. getStartOffset(), afd.getLength());
+            mediaPlayer.prepare();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

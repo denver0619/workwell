@@ -21,6 +21,8 @@ public abstract class Exercise {
     protected Long defaultTick = 10L;
     protected CountDownTimer countDownTimer;
     protected boolean isTimerRunning = false; // Track timer state
+    protected boolean isRepFinished = false; // check if current rep is finished
+
     // FOR COUNTING REPS
 
     protected int relaxedCount = 0;
@@ -133,6 +135,7 @@ public abstract class Exercise {
         RESTING,
         TRANSITIONING,
         ALIGNED,
+        REP_FINISHED,
         NO_PERSON,
         FINISHED;
 
@@ -263,6 +266,7 @@ public abstract class Exercise {
                 isTimerReset = true;
                 isFromRelaxed = false;
                 isTimerRunning = false; // Stop when repetitions are complete
+                isRepFinished = true;
                 // Restart the timer
                 initTimer(duration);
 

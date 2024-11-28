@@ -1,13 +1,29 @@
 package com.digiview.workwell.ui.routine.execution;
 
+import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 import android.os.CountDownTimer;
-
+import android.media.MediaPlayer;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.io.IOException;
+
 public class ExerciseTransitionViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
+    private MediaPlayer mediaPlayer;
+    public void setMediaPlayer(MediaPlayer mediaPlayer) {
+        this.mediaPlayer = mediaPlayer;
+    }
+    public MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
+
+    private Context context;
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
     private CountDownTimer countDownTimer;
 
 
@@ -26,6 +42,13 @@ public class ExerciseTransitionViewModel extends ViewModel {
     }
 
     public void startTransition() {// Initialize the CountDownTimer
+        try (AssetFileDescriptor afd = context.getAssets().openFd("sounds/timer.wav")) {
+            mediaPlayer.setDataSource(afd.getFileDescriptor(), afd. getStartOffset(), afd.getLength());
+            mediaPlayer.prepare();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         // Cancel any existing timer
         if (countDownTimer != null) {
             countDownTimer.cancel();
@@ -35,6 +58,8 @@ public class ExerciseTransitionViewModel extends ViewModel {
             public void onTick(long millisUntilFinished) {
                 timeLeft.setValue(millisUntilFinished); // Update time left
                 transitionState.setValue(RoutineConstants.TRANSITION_STATE.ONGOING); // Update transition state
+
+                mediaPlayer.start();
             }
 
             @Override

@@ -1,5 +1,6 @@
 package com.digiview.workwell.data.models;
 
+import com.google.firebase.firestore.Exclude;
 import com.google.firebase.firestore.PropertyName;
 import com.google.firebase.firestore.ServerTimestamp;
 
@@ -38,8 +39,11 @@ public class RoutineLogs implements Serializable {
     }
 
     // Associated models for easier handling
+    @Exclude
     private SelfAssessment selfAssessment;
+    @Exclude
     private Video video;
+    @Exclude
     private Journal journal;
 
     // Constructor with all fields
