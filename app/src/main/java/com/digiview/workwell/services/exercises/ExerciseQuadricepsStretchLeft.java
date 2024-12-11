@@ -42,7 +42,7 @@ public class ExerciseQuadricepsStretchLeft extends Exercise {
 
         if (angle3D1 >=140 && angle3D2 >= 100) {
             position = Exercise.STATUS.RESTING;
-        } else if (angle3D1 <= 120 && angle3D2 >= 100) {
+        } else if (angle3D1 <= 130 && angle3D2 >= 100) {
             position = Exercise.STATUS.ALIGNED;
         } else {
             position = Exercise.STATUS.TRANSITIONING;
