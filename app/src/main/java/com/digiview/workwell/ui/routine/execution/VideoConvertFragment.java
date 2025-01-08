@@ -93,7 +93,8 @@ public class VideoConvertFragment extends Fragment {
         //with rotation
 //        String command = "-f concat -safe 0 -i \"" + inputPath + "\" -vf \"fps=15,format=yuv420p,transpose=1\" \"" + outputPath + "\"";
         //without rotation
-        String command = "-f concat -safe 0 -i \"" + inputPath + "\" -vf \"fps=11,format=yuv420p\" \"" + outputPath + "\"";
+        String command = "-f concat -safe 0 -i \"" + inputPath + "\" -vf \"fps=15,format=yuv420p\" \"" + outputPath + "\"";
+        //-f concat -safe 0 -i "images.txt" -vf "fps=15,format=yuv420p" "aaaaa.mp4"
 
 
         // Execute the FFmpeg command asynchronously

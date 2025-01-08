@@ -154,7 +154,7 @@ class PoseLandmarkerHelper(
 
     // Convert the ImageProxy to MP Image and feed it to PoselandmakerHelper.
     fun detectLiveStream(
-        imageProxy: ImageProxy,
+        bitmap: Bitmap,
         isFrontCamera: Boolean,
         saveDirectory: File,
         fileName: String
@@ -167,47 +167,47 @@ class PoseLandmarkerHelper(
             )
         }
         val frameTime = SystemClock.uptimeMillis()
-
-        // Copy out RGB bits from the frame to a bitmap buffer
-        val bitmapBuffer =
-            Bitmap.createBitmap(
-                imageProxy.width,
-                imageProxy.height,
-                Bitmap.Config.ARGB_8888
-            )
-
-
-
-        imageProxy.use { bitmapBuffer.copyPixelsFromBuffer(imageProxy.planes[0].buffer) }
-        imageProxy.close()
-
-
-
-        val matrix = Matrix().apply {
-            // Rotate the frame received from the camera to be in the same direction as it'll be shown
-            postRotate(imageProxy.imageInfo.rotationDegrees.toFloat())
-
-            // flip image if user use front camera
-            if (isFrontCamera) {
-                postScale(
-                    -1f,
-                    1f,
-                    imageProxy.width.toFloat(),
-                    imageProxy.height.toFloat()
-                )
-            }
-        }
-        val rotatedBitmap = Bitmap.createBitmap(
-            bitmapBuffer, 0, 0, bitmapBuffer.width, bitmapBuffer.height,
-            matrix, true
-        )
+//
+//        // Copy out RGB bits from the frame to a bitmap buffer
+//        val bitmapBuffer =
+//            Bitmap.createBitmap(
+//                imageProxy.width,
+//                imageProxy.height,
+//                Bitmap.Config.ARGB_8888
+//            )
+//
+//
+//
+//        imageProxy.use { bitmapBuffer.copyPixelsFromBuffer(imageProxy.planes[0].buffer) }
+//        imageProxy.close()
+//
+//
+//
+//        val matrix = Matrix().apply {
+//            // Rotate the frame received from the camera to be in the same direction as it'll be shown
+//            postRotate(imageProxy.imageInfo.rotationDegrees.toFloat())
+//
+//            // flip image if user use front camera
+//            if (isFrontCamera) {
+//                postScale(
+//                    -1f,
+//                    1f,
+//                    imageProxy.width.toFloat(),
+//                    imageProxy.height.toFloat()
+//                )
+//            }
+//        }
+//        val rotatedBitmap = Bitmap.createBitmap(
+//            bitmapBuffer, 0, 0, bitmapBuffer.width, bitmapBuffer.height,
+//            matrix, true
+//        )
 
 
         // save to img file after copying the image from buffer
-        saveImage(rotatedBitmap, saveDirectory, fileName)
+//        saveImage(rotatedBitmap, saveDirectory, fileName)
 
         // Convert the input Bitmap object to an MPImage object to run inference
-        val mpImage = BitmapImageBuilder(rotatedBitmap).build()
+        val mpImage = BitmapImageBuilder(bitmap).build()
 
         detectAsync(mpImage, frameTime)
     }
@@ -403,18 +403,18 @@ class PoseLandmarkerHelper(
         fun onResults(resultBundle: ResultBundle)
     }
 
-    //MODIFICATION
-    //Saves the image in the specified directory
-    private fun saveImage(bitmap: Bitmap, saveDirectory: File, fileName: String) {
-        //Getvalues from the view model
-
-        val outputFile = File(saveDirectory, "image_${System.currentTimeMillis()}.jpeg")
-        try {
-            FileOutputStream(outputFile).use { out ->
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
+//    //MODIFICATION
+//    //Saves the image in the specified directory
+//    private fun saveImage(bitmap: Bitmap, saveDirectory: File, fileName: String) {
+//        //Getvalues from the view model
+//
+//        val outputFile = File(saveDirectory, "image_${System.currentTimeMillis()}.jpeg")
+//        try {
+//            FileOutputStream(outputFile).use { out ->
+//                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+//            }
+//        } catch (e: IOException) {
+//            e.printStackTrace()
+//        }
+//    }
 }

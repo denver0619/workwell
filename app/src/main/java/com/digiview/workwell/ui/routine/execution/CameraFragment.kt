@@ -20,6 +20,7 @@ package com.digiview.workwell.ui.routine.execution
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.graphics.Matrix
 import android.hardware.camera2.CaptureRequest
 import android.os.Bundle
 import android.util.Log
@@ -350,6 +351,9 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
         preview = Preview.Builder().setTargetAspectRatio(AspectRatio.RATIO_4_3)
             .setTargetRotation(fragmentCameraBinding.viewFinder.display.rotation)
             .build()
+            .also {
+                //get image to save from preview
+            }
 
         // ImageAnalysis. Using RGBA 8888 to match how our models work
 //        val imageAnalyzerBuilder: ImageAnalysis.Builder = ImageAnalysis.Builder().setTargetAspectRatio(AspectRatio.RATIO_4_3)
@@ -379,7 +383,40 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
             // The analyzer can then be assigned to the instance
             .also {
                 it.setAnalyzer(backgroundExecutor) { image ->
-                    detectPose(image)
+                    val bitmapBuffer =
+                    Bitmap.createBitmap(
+                        image.width,
+                        image.height,
+                        Bitmap.Config.ARGB_8888
+                    )
+
+
+
+                    image.use { bitmapBuffer.copyPixelsFromBuffer(image.planes[0].buffer) }
+                    image.close()
+
+
+
+                    val matrix = Matrix().apply {
+                        // Rotate the frame received from the camera to be in the same direction as it'll be shown
+                        postRotate(image.imageInfo.rotationDegrees.toFloat())
+
+                        // flip image if user use front camera
+                        if (true) {
+                            postScale(
+                                -1f,
+                                1f,
+                                image.width.toFloat(),
+                                image.height.toFloat()
+                            )
+                        }
+                    }
+                    val rotatedBitmap = Bitmap.createBitmap(
+                        bitmapBuffer, 0, 0, bitmapBuffer.width, bitmapBuffer.height,
+                        matrix, true
+                    )
+                    saveImage(rotatedBitmap, viewModel.saveDirectory, viewModel.fitnessLogID)
+                    detectPose(rotatedBitmap)
                 }
             }
 
@@ -400,10 +437,10 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
         }
     }
 
-    private fun detectPose(imageProxy: ImageProxy) {
+    private fun detectPose(bitmap: Bitmap) {
         if(this::poseLandmarkerHelper.isInitialized) {
             poseLandmarkerHelper.detectLiveStream(
-                imageProxy = imageProxy,
+                bitmap = bitmap,
                 isFrontCamera = cameraFacing == CameraSelector.LENS_FACING_FRONT,
                 viewModel.saveDirectory,
                 viewModel.fitnessLogID,
@@ -456,6 +493,19 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
             }
         }
     }
+    //MODIFICATION
+    //Saves the image in the specified directory
+    private fun saveImage(bitmap: Bitmap, saveDirectory: File, fileName: String) {
+        //Getvalues from the view model
 
+        val outputFile = File(saveDirectory, "image_${System.currentTimeMillis()}.jpeg")
+        try {
+            FileOutputStream(outputFile).use { out ->
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
 
 }

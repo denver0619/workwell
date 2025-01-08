@@ -38,7 +38,7 @@ public class ExerciseQuadricepsStretchRight extends Exercise {
         STATUS position;
         if (angle3D1 >= 140 && angle3D2 >= 100) {
             position = STATUS.RESTING;
-        } else if (angle3D1 <= 130 && angle3D2 <= 100) {
+        } else if (angle3D1 <= 130 && angle3D2 >= 100) {
             position = STATUS.ALIGNED;
         } else {
             position = STATUS.TRANSITIONING;

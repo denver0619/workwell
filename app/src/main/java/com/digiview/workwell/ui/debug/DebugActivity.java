@@ -51,7 +51,7 @@ public class DebugActivity extends AppCompatActivity {
         Button startRoutine = findViewById(R.id.startRoutineButton);
 
         ArrayList<RoutineExercise> exercises = new ArrayList<>();
-        exercises.add(exercise1);
+//        exercises.add(exercise1);
         exercises.add(exercise2);
         exercises.add(exercise3);
 
