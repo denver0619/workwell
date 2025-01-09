@@ -93,8 +93,16 @@ public class VideoConvertFragment extends Fragment {
         //with rotation
 //        String command = "-f concat -safe 0 -i \"" + inputPath + "\" -vf \"fps=15,format=yuv420p,transpose=1\" \"" + outputPath + "\"";
         //without rotation
-        String command = "-f concat -safe 0 -i \"" + inputPath + "\" -vf \"fps=15,format=yuv420p\" \"" + outputPath + "\"";
-        //-f concat -safe 0 -i "images.txt" -vf "fps=15,format=yuv420p" "aaaaa.mp4"
+
+        //without duration in images.txt
+        //ffmpeg -f concat -safe 0 -i "images.txt" -vf "fps=15,format=yuv420p" "aaaaa.mp4"
+
+//        String command = "-f concat -safe 0 -i \"" + inputPath + "\" -vf \"fps=15,format=yuv420p\" \"" + outputPath + "\"";
+
+        //with durationin images.txt
+        //ffmpeg -f concat -safe 0 -i images.txt -vf "format=yuv420p" "output.mp4"
+
+        String command = "-f concat -safe 0 -i \"" + inputPath + "\" -vf \"format=yuv420p\" \"" + outputPath + "\"";
 
 
         // Execute the FFmpeg command asynchronously
@@ -111,6 +119,8 @@ public class VideoConvertFragment extends Fragment {
 //        FFmpegKit.execute(command);
 //        mViewModel.setIsConvertSuccess(true);
     }
+
+
 //    private void checkIfFileExist(File outputFile) {
 //        if (outputFile.exists()) {
 //            mViewModel.setIsConvertSuccess(true);
@@ -120,27 +130,62 @@ public class VideoConvertFragment extends Fragment {
 //
 //    }
 
+//    private String sortImagesAndSaveToText(File directory) {
+//        String outputFileName = "images.txt";
+//        File[] imageFiles = directory.listFiles((dir, name) -> name.startsWith("image_") && name.endsWith(".jpeg"));
+//
+//        if (imageFiles != null) {
+//            // Sort the image files based on the numeric value in the filename (timestamp)
+//            Arrays.sort(imageFiles, Comparator.comparingLong(file -> Long.parseLong(file.getName().substring(6, file.getName().length() - 5))));
+//
+//            // Create a list file (images.txt)
+//            File listFile = new File(directory, outputFileName);
+//            try (FileWriter writer = new FileWriter(listFile)) {
+//                for (File imageFile : imageFiles) {
+//                    writer.write("file '" + imageFile.getAbsolutePath() + "'\n");
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        return outputFileName;
+//    }
+
     private String sortImagesAndSaveToText(File directory) {
         String outputFileName = "images.txt";
         File[] imageFiles = directory.listFiles((dir, name) -> name.startsWith("image_") && name.endsWith(".jpeg"));
 
         if (imageFiles != null) {
             // Sort the image files based on the numeric value in the filename (timestamp)
-            Arrays.sort(imageFiles, Comparator.comparingLong(file -> Long.parseLong(file.getName().substring(6, file.getName().length() - 5))));
+            Arrays.sort(imageFiles, Comparator.comparingLong(file ->
+                    Long.parseLong(file.getName().substring(6, file.getName().length() - 5))
+            ));
 
-            // Create a list file (images.txt)
+            // Create the images.txt file
             File listFile = new File(directory, outputFileName);
             try (FileWriter writer = new FileWriter(listFile)) {
-                for (File imageFile : imageFiles) {
+                for (int i = 0; i < imageFiles.length; i++) {
+                    File imageFile = imageFiles[i];
                     writer.write("file '" + imageFile.getAbsolutePath() + "'\n");
+
+                    // Calculate and write the duration for all except the last file
+                    if (i < imageFiles.length - 1) {
+                        long currentTimestamp = Long.parseLong(imageFile.getName().substring(6, imageFile.getName().length() - 5));
+                        long nextTimestamp = Long.parseLong(imageFiles[i + 1].getName().substring(6, imageFiles[i + 1].getName().length() - 5));
+                        double duration = (nextTimestamp - currentTimestamp) / 1000.0; // Convert milliseconds to seconds
+                        writer.write(String.format("duration %.3f\n", duration));
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
         return outputFileName;
     }
+
+
+
 
     private void uploadVideoAndStoreMetadata(File videoFile, String routineLogId) {
         VideoService videoService = new VideoService();
