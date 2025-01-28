@@ -4,7 +4,6 @@ import com.google.firebase.firestore.Exclude;
 import com.google.firebase.firestore.PropertyName;
 import com.google.firebase.firestore.ServerTimestamp;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -31,6 +30,9 @@ public class RoutineLogs implements Serializable {
     @PropertyName("JournalId")
     private String journalId;
 
+    @PropertyName("OrganizationId")
+    private String organizationId; // New field for organization ID
+
     @PropertyName("CreatedAt")
     private Date createdAt;
 
@@ -47,11 +49,12 @@ public class RoutineLogs implements Serializable {
     private Journal journal;
 
     // Constructor with all fields
-    public RoutineLogs(String routineLogId, String routineId, String routineLogName, String uid, Date createdAt) {
+    public RoutineLogs(String routineLogId, String routineId, String routineLogName, String uid, String organizationId, Date createdAt) {
         this.routineLogId = routineLogId;
         this.routineId = routineId;
         this.routineLogName = routineLogName;
         this.uid = uid;
+        this.organizationId = organizationId;
         this.createdAt = createdAt;
     }
 
@@ -126,6 +129,16 @@ public class RoutineLogs implements Serializable {
         this.journalId = journalId;
     }
 
+    @PropertyName("OrganizationId")
+    public String getOrganizationId() {
+        return organizationId;
+    }
+
+    @PropertyName("OrganizationId")
+    public void setOrganizationId(String organizationId) {
+        this.organizationId = organizationId;
+    }
+
     @PropertyName("CreatedAt")
     @ServerTimestamp
     public Date getCreatedAt() {
@@ -144,9 +157,11 @@ public class RoutineLogs implements Serializable {
                 ", RoutineId='" + routineId + '\'' +
                 ", RoutineLogName='" + routineLogName + '\'' +
                 ", Uid='" + uid + '\'' +
+                ", OrganizationId='" + organizationId + '\'' +
                 ", CreatedAt=" + createdAt +
                 '}';
     }
+
     public SelfAssessment getSelfAssessment() {
         return selfAssessment;
     }
@@ -170,5 +185,4 @@ public class RoutineLogs implements Serializable {
     public void setJournal(Journal journal) {
         this.journal = journal;
     }
-
 }

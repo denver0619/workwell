@@ -1,14 +1,14 @@
 package com.digiview.workwell.data.models;
 
 import com.google.firebase.firestore.PropertyName;
-import com.digiview.workwell.data.models.TargetArea;
 
 public class Exercise {
 
     private String ExerciseId; // Firestore ID
     private String Name;       // Exercise name
     private String Description; // Exercise description
-    private TargetArea TargetArea; // Converted from enum (numeric) to string
+    private String TargetArea; // Changed to string to align with Firestore
+    private String OrganizationId; // ID of the organization the exercise belongs to
 
     // Default constructor (required for Firestore)
     public Exercise() {
@@ -40,12 +40,33 @@ public class Exercise {
     }
 
     @PropertyName("TargetArea")
-    public TargetArea getTargetArea() {
+    public String getTargetArea() {
         return TargetArea;
     }
 
     @PropertyName("TargetArea")
-    public void setTargetArea(Long targetAreaValue) {
-        this.TargetArea = com.digiview.workwell.data.models.TargetArea.fromValue(targetAreaValue);
+    public void setTargetArea(String targetArea) {
+        this.TargetArea = targetArea; // Set string value directly
+    }
+
+    @PropertyName("OrganizationId")
+    public String getOrganizationId() {
+        return OrganizationId;
+    }
+
+    @PropertyName("OrganizationId")
+    public void setOrganizationId(String organizationId) {
+        this.OrganizationId = organizationId; // Set the organization ID
+    }
+
+    @Override
+    public String toString() {
+        return "Exercise{" +
+                "ExerciseId='" + ExerciseId + '\'' +
+                ", Name='" + Name + '\'' +
+                ", Description='" + Description + '\'' +
+                ", TargetArea='" + TargetArea + '\'' +
+                ", OrganizationId='" + OrganizationId + '\'' +
+                '}';
     }
 }

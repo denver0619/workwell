@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.digiview.workwell.data.models.RoutineLogs;
 import com.digiview.workwell.data.repository.RoutineLogRepository;
+import com.digiview.workwell.data.util.AuthHelper;
 import com.google.android.gms.tasks.Task;
 
 import java.util.List;
@@ -32,16 +33,21 @@ public class RoutineLogService {
      * @return CompletableFuture containing the generated RoutineLogId.
      */
     public CompletableFuture<String> createRoutineLog(String routineId, String routineLogName, String uid) {
-        RoutineLogs routineLog = new RoutineLogs();
-        routineLog.setRoutineId(routineId);
-        routineLog.setRoutineLogName(routineLogName);
-        routineLog.setUid(uid);
-        routineLog.setCreatedAt(null);
-        routineLog.setSelfAssessmentId(null);
-        routineLog.setVideoId(null);
-        routineLog.setJournalId(null);
+        return AuthHelper.getOrganizationIdFromToken()
+                .thenCompose(organizationId -> {
+                    // Create a RoutineLog with the retrieved OrganizationId
+                    RoutineLogs routineLog = new RoutineLogs();
+                    routineLog.setRoutineId(routineId);
+                    routineLog.setRoutineLogName(routineLogName);
+                    routineLog.setUid(uid);
+                    routineLog.setOrganizationId(organizationId); // Set OrganizationId
+                    routineLog.setCreatedAt(null);
+                    routineLog.setSelfAssessmentId(null);
+                    routineLog.setVideoId(null);
+                    routineLog.setJournalId(null);
 
-        return repository.createRoutineLog(routineLog);
+                    return repository.createRoutineLog(routineLog);
+                });
     }
 
     public Task<Void> updateRoutineLogSelfAssessment(String routineLogId, String selfAssessmentId) {
