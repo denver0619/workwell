@@ -21,7 +21,7 @@ public class SelfAssessmentService {
      * @param selfAssessment The SelfAssessment object to add.
      * @return A Task representing the operation.
      */
-    public CompletableFuture<Void> addSelfAssessment(SelfAssessment selfAssessment) {
+    public CompletableFuture<String> addSelfAssessment(SelfAssessment selfAssessment) {
         return AuthHelper.getOrganizationIdFromToken()
                 .thenCompose(organizationId -> {
                     // Set OrganizationId in the SelfAssessment object
@@ -30,10 +30,11 @@ public class SelfAssessmentService {
                     // Add SelfAssessment using the repository
                     return CompletableFuture.supplyAsync(() -> {
                         repository.addSelfAssessment(selfAssessment);
-                        return null;
+                        return selfAssessment.getSelfAssessmentId(); // Return the ID after saving
                     });
                 });
     }
+
 
     public CompletableFuture<SelfAssessment> getSelfAssessment(String selfAssessmentId) {
         return repository.getSelfAssessment(selfAssessmentId);

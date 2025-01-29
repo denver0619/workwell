@@ -42,6 +42,7 @@ public class RoutineLogRepository {
         data.put("RoutineLogId", routineLog.getRoutineLogId());
         data.put("RoutineId", routineLog.getRoutineId());
         data.put("RoutineLogName", routineLog.getRoutineLogName());
+        data.put("OrganizationId", routineLog.getOrganizationId());
         data.put("Uid", routineLog.getUid());
         data.put("SelfAssessmentId", routineLog.getSelfAssessmentId());
         data.put("VideoId", routineLog.getVideoId());
@@ -57,10 +58,10 @@ public class RoutineLogRepository {
     }
 
 
-    public Task<Void> updateRoutineLogField(String routineLogId, String fieldName, Object value) {
+    public Task<Void> updateRoutineLogField(String routineLogId, String selfAssessmentId) {
         return firestore.collection("routinelogs")
                 .document(routineLogId)
-                .update(fieldName, value);
+                .update("SelfAssessmentId", selfAssessmentId);
     }
     public Task<Void> updateVideoIdField(String routineLogId, String videoId) {
         return firestore.collection("routinelogs")

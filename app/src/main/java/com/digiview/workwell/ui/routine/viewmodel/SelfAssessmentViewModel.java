@@ -61,24 +61,24 @@ public class SelfAssessmentViewModel extends ViewModel {
         selfAssessment.setDifficulty(difficulty.getValue() != null ? difficulty.getValue() : 0);
         selfAssessment.setAwareness(awareness.getValue() != null ? awareness.getValue() : 0);
 
-        selfAssessmentService.addSelfAssessment(selfAssessment).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                String selfAssessmentId = selfAssessment.getSelfAssessmentId();
-                Log.d("SelfAssessmentViewModel", "SelfAssessment submitted successfully.");
+        selfAssessmentService.addSelfAssessment(selfAssessment)
+                .thenAccept(selfAssessmentId -> {
+                    Log.d("SelfAssessmentViewModel", "SelfAssessment submitted successfully with ID: " + selfAssessmentId);
 
-                // Update RoutineLog with the new SelfAssessmentId
-                RoutineLogService routineLogService = new RoutineLogService();
-                routineLogService.updateRoutineLogSelfAssessment(routineLogId, selfAssessmentId)
-                        .addOnCompleteListener(updateTask -> {
-                            if (updateTask.isSuccessful()) {
+                    // Update RoutineLog with the new SelfAssessmentId
+                    RoutineLogService routineLogService = new RoutineLogService();
+                    routineLogService.updateRoutineLogSelfAssessment(routineLogId, selfAssessmentId)
+                            .addOnSuccessListener(unused -> {
                                 Log.d("SelfAssessmentViewModel", "RoutineLog updated with SelfAssessmentId.");
-                            } else {
-                                Log.e("SelfAssessmentViewModel", "Error updating RoutineLog: ", updateTask.getException());
-                            }
-                        });
-            } else {
-                Log.e("SelfAssessmentViewModel", "Error submitting SelfAssessment: ", task.getException());
-            }
-        });
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e("SelfAssessmentViewModel", "Error updating RoutineLog: ", e);
+                            });
+                })
+                .exceptionally(e -> {
+                    Log.e("SelfAssessmentViewModel", "Error submitting SelfAssessment: ", e);
+                    return null;
+                });
+
     }
 }

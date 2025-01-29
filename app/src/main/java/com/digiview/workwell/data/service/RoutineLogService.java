@@ -36,6 +36,7 @@ public class RoutineLogService {
         return AuthHelper.getOrganizationIdFromToken()
                 .thenCompose(organizationId -> {
                     // Create a RoutineLog with the retrieved OrganizationId
+                    Log.d("OrganizationId", organizationId);
                     RoutineLogs routineLog = new RoutineLogs();
                     routineLog.setRoutineId(routineId);
                     routineLog.setRoutineLogName(routineLogName);
@@ -51,7 +52,7 @@ public class RoutineLogService {
     }
 
     public Task<Void> updateRoutineLogSelfAssessment(String routineLogId, String selfAssessmentId) {
-        return repository.updateRoutineLogField(routineLogId, "SelfAssessmentId", selfAssessmentId);
+        return repository.updateRoutineLogField(routineLogId, selfAssessmentId);
     }
     public Task<Void> updateRoutineLogVideoId(String routineLogId, String videoId) {
         return repository.updateVideoIdField(routineLogId, videoId);
