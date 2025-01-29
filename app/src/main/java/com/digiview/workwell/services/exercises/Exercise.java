@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
 
 public abstract class Exercise {
     protected final ExecutorService executor = Executors.newFixedThreadPool(2);
@@ -186,6 +188,11 @@ public abstract class Exercise {
     public Exercise setLandmarkerResult(PoseLandmarkerResult landmarkerResult) {
         this.landmarks = landmarkerResult.landmarks().get(0);
         return this;
+    }
+
+    //CALCULATIONS
+    protected double[] calculateMidpoint3D(double[] a, double[] b) {
+        return IntStream.range(0, a.length).mapToDouble(i -> (a[i] + b[i])/2).toArray();
     }
 
     private double calculateAngle2D(double[] a, double[] b, double[] c) {

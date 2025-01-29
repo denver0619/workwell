@@ -59,11 +59,11 @@ public class DebugActivity extends AppCompatActivity {
         Button startRoutine = findViewById(R.id.startRoutineButton);
 
         ArrayList<RoutineExercise> exercises = new ArrayList<>();
-//        exercises.add(exercise1);
+        exercises.add(exercise1);
 //        exercises.add(exercise2);
 //        exercises.add(exercise3);
-        exercises.add(exercise4);
-        exercises.add(exercise5);
+//        exercises.add(exercise4);
+//        exercises.add(exercise5);
 
         startRoutine.setOnClickListener(new View.OnClickListener() {
             @Override
