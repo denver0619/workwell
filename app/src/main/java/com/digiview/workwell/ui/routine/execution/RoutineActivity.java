@@ -14,19 +14,22 @@ import java.util.List;
 
 public class RoutineActivity extends AppCompatActivity implements RoutineLooperFragment.OnRoutineFinishedListener {
 
+    private String videoId;
+    private String routineId;
+    private String routineName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_routine);
 
-        String routineLogId = getIntent().getStringExtra("ROUTINE_LOG_ID");
+        routineId = getIntent().getStringExtra("ROUTINE_ID");
+        routineName = getIntent().getStringExtra("ROUTINE_NAME");
         ArrayList<RoutineExercise> exercises = (ArrayList<RoutineExercise>) getIntent().getSerializableExtra("EXERCISES");
 
         if (savedInstanceState == null) {
             RoutineLooperFragment routineLooperFragment = RoutineLooperFragment.newInstance();
 
             Bundle bundle = new Bundle();
-            bundle.putString("ROUTINE_LOG_ID", routineLogId);
             bundle.putSerializable("EXERCISES", exercises);
             routineLooperFragment.setArguments(bundle);
 
@@ -35,14 +38,22 @@ public class RoutineActivity extends AppCompatActivity implements RoutineLooperF
                     .commitNow();
         }
     }
+    public void setVideoId(String videoId) {
+        this.videoId = videoId;
+        Log.d("RoutineActivity", "Received videoId: " + videoId);
+    }
 
     @Override
-    public void onRoutineFinished(String routineLogId, List<RoutineExercise> exercises) {
+    public void onRoutineFinished(List<RoutineExercise> exercises) {
+        Log.d("RoutineActivity", "onRoutineFinished called with videoId: " + videoId);
+
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("ROUTINE_LOG_ID", routineLogId);
-        resultIntent.putExtra("EXERCISES", new ArrayList<>(exercises));
+        resultIntent.putExtra("VIDEO_ID", videoId); // Pass videoId to MainActivity
+        resultIntent.putExtra("ROUTINE_ID", routineId);
+        resultIntent.putExtra("ROUTINE_NAME", routineName);
         setResult(RESULT_OK, resultIntent);
         finish();
     }
+
 
 }

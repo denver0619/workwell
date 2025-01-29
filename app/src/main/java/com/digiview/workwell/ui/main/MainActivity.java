@@ -70,10 +70,12 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    public void startRoutineActivity(String routineLogId, ArrayList<RoutineExercise> exercises) {
+    public void startRoutineActivity(ArrayList<RoutineExercise> exercises, String routineId, String routineName) {
         Intent intent = new Intent(this, RoutineActivity.class);
-        intent.putExtra("ROUTINE_LOG_ID", routineLogId);
         intent.putExtra("EXERCISES", exercises);
+        intent.putExtra("ROUTINE_ID", routineId);
+        intent.putExtra("ROUTINE_NAME", routineName);
+
         startActivityForResult(intent, REQUEST_ROUTINE_ACTIVITY);
     }
 
@@ -82,20 +84,31 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_ROUTINE_ACTIVITY && resultCode == RESULT_OK && data != null) {
-            String routineLogId = data.getStringExtra("ROUTINE_LOG_ID");
-            ArrayList<RoutineExercise> exercises =
-                    (ArrayList<RoutineExercise>) data.getSerializableExtra("EXERCISES");
+            String videoId = data.getStringExtra("VIDEO_ID"); // Get Video ID
+            String routineId = data.getStringExtra("ROUTINE_ID");
+            String routineName = data.getStringExtra("ROUTINE_NAME");
 
-            openSelfAssessmentFragment(routineLogId, exercises);
+            if (videoId != null && routineId != null && routineName != null) {
+                Log.d("MainActivity", "Video ID received: " + videoId);
+                Log.d("MainActivity", routineId);
+                Log.d("MainActivity", routineName);
+
+                // Open SelfAssessmentFragment with video ID
+                openSelfAssessmentFragment(videoId, routineId, routineName);
+            } else {
+                Log.e("MainActivity", "Error: Video ID not received.");
+            }
         }
     }
 
-    private void openSelfAssessmentFragment(String routineLogId, ArrayList<RoutineExercise> exercises) {
+
+    private void openSelfAssessmentFragment(String videoId, String routineId, String routineName) {
         SelfAssessmentFragment selfAssessmentFragment = new SelfAssessmentFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putString("ROUTINE_LOG_ID", routineLogId);
-        bundle.putSerializable("EXERCISES", exercises);
+        bundle.putString("VIDEO_ID", videoId);
+        bundle.putString("ROUTINE_ID", routineId);
+        bundle.putString("ROUTINE_NAME", routineName);
         selfAssessmentFragment.setArguments(bundle);
 
         getSupportFragmentManager().beginTransaction()

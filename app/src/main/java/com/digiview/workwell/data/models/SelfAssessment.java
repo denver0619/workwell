@@ -36,16 +36,6 @@ public class SelfAssessment {
         this.selfAssessmentId = selfAssessmentId;
     }
 
-    @PropertyName("RoutineLogId")
-    public String getRoutineLogId() {
-        return routineLogId;
-    }
-
-    @PropertyName("RoutineLogId")
-    public void setRoutineLogId(String routineLogId) {
-        this.routineLogId = routineLogId;
-    }
-
     @PropertyName("Awareness")
     public int getAwareness() {
         return awareness;

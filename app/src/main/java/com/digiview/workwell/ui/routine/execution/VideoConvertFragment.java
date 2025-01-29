@@ -27,6 +27,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.UUID;
 
 public class VideoConvertFragment extends Fragment {
 
@@ -34,6 +35,7 @@ public class VideoConvertFragment extends Fragment {
     private RoutineLooperViewModel routineViewModel;
     private CameraViewModel cameraViewModel;
     private FragmentVideoConvertBinding fragmentVideoConvertBinding;
+    private String tempVideoId;
 
     public static VideoConvertFragment newInstance() {
         return new VideoConvertFragment();
@@ -49,66 +51,43 @@ public class VideoConvertFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         mViewModel = new ViewModelProvider(this).get(VideoConvertViewModel.class);
         routineViewModel = new ViewModelProvider(requireActivity()).get(RoutineLooperViewModel.class);
         cameraViewModel = new ViewModelProvider(requireActivity()).get(CameraViewModel.class);
 
+        // Generate a unique temporary ID for the video
+        tempVideoId = UUID.randomUUID().toString();
+        Log.d("VideoConvertFragment", "Generated Temporary Video ID: " + tempVideoId);
+
         File saveDirectory = cameraViewModel.getSaveDirectory();
-        String fitnessLogID = cameraViewModel.getFitnessLogID();
 
-        // Observe conversion success
-        mViewModel.getIsConvertSuccess().observe(getViewLifecycleOwner(), isConvertSuccess -> {
-            if (isConvertSuccess) {
-                Toast.makeText(requireContext(), "Conversion Successful", Toast.LENGTH_SHORT).show();
-
-                File convertedVideo = new File(saveDirectory, fitnessLogID + ".mp4");
-
-                if (convertedVideo.exists()) {
-                    Log.d("Video Path", "Converted video path: " + convertedVideo.getAbsolutePath());
-                    uploadVideoAndStoreMetadata(convertedVideo, fitnessLogID);
-//                    clearCache(saveDirectory);
-                } else {
-                    Log.e("VideoUpload", "Converted video file does not exist.");
-                }
-
-
-                routineViewModel.setIsRoutineFinished(true);
-            } else {
-                Toast.makeText(requireContext(), "Conversion Failed", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // Start the video conversion
-        convertToVideo(saveDirectory, fitnessLogID);
+        // Start the video conversion with the temporary ID
+        convertToVideo(saveDirectory, tempVideoId);
     }
 
 
 
-    private void convertToVideo(File rootDir, String fitnessLogID) {
+    private void convertToVideo(File rootDir, String tempVideoId) {
         String inputPath = new File(rootDir, sortImagesAndSaveToText(rootDir)).getAbsolutePath();
-        File outputFile = new File(rootDir, fitnessLogID + ".mp4");
+        File outputFile = new File(rootDir, tempVideoId + ".mp4"); // Use temp ID
         String outputPath = outputFile.getAbsolutePath();
 
-        // FFmpeg command to convert images to video
-        //with rotation
-//        String command = "-f concat -safe 0 -i \"" + inputPath + "\" -vf \"fps=15,format=yuv420p,transpose=1\" \"" + outputPath + "\"";
-        //without rotation
         String command = "-f concat -safe 0 -i \"" + inputPath + "\" -vf \"fps=11,format=yuv420p\" \"" + outputPath + "\"";
 
-
-        // Execute the FFmpeg command asynchronously
         FFmpegKit.executeAsync(command, session -> {
             if (session.getReturnCode().isSuccess()) {
-                Log.d("FFmpeg", "Video created successfully!");
+                Log.d("FFmpeg", "Video created successfully with Temp ID: " + tempVideoId);
                 mViewModel.setIsConvertSuccess(true);
-                mViewModel.setOutputVideoFile(outputFile); // Store the output file in ViewModel
+                mViewModel.setOutputVideoFile(outputFile);
+
+                // Upload the video
+                uploadVideo(outputFile);
             } else {
-                Log.e("FFmpeg", "Failed to create video: " + session.getOutput());
+                Log.e("FFmpeg", "Failed to create video.");
                 mViewModel.setIsConvertSuccess(false);
             }
         });
-//        FFmpegKit.execute(command);
-//        mViewModel.setIsConvertSuccess(true);
     }
 //    private void checkIfFileExist(File outputFile) {
 //        if (outputFile.exists()) {
@@ -141,24 +120,32 @@ public class VideoConvertFragment extends Fragment {
         return outputFileName;
     }
 
-    private void uploadVideoAndStoreMetadata(File videoFile, String routineLogId) {
+    private void uploadVideo(File videoFile) {
         VideoService videoService = new VideoService();
 
         videoService.uploadVideo(videoFile.getAbsolutePath()).thenAccept(video -> {
-            // Update RoutineLog with VideoId
-            RoutineLogService routineLogService = new RoutineLogService();
-            routineLogService.updateRoutineLogVideoId(routineLogId, video.getVideoId())
-                    .addOnSuccessListener(unused -> {
-                        Log.d("VideoUpload", "VideoId successfully updated in RoutineLog!");
-                    })
-                    .addOnFailureListener(e -> {
-                        Log.e("VideoUpload", "Failed to update VideoId in RoutineLog.", e);
-                    });
+            String realVideoId = video.getVideoId(); // Get real video ID from upload
+            Log.d("VideoConvertFragment", "Video uploaded with ID: " + realVideoId);
+
+            // Notify RoutineActivity with the uploaded video ID
+            requireActivity().runOnUiThread(() -> {
+                if (getActivity() instanceof RoutineActivity) {
+                    ((RoutineActivity) getActivity()).setVideoId(realVideoId);
+                } else {
+                    Log.e("VideoConvertFragment", "Activity is not RoutineActivity");
+                }
+            });
+
+            // ✅ Set isRoutineFinished to true to trigger navigation to MainActivity
+            routineViewModel.setIsRoutineFinished(true);
+
         }).exceptionally(e -> {
-            Log.e("VideoUpload", "Failed to upload video or save metadata.", e);
+            Log.e("VideoUpload", "Failed to upload video.", e);
             return null;
         });
     }
+
+
 
 
     private void clearCache(File cacheDir) {
