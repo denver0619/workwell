@@ -5,8 +5,20 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/neutral_white_color"
+    android:background="@drawable/bg_gradient"
     tools:context=".ui.auth.AuthLoginActivity">
+
+    <!-- Image on top of the gradient container -->
+    <ImageView
+        android:id="@+id/bgImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:paddingVertical="100dp"
+        android:src="@drawable/img_woman_stretch"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/login_img_description"
+        android:layout_centerInParent="true" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -23,18 +35,11 @@
         app:layout_constraintTop_toTopOf="parent"
         >
 
-        <ImageView
-            android:layout_width="220dp"
-            android:layout_height="180dp"
-            android:layout_gravity="center"
-            android:contentDescription="@string/login_img_description"
-            app:srcCompat="@drawable/img_login" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/welcome_msg1"
-            android:textColor="@color/neutral_dark_color"
+            android:textColor="@color/neutral_white_color"
             android:textSize="32sp"
             app:fontVariationSettings="'wght' 600" />
 
@@ -42,6 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/login_sub_header"
+            android:textColor="@color/neutral_white_color"
             android:textSize="16sp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -49,10 +55,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:textColorHint="@color/neutral_dark_color"
-            app:boxBackgroundColor="@color/white"
-            app:boxStrokeColor="@color/neutral_dark_color"
-            app:hintTextColor="@color/primary_color">
+            android:textColorHint="@color/white"
+            app:boxBackgroundColor="@color/transparent"
+            app:boxStrokeColor="@color/white"
+
+            app:hintTextColor="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etLoginEmail"
@@ -63,7 +70,7 @@
                 android:maxLines="1"
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
-                android:textColor="@color/neutral_dark_color"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,11 +79,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:textColorHint="@color/neutral_dark_color"
-            app:boxBackgroundColor="@color/white"
-            app:boxStrokeColor="@color/neutral_dark_color"
-            app:hintTextColor="@color/primary_color"
-            app:passwordToggleEnabled="true">
+            android:textColorHint="@color/white"
+            app:boxBackgroundColor="@color/transparent"
+            app:boxStrokeColor="@color/white"
+
+            app:hintTextColor="@color/white"
+            app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etLoginPassword"
@@ -86,8 +94,10 @@
                 android:inputType="textPassword"
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
+
 
         <Button
             android:id="@+id/btnLoginEmail"
