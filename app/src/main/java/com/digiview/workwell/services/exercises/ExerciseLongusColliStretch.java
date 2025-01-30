@@ -12,18 +12,23 @@ public class ExerciseLongusColliStretch extends  Exercise {
     }
     @Override
     public ExerciseResult excerciseResult() {
-        double[] a = landmarkToArray(landmarks.get(LANDMARKS.RIGHT_EAR.getId()));
-        double[] b = landmarkToArray(landmarks.get(LANDMARKS.LEFT_EAR.getId()));
-        double[] c = landmarkToArray(landmarks.get(LANDMARKS.NOSE.getId()));
-        double[] d = landmarkToArray(landmarks.get(LANDMARKS.RIGHT_SHOULDER.getId()));
-        double[] e = landmarkToArray(landmarks.get(LANDMARKS.LEFT_SHOULDER.getId()));
+        double[] a = landmarkToArray(landmarks.get(LANDMARKS.RIGHT_SHOULDER.getId()));
+        double[] b = landmarkToArray(landmarks.get(LANDMARKS.LEFT_SHOULDER.getId()));
+//        double[] c = landmarkToArray(landmarks.get(LANDMARKS.NOSE.getId()));
+        double[] d = landmarkToArray(landmarks.get(LANDMARKS.RIGHT_EAR.getId()));
+        double[] e = landmarkToArray(landmarks.get(LANDMARKS.LEFT_EAR.getId()));
+        double[] f = landmarkToArray(landmarks.get(LANDMARKS.MOUTH_RIGHT.getId()));
+        double[] g = landmarkToArray(landmarks.get(LANDMARKS.MOUTH_LEFT.getId()));
+//        double[] f = landmarkToArray(landmarks.get(LANDMARKS.RIGHT_EYE.getId()));
+//        double[] g = landmarkToArray(landmarks.get(LANDMARKS.LEFT_EYE.getId()));
 
 
 
         // Run 3D calculation in a separate thread
         double[] abMid = calculateMidpoint3D(a,b);
         double[] deMid = calculateMidpoint3D(d,e);
-        Future<Double> angle3DFuture = calculateAngle3DAsync(abMid, c, deMid);
+        double[] fgMid = calculateMidpoint3D(f,g);
+        Future<Double> angle3DFuture = calculateAngle3DAsync(abMid, deMid, fgMid);
 
         double angle3D = 0;
 
@@ -43,13 +48,14 @@ public class ExerciseLongusColliStretch extends  Exercise {
 
         //TODO: Angle Threshold Test
         STATUS position;
-        if (angle3D >=13) {
-            position = STATUS.RESTING;
-        } else if (angle3D < 12) {
-            position = STATUS.ALIGNED;
-        } else {
-            position = STATUS.TRANSITIONING;
-        }
+//        if (angle3D <=16) {
+//            position = STATUS.RESTING;
+//        } else if (angle3D >=18) {
+//            position = STATUS.ALIGNED;
+//        } else {
+//            position = STATUS.TRANSITIONING;
+//        }
+        position = STATUS.RESTING;//TODO: Remove after debug
         // Handle state transitions
         switch (position) {
             case RESTING:

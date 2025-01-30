@@ -185,8 +185,8 @@ public abstract class Exercise {
         this.duration = duration;
     }
 
-    public Exercise setLandmarkerResult(PoseLandmarkerResult landmarkerResult) {
-        this.landmarks = landmarkerResult.landmarks().get(0);
+    public Exercise setLandmarkerResult(List<NormalizedLandmark> landmarkerResult) {
+        this.landmarks = landmarkerResult;
         return this;
     }
 
