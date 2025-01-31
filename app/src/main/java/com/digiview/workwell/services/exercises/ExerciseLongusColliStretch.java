@@ -14,13 +14,15 @@ public class ExerciseLongusColliStretch extends  Exercise {
     public ExerciseResult excerciseResult() {
         double[] a = landmarkToArray(landmarks.get(LANDMARKS.RIGHT_SHOULDER.getId()));
         double[] b = landmarkToArray(landmarks.get(LANDMARKS.LEFT_SHOULDER.getId()));
-//        double[] c = landmarkToArray(landmarks.get(LANDMARKS.NOSE.getId()));
+        double[] c = landmarkToArray(landmarks.get(LANDMARKS.NOSE.getId()));
         double[] d = landmarkToArray(landmarks.get(LANDMARKS.RIGHT_EAR.getId()));
         double[] e = landmarkToArray(landmarks.get(LANDMARKS.LEFT_EAR.getId()));
-        double[] f = landmarkToArray(landmarks.get(LANDMARKS.MOUTH_RIGHT.getId()));
-        double[] g = landmarkToArray(landmarks.get(LANDMARKS.MOUTH_LEFT.getId()));
-//        double[] f = landmarkToArray(landmarks.get(LANDMARKS.RIGHT_EYE.getId()));
-//        double[] g = landmarkToArray(landmarks.get(LANDMARKS.LEFT_EYE.getId()));
+//        double[] d = landmarkToArray(landmarks.get(LANDMARKS.RIGHT_EYE.getId()));
+//        double[] e = landmarkToArray(landmarks.get(LANDMARKS.LEFT_EYE.getId()));
+//        double[] f = landmarkToArray(landmarks.get(LANDMARKS.MOUTH_RIGHT.getId()));
+//        double[] g = landmarkToArray(landmarks.get(LANDMARKS.MOUTH_LEFT.getId()));
+        double[] f = landmarkToArray(landmarks.get(LANDMARKS.RIGHT_EYE.getId()));
+        double[] g = landmarkToArray(landmarks.get(LANDMARKS.LEFT_EYE.getId()));
 
 
 
@@ -48,9 +50,9 @@ public class ExerciseLongusColliStretch extends  Exercise {
 
         //TODO: Angle Threshold Test
         STATUS position;
-        if (angle3D >= 133) {
+        if (angle3D >= 140) {
             position = STATUS.RESTING;
-        } else if (angle3D <= 128) {
+        } else if (angle3D <= 135) {
             position = STATUS.ALIGNED;
         } else {
             position = STATUS.TRANSITIONING;
