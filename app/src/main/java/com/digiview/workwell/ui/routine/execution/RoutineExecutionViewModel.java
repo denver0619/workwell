@@ -99,6 +99,7 @@ public class RoutineExecutionViewModel extends ViewModel {// TODO: Implement the
     *  Pass the landmarks to it
     *  Pass the result to exercise
     */
+    public PoseSmoother poseSmoother = new PoseSmoother(10);
 
     public void processLandmarkerResult(PoseLandmarkerResult landmarkerResults) {
         setExecutionState(RoutineConstants.EXECUTION_STATE.PREPARING);
@@ -108,7 +109,11 @@ public class RoutineExecutionViewModel extends ViewModel {// TODO: Implement the
 
         if (landmarkerResults != null && !landmarkerResults.landmarks().isEmpty()) {
             //pass the detected keypoints for calculation
-            exercise.getValue().setLandmarkerResult(landmarkerResults.landmarks().get(0));
+            //TODO: Implementing PoseSmoother
+//            exercise.getValue().setLandmarkerResult(landmarkerResults.landmarks().get(0));
+            exercise.getValue().setLandmarkerResult(
+                    poseSmoother.update(landmarkerResults.landmarks().get(0))
+            );
 
             //get the result from calculation
             Exercise.ExerciseResult result = exercise.getValue().excerciseResult();

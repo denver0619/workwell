@@ -48,14 +48,14 @@ public class ExerciseLongusColliStretch extends  Exercise {
 
         //TODO: Angle Threshold Test
         STATUS position;
-//        if (angle3D <=16) {
-//            position = STATUS.RESTING;
-//        } else if (angle3D >=18) {
-//            position = STATUS.ALIGNED;
-//        } else {
-//            position = STATUS.TRANSITIONING;
-//        }
-        position = STATUS.RESTING;//TODO: Remove after debug
+        if (angle3D >= 133) {
+            position = STATUS.RESTING;
+        } else if (angle3D <= 128) {
+            position = STATUS.ALIGNED;
+        } else {
+            position = STATUS.TRANSITIONING;
+        }
+//        position = STATUS.RESTING;//TODO: Remove after debug
         // Handle state transitions
         switch (position) {
             case RESTING:
