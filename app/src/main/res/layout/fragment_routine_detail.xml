@@ -19,6 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp" />
+
     <!-- Sticky TextView at the Top -->
     <TextView
         android:id="@+id/tvRoutineTitle"
@@ -29,12 +30,25 @@
         android:paddingHorizontal="56dp"
         android:paddingVertical="8dp"
         android:text="@string/placeholder_routine_detail"
-        android:textColor="@color/neutral_dark_color"
+        android:textColor="@color/neutral_white_color"
         android:textFontWeight="600"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvRoutineExerciseTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingHorizontal="56dp"
+        android:paddingVertical="8dp"
+        android:text="@string/exercise_label"
+        android:textColor="@color/neutral_white_color"
+        android:textFontWeight="600"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/tvRoutineTitle" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRoutineDetail"
@@ -47,7 +61,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvRoutineTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvRoutineExerciseTitle"
         app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -33,8 +33,9 @@
     <string name="placeholder_routine_date">YYYY-MM-DD hh:mm tt</string>
     <string name="placeholder_routine_detail">Routine Name 1</string>
     <string name="placeholder_exercise_name">Exercise Name</string>
+    <string name="exercise_label">Exercises</string>
     <string name="placeholder_exercise_detail">Loading exercise detail....</string>
-    <string name="start_exercise">View Exercise</string>
+    <string name="start_exercise">View Instructions</string>
 
     <!--    Self Assessment -->
     <string name="asmt_title">Self-Assessment</string>
@@ -66,6 +67,28 @@
     <string name="reflection_content">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."</string>
 
     <string name="video_player">Exercise Video</string>
+
+    <string name="profile_account">Account</string>
+    <string name="profile_email">Email:</string>
+    <string name="profile_username">Username:</string>
+    <string name="profile_personalInfo">Personal Information</string>
+    <string name="profile_name">Name: </string>
+    <string name="profile_age">Age: </string>
+    <string name="profile_contact">Contact: </string>
+    <string name="profile_height">Height: </string>
+    <string name="profile_weight">Weight: </string>
+    <string name="profile_address">Address: </string>
+    <string name="profile_assignedDoctor">Assigned Professional: </string>
+
+
+
+
+
+
+
+
+
+
     <!--    MediaPipe-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="media_pipe">MediaPipe</string>
