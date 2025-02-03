@@ -30,17 +30,15 @@ public class AuthService {
     }
 
     /**
-     * Extract the user's role from claims.
+     * Extract the user's role from claims as a string.
      */
-    public long extractUserRole(Map<String, Object> claims) {
+    public String extractUserRoleAsString(Map<String, Object> claims) {
         if (claims.containsKey("Role")) {
             Object roleObj = claims.get("Role");
-            if (roleObj instanceof Integer) {
-                return ((Integer) roleObj).longValue();
-            } else if (roleObj instanceof Long) {
-                return (Long) roleObj;
+            if (roleObj instanceof String) {
+                return (String) roleObj; // Return role as a string
             }
         }
-        return -1; // Default to invalid role
+        return null; // Default to null if role is not present or invalid
     }
 }

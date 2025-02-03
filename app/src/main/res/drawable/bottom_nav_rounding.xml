@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Background color of Bottom Navigation -->
+    <solid android:color="@color/white"/>
+
+    <!-- Rounded corners on the top -->
+    <corners android:topLeftRadius="28dp" android:topRightRadius="24dp"/>
+
+    <!-- Optional shadow effect (Only works on API 28+) -->
+    <padding android:bottom="4dp"/>
+</shape>

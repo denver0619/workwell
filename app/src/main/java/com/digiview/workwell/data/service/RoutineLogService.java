@@ -4,7 +4,9 @@ import android.util.Log;
 
 import com.digiview.workwell.data.models.RoutineLogs;
 import com.digiview.workwell.data.repository.RoutineLogRepository;
+import com.digiview.workwell.data.util.AuthHelper;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -23,29 +25,46 @@ public class RoutineLogService {
         journalService = new JournalService();
     }
 
-    /**
-     * Create a RoutineLog in Firestore.
-     *
-     * @param routineId        The ID of the routine being logged.
-     * @param routineLogName   The name of the routine log.
-     * @param uid              The UID of the user creating the log.
-     * @return CompletableFuture containing the generated RoutineLogId.
-     */
-    public CompletableFuture<String> createRoutineLog(String routineId, String routineLogName, String uid) {
-        RoutineLogs routineLog = new RoutineLogs();
-        routineLog.setRoutineId(routineId);
-        routineLog.setRoutineLogName(routineLogName);
-        routineLog.setUid(uid);
-        routineLog.setCreatedAt(null);
-        routineLog.setSelfAssessmentId(null);
-        routineLog.setVideoId(null);
-        routineLog.setJournalId(null);
 
-        return repository.createRoutineLog(routineLog);
+//    public CompletableFuture<String> createRoutineLog(String routineId, String routineLogName, String uid) {
+//        return AuthHelper.getOrganizationIdFromToken()
+//                .thenCompose(organizationId -> {
+//                    // Create a RoutineLog with the retrieved OrganizationId
+//                    Log.d("OrganizationId", organizationId);
+//                    RoutineLogs routineLog = new RoutineLogs();
+//                    routineLog.setRoutineId(routineId);
+//                    routineLog.setRoutineLogName(routineLogName);
+//                    routineLog.setUid(uid);
+//                    routineLog.setOrganizationId(organizationId); // Set OrganizationId
+//                    routineLog.setCreatedAt(null);
+//                    routineLog.setSelfAssessmentId(null);
+//                    routineLog.setVideoId(null);
+//                    routineLog.setJournalId(null);
+//
+//                    return repository.createRoutineLog(routineLog);
+//                });
+//    }
+
+    public CompletableFuture<String> createRoutineLog(String videoId, String selfAssessmentId, String routineId, String routineLogName, String uid) {
+        return AuthHelper.getOrganizationIdFromToken()
+                .thenCompose(organizationId -> {
+                    // Create a RoutineLog with the retrieved OrganizationId
+                    RoutineLogs routineLog = new RoutineLogs();
+                    routineLog.setRoutineId(routineId);
+                    routineLog.setRoutineLogName(routineLogName);
+                    routineLog.setUid(uid);
+                    routineLog.setOrganizationId(organizationId); // Set OrganizationId
+                    routineLog.setCreatedAt(null);
+                    routineLog.setSelfAssessmentId(selfAssessmentId);
+                    routineLog.setVideoId(videoId);
+                    routineLog.setJournalId(null);
+
+                    return repository.createRoutineLog(routineLog);
+                });
     }
 
     public Task<Void> updateRoutineLogSelfAssessment(String routineLogId, String selfAssessmentId) {
-        return repository.updateRoutineLogField(routineLogId, "SelfAssessmentId", selfAssessmentId);
+        return repository.updateSelfAssessmentField(routineLogId, selfAssessmentId);
     }
     public Task<Void> updateRoutineLogVideoId(String routineLogId, String videoId) {
         return repository.updateVideoIdField(routineLogId, videoId);

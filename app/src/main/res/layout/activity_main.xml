@@ -5,15 +5,16 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/neutral_white_color"
+
     tools:context=".ui.main.MainActivity"
+    android:background="@drawable/bg_gradient"
     >
 
     <FrameLayout
         android:id="@+id/flFragmentContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/neutral_white_color"
+
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +28,7 @@
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@drawable/bottom_nav_rounding"
         android:clipChildren="false"
         android:clipToPadding="false"
         app:itemActiveIndicatorStyle="@style/Widget.Custom.Indicator"

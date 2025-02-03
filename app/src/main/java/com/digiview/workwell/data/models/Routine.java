@@ -10,7 +10,7 @@ import java.util.List;
 public class Routine implements Serializable {
     private String RoutineId;
     private String Name;
-    private TargetArea TargetArea;
+    private String TargetArea; // Changed from enum to string
     private List<String> Users;
     private List<RoutineExercise> Exercises;
     private String AssignedName;
@@ -19,11 +19,6 @@ public class Routine implements Serializable {
     @PropertyName("EndDate")
     private Date EndDate;
 
-    private Date FormattedStartDate;
-
-    private Date FormattedEndDate;
-
-
     public String getFormattedStartDate() {
         if (StartDate != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -31,7 +26,6 @@ public class Routine implements Serializable {
         }
         return null;
     }
-
 
     public void setFormattedStartDate(String formattedStartDate) {
         try {
@@ -43,7 +37,6 @@ public class Routine implements Serializable {
         }
     }
 
-
     public String getFormattedEndDate() {
         if (EndDate != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -51,7 +44,6 @@ public class Routine implements Serializable {
         }
         return null;
     }
-
 
     public void setFormattedEndDate(String formattedEndDate) {
         try {
@@ -84,25 +76,26 @@ public class Routine implements Serializable {
         return StartDate;
     }
 
-    public void setStartDate(Date StartDate) {
-        this.StartDate = StartDate;
+    public void setStartDate(Date startDate) {
+        this.StartDate = startDate;
     }
-    public Date getEndDate() {
-            return EndDate;
-        }
 
-    public void setEndDate(Date EndDate) {
-        this.EndDate = EndDate;
+    public Date getEndDate() {
+        return EndDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.EndDate = endDate;
     }
 
     @PropertyName("TargetArea")
-    public TargetArea getTargetArea() {
+    public String getTargetArea() {
         return TargetArea;
     }
 
     @PropertyName("TargetArea")
-    public void setTargetArea(Long targetAreaValue) {
-        this.TargetArea = com.digiview.workwell.data.models.TargetArea.fromValue(targetAreaValue);
+    public void setTargetArea(String targetArea) {
+        this.TargetArea = targetArea;
     }
 
     public List<String> getUsers() {
@@ -112,7 +105,6 @@ public class Routine implements Serializable {
     public void setUsers(List<String> users) {
         this.Users = users;
     }
-
 
     public List<RoutineExercise> getExercises() {
         return Exercises;
@@ -130,34 +122,13 @@ public class Routine implements Serializable {
         this.AssignedName = assignedName;
     }
 
-//    // Fetch assigned name asynchronously
-//    public CompletableFuture<String> fetchAssignedName() {
-//        CompletableFuture<String> future = new CompletableFuture<>();
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        db.collection("users")
-//                .document(Users)
-//                .get()
-//                .addOnSuccessListener(document -> {
-//                    if (document.exists()) {
-//                        String firstName = document.getString("FirstName");
-//                        String lastName = document.getString("LastName");
-//                        future.complete(firstName + " " + lastName);
-//                    } else {
-//                        future.complete("Unknown User");
-//                    }
-//                })
-//                .addOnFailureListener(e -> future.completeExceptionally(e));
-//
-//        return future;
-//    }
-
     @Override
     public String toString() {
         return "Routine{" +
                 "RoutineId='" + RoutineId + '\'' +
                 ", Name='" + Name + '\'' +
-                ", Users='" + Users + '\'' +
-                ", TargetArea=" + TargetArea +
+                ", Users=" + Users +
+                ", TargetArea='" + TargetArea + '\'' +
                 ", Exercises=" + (Exercises != null ? Exercises.toString() : "No exercises available") +
                 '}';
     }

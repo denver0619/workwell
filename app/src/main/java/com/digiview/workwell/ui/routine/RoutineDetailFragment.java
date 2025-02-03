@@ -100,20 +100,24 @@ public class RoutineDetailFragment extends Fragment implements RoutineDetailAdap
             Toast.makeText(getContext(), "No exercises found in the routine.", Toast.LENGTH_SHORT).show();
             return;
         }
+        Routine currentRoutine = mViewModel.getRoutine();
+        String routineId = currentRoutine.getRoutineId();
+        String routineName = currentRoutine.getName();
+        ((MainActivity) requireActivity()).startRoutineActivity(new ArrayList<>(exercises), routineId, routineName);
 
-        mViewModel.createRoutineLog(uid).thenAccept(routineLogId -> {
-            Log.d("RoutineDetailFragment", "RoutineLog created with ID: " + routineLogId);
-
-            for (RoutineExercise exercise : exercises) {
-                Log.d("RoutineDetailFragment", "Exercise: " + exercise.getExerciseName());
-            }
-
-            ((MainActivity) requireActivity()).startRoutineActivity(routineLogId, new ArrayList<>(exercises));
-        }).exceptionally(e -> {
-            Log.e("RoutineDetailFragment", "Failed to create RoutineLog: " + e.getMessage());
-            Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            return null;
-        });
+//        mViewModel.createRoutineLog(uid).thenAccept(routineLogId -> {
+//            Log.d("RoutineDetailFragment", "RoutineLog created with ID: " + routineLogId);
+//
+//            for (RoutineExercise exercise : exercises) {
+//                Log.d("RoutineDetailFragment", "Exercise: " + exercise.getExerciseName());
+//            }
+//
+//            ((MainActivity) requireActivity()).startRoutineActivity(routineLogId, new ArrayList<>(exercises));
+//        }).exceptionally(e -> {
+//            Log.e("RoutineDetailFragment", "Failed to create RoutineLog: " + e.getMessage());
+//            Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//            return null;
+//        });
     }
 
 
