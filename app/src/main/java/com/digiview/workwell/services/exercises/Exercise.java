@@ -275,7 +275,7 @@ public abstract class Exercise {
                 isTimerRunning = false; // Stop when repetitions are complete
                 isRepFinished = true;
                 // Restart the timer
-                initTimer(duration);
+//                initTimer(duration);
 
             }
         };
@@ -294,14 +294,22 @@ public abstract class Exercise {
     }
 
     protected void resumeTimer() {
-        if (!isTimerRunning && timeLeft > 0) {
+//        if (!isTimerRunning && timeLeft > 0) {
             //continue timer only if the same timer and new rep
             if (!isTimerReset) {
                 initTimer(timeLeft);
                 startTimer();
             }
+//        }
+    }
+
+    protected  void restartTimer() {
+        if (isTimerReset) {
+            countDownTimer.cancel();
+            initTimer(duration);
         }
     }
+
     public abstract ExerciseResult excerciseResult();
 
 }
