@@ -2,7 +2,7 @@ package com.digiview.workwell.services.exercises;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-
+//NOT UPDATED DO NOT USE
 public class ExerciseWristExtensorStretchLeft extends Exercise{
     public ExerciseWristExtensorStretchLeft(Integer repetition, Long duration) {
         super(repetition, duration);

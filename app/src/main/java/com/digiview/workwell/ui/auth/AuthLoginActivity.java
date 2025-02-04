@@ -18,11 +18,12 @@ import com.digiview.workwell.data.service.AuthService;
 import com.digiview.workwell.ui.main.MainActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.digiview.workwell.data.util.Constants;
 
 public class AuthLoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextInputEditText inputEmail, inputPassword;
-    private Button emailLogin, googleLogin, signupRedirect;
+    private Button emailLogin;
 
     private AuthService authService; // Service for authentication workflows
 
@@ -46,28 +47,15 @@ public class AuthLoginActivity extends AppCompatActivity implements View.OnClick
         inputEmail = findViewById(R.id.etLoginEmail);
         inputPassword = findViewById(R.id.etLoginPassword);
         emailLogin = findViewById(R.id.btnLoginEmail);
-//        googleLogin = findViewById(R.id.btnLoginGoogle);
-//        signupRedirect = findViewById(R.id.btnSignupRedirect);
-
-//        googleLogin.setOnClickListener(this);
         emailLogin.setOnClickListener(this);
-//        signupRedirect.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-//        if (v.getId() == R.id.btnSignupRedirect) {
-//            redirectToSignup();
-//        } else
         if (v.getId() == R.id.btnLoginEmail) {
             handleEmailLogin();
         }
     }
-
-//    private void redirectToSignup() {
-//        Intent intent = new Intent(AuthLoginActivity.this, AuthSignupActivity.class);
-//        startActivity(intent);
-//    }
 
     private void handleEmailLogin() {
         String email = inputEmail.getText().toString().trim();
@@ -100,7 +88,7 @@ public class AuthLoginActivity extends AppCompatActivity implements View.OnClick
         authService.getIdToken(true)
                 .addOnCompleteListener(tokenTask -> {
                     if (tokenTask.isSuccessful()) {
-                        long role = authService.extractUserRole(tokenTask.getResult().getClaims());
+                        String role = authService.extractUserRoleAsString(tokenTask.getResult().getClaims());
                         handleUserRole(role);
                     } else {
                         Log.e("AuthDebug", "Error fetching token: " + tokenTask.getException().getMessage());
@@ -109,12 +97,12 @@ public class AuthLoginActivity extends AppCompatActivity implements View.OnClick
                 });
     }
 
-    private void handleUserRole(long role) {
-        if (role == 1) {
+    private void handleUserRole(String role) {
+        if (Constants.UserRole.User.equals(role)) {
             Log.d("AuthDebug", "User role: Standard User");
             proceedToApp();
-        } else if (role == 0) {
-            Log.d("AuthDebug", "User role: Admin");
+        } else if (Constants.UserRole.Admin.equals(role) || Constants.UserRole.SuperAdmin.equals(role)) {
+            Log.d("AuthDebug", "User role: Admin or SuperAdmin");
             denyAccess("Admins are not allowed to access this app.");
         } else {
             denyAccess("Invalid role detected.");

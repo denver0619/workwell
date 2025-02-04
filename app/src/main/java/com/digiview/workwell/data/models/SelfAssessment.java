@@ -22,6 +22,9 @@ public class SelfAssessment {
     @PropertyName("Stiffness")
     private int stiffness;
 
+    @PropertyName("OrganizationId")
+    private String organizationId; // New field for OrganizationId
+
     // Getters and setters with @PropertyName for serialization/deserialization
     @PropertyName("SelfAssessmentId")
     public String getSelfAssessmentId() {
@@ -31,16 +34,6 @@ public class SelfAssessment {
     @PropertyName("SelfAssessmentId")
     public void setSelfAssessmentId(String selfAssessmentId) {
         this.selfAssessmentId = selfAssessmentId;
-    }
-
-    @PropertyName("RoutineLogId")
-    public String getRoutineLogId() {
-        return routineLogId;
-    }
-
-    @PropertyName("RoutineLogId")
-    public void setRoutineLogId(String routineLogId) {
-        this.routineLogId = routineLogId;
     }
 
     @PropertyName("Awareness")
@@ -81,5 +74,28 @@ public class SelfAssessment {
     @PropertyName("Stiffness")
     public void setStiffness(int stiffness) {
         this.stiffness = stiffness;
+    }
+
+    @PropertyName("OrganizationId")
+    public String getOrganizationId() {
+        return organizationId;
+    }
+
+    @PropertyName("OrganizationId")
+    public void setOrganizationId(String organizationId) {
+        this.organizationId = organizationId;
+    }
+
+    @Override
+    public String toString() {
+        return "SelfAssessment{" +
+                "selfAssessmentId='" + selfAssessmentId + '\'' +
+                ", routineLogId='" + routineLogId + '\'' +
+                ", awareness=" + awareness +
+                ", difficulty=" + difficulty +
+                ", pain=" + pain +
+                ", stiffness=" + stiffness +
+                ", organizationId='" + organizationId + '\'' +
+                '}';
     }
 }

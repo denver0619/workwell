@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.digiview.workwell.R;
 import com.digiview.workwell.data.models.RoutineExercise;
 import com.digiview.workwell.ui.routine.viewmodel.SelfAssessmentViewModel;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -28,14 +29,16 @@ public class SelfAssessmentFragment extends Fragment {
     private TextView tvStiffnessValue, tvPainValue, tvDifficultyValue, tvAwarenessValue;
     private Button btnSubmit;
 
-    private String routineLogId;
-    private List<RoutineExercise> exercises;
+    private String videoId;
+    private String routineId;
+    private String routineName;
 
-    public static SelfAssessmentFragment newInstance(String routineLogId, List<RoutineExercise> exercises) {
+    public static SelfAssessmentFragment newInstance(String videoId, String routineId, String routineName) {
         SelfAssessmentFragment fragment = new SelfAssessmentFragment();
         Bundle args = new Bundle();
-        args.putString("ROUTINE_LOG_ID", routineLogId);
-        args.putSerializable("EXERCISES", (java.io.Serializable) exercises);
+        args.putString("VIDEO_ID", videoId);
+        args.putString("ROUTINE_ID", routineId);
+        args.putString("ROUTINE_NAME", routineName);
         fragment.setArguments(args);
         return fragment;
     }
@@ -76,19 +79,20 @@ public class SelfAssessmentFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Retrieve arguments
         if (getArguments() != null) {
-            routineLogId = getArguments().getString("ROUTINE_LOG_ID");
-            exercises = (List<RoutineExercise>) getArguments().getSerializable("EXERCISES");
+            videoId = getArguments().getString("VIDEO_ID"); // Get Video ID
+            routineId = getArguments().getString("ROUTINE_ID");
+            routineName = getArguments().getString("ROUTINE_NAME");
 
-            Log.d("SelfAssessmentFragment", "RoutineLogId: " + routineLogId);
-            if (exercises != null) {
-                for (RoutineExercise exercise : exercises) {
-                    Log.d("SelfAssessmentFragment", "Exercise: " + exercise.getExerciseName());
-                }
-            }
+            Log.d("SelfAssessmentFragment", "Received Video ID: " + videoId);
+            Log.d("SelfAssessmentFragment", "Routine ID: " + routineId);
+            Log.d("SelfAssessmentFragment", "Routine Name: " + routineName);
+        } else {
+            Log.e("SelfAssessmentFragment", "Error: VIDEO_ID not found in arguments");
         }
     }
+
+
 
     private void setupSeekBarListeners() {
         seekBarStiffness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -163,10 +167,19 @@ public class SelfAssessmentFragment extends Fragment {
     }
 
     private void handleSubmit() {
-        
-        viewModel.submitData(routineLogId);
+        if (videoId.isEmpty() || routineId.isEmpty() || routineName.isEmpty()) {
+            Toast.makeText(requireContext(), "Error: Missing required data.", Toast.LENGTH_SHORT).show();
+            Log.e("SelfAssessmentFragment", "Error: Missing data: Video ID: " + videoId + ", Routine ID: " + routineId + ", Routine Name: " + routineName);
+            return;
+        }
 
-        Toast.makeText(requireContext(), "Data submitted successfully!", Toast.LENGTH_SHORT).show();
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
+        // Call ViewModel to submit SelfAssessment and create RoutineLog
+        viewModel.submitData(videoId, routineId, routineName, uid);
+
+        Toast.makeText(requireContext(), "Submitting SelfAssessment and creating RoutineLog...", Toast.LENGTH_SHORT).show();
 
         // Navigate back to previous activity or show confirmation
         requireActivity().getSupportFragmentManager().popBackStack();

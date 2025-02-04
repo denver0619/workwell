@@ -27,6 +27,37 @@ public class RoutineLogRepository {
     /**
      * Save a RoutineLog to Firestore and return the generated document ID.
      */
+//    public CompletableFuture<String> createRoutineLog(RoutineLogs routineLog) {
+//        CompletableFuture<String> future = new CompletableFuture<>();
+//
+//        // Generate a new document reference to get the ID
+//        DocumentReference documentReference = firestore.collection("routinelogs").document();
+//        String generatedId = documentReference.getId();
+//
+//        // Set the generated ID into the routineLog object
+//        routineLog.setRoutineLogId(generatedId);
+//
+//        // Create a map to explicitly include only required fields
+//        Map<String, Object> data = new HashMap<>();
+//        data.put("RoutineLogId", routineLog.getRoutineLogId());
+//        data.put("RoutineId", routineLog.getRoutineId());
+//        data.put("RoutineLogName", routineLog.getRoutineLogName());
+//        data.put("OrganizationId", routineLog.getOrganizationId());
+//        data.put("Uid", routineLog.getUid());
+//        data.put("SelfAssessmentId", routineLog.getSelfAssessmentId());
+//        data.put("VideoId", routineLog.getVideoId());
+//        data.put("JournalId", routineLog.getJournalId());
+//        data.put("CreatedAt", routineLog.getCreatedAt());
+//
+//        // Save the map to Firestore with the document ID
+//        documentReference.set(data)
+//                .addOnSuccessListener(unused -> future.complete(generatedId))
+//                .addOnFailureListener(future::completeExceptionally);
+//
+//        return future;
+//    }
+
+
     public CompletableFuture<String> createRoutineLog(RoutineLogs routineLog) {
         CompletableFuture<String> future = new CompletableFuture<>();
 
@@ -39,9 +70,10 @@ public class RoutineLogRepository {
 
         // Create a map to explicitly include only required fields
         Map<String, Object> data = new HashMap<>();
-        data.put("RoutineLogId", routineLog.getRoutineLogId());
+        data.put("RoutineLogId", generatedId);
         data.put("RoutineId", routineLog.getRoutineId());
         data.put("RoutineLogName", routineLog.getRoutineLogName());
+        data.put("OrganizationId", routineLog.getOrganizationId());
         data.put("Uid", routineLog.getUid());
         data.put("SelfAssessmentId", routineLog.getSelfAssessmentId());
         data.put("VideoId", routineLog.getVideoId());
@@ -56,11 +88,10 @@ public class RoutineLogRepository {
         return future;
     }
 
-
-    public Task<Void> updateRoutineLogField(String routineLogId, String fieldName, Object value) {
+    public Task<Void> updateSelfAssessmentField(String routineLogId, String selfAssessmentId) {
         return firestore.collection("routinelogs")
                 .document(routineLogId)
-                .update(fieldName, value);
+                .update("SelfAssessmentId", selfAssessmentId);
     }
     public Task<Void> updateVideoIdField(String routineLogId, String videoId) {
         return firestore.collection("routinelogs")

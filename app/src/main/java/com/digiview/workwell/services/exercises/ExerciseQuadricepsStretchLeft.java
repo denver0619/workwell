@@ -51,9 +51,12 @@ public class ExerciseQuadricepsStretchLeft extends Exercise {
         switch (position) {
             case RESTING:
                 // mark new timer as current
+                if (isRepFinished){
+                    isRepFinished = false;
+                    restartTimer();
+                }
                 isTimerReset = false;
                 relaxedCount++;
-                isRepFinished = false;
                 stretchedCount = 0;
                 pauseTimer(); // Pause the timer
                 if (relaxedCount >= stateThreshold && lastStatus != STATUS.RESTING) {

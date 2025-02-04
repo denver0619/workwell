@@ -7,13 +7,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.digiview.workwell.R;
+import com.digiview.workwell.data.util.AuthHelper;
 
 public class HomeFragment extends Fragment {
 
@@ -63,4 +66,16 @@ public class HomeFragment extends Fragment {
         // Fetch user data from the ViewModel
         mViewModel.fetchUserData();
     }
+
+    private void testGetOrganizationId() {
+        AuthHelper.getOrganizationIdFromToken()
+                .thenAccept(organizationId -> {
+                    Log.d("TestOrgId", "OrganizationId retrieved: " + organizationId);
+                })
+                .exceptionally(e -> {
+                    Log.e("TestOrgId", "Failed to retrieve OrganizationId", e);
+                    return null;
+                });
+    }
+
 }

@@ -1,20 +1,10 @@
 package com.digiview.workwell.ui.routine.execution;
 
-import androidx.camera.core.AspectRatio;
-import androidx.camera.core.CameraSelector;
-import androidx.camera.core.CameraX;
-import androidx.camera.core.ImageAnalysis;
-import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,30 +12,18 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.arthenica.ffmpegkit.FFmpegKit;
 import com.digiview.workwell.R;
 
 import com.digiview.workwell.data.models.RoutineExercise;
 import com.digiview.workwell.databinding.FragmentRoutineLooperBinding;
-import com.digiview.workwell.services.exercises.Exercise;
-import com.google.common.util.concurrent.ListenableFuture;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.ExecutionException;
-
+import java.util.UUID;
 
 
 public class RoutineLooperFragment extends Fragment {
@@ -155,9 +133,12 @@ public class RoutineLooperFragment extends Fragment {
         exerciseTransitionViewModel = new ViewModelProvider(requireActivity()).get(ExerciseTransitionViewModel.class);
         cameraViewModel = new ViewModelProvider(requireActivity()).get(CameraViewModel.class);
 
-        // initialize values
-        cameraViewModel.setFitnessLogID(routineLogId);
-        cameraViewModel.setSaveDirectory(requireContext(), routineLogId);
+        // Generate a unique temporary ID
+        String tempRoutineLogId = UUID.randomUUID().toString();
+
+// Initialize values with the temporary ID
+        cameraViewModel.setFitnessLogID(tempRoutineLogId);
+        cameraViewModel.setSaveDirectory(requireContext(), tempRoutineLogId);
 
         //perform things
 //        routineViewModel.setTtsHelper(getContext());
@@ -203,7 +184,7 @@ public class RoutineLooperFragment extends Fragment {
             if (isRoutineFinished) {
                 // Pass data to the parent activity using the callback
                 if (onRoutineFinishedListener != null) {
-                    onRoutineFinishedListener.onRoutineFinished(routineLogId, exercises);
+                    onRoutineFinishedListener.onRoutineFinished(exercises);
                 }
 
                 // Close the RoutineLooperFragment
@@ -214,7 +195,7 @@ public class RoutineLooperFragment extends Fragment {
     }
 
     public interface OnRoutineFinishedListener {
-        void onRoutineFinished(String routineLogId, List<RoutineExercise> exercises);
+        void onRoutineFinished(List<RoutineExercise> exercises);
     }
 
 

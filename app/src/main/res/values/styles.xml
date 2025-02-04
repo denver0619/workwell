@@ -21,7 +21,7 @@
     </style>
 
     <style name="Widget.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
-        <item name="android:color">@color/accent_color2</item> <!--ACTIVE INDICATOR-->
+        <item name="android:color">@color/secondary_color</item> <!--ACTIVE INDICATOR-->
     </style>
 
 

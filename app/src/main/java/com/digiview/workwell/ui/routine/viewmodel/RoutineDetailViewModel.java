@@ -54,17 +54,17 @@ public class RoutineDetailViewModel extends ViewModel {
      * @param uid The user ID of the creator.
      * @return A CompletableFuture containing the generated RoutineLogId or an exception.
      */
-    public CompletableFuture<String> createRoutineLog(String uid) {
-        if (currentRoutine == null) {
-            CompletableFuture<String> future = new CompletableFuture<>();
-            future.completeExceptionally(new IllegalStateException("Routine is not set."));
-            return future;
-        }
-
-        return routineLogService.createRoutineLog(
-                currentRoutine.getRoutineId(),
-                currentRoutine.getName(),
-                uid
-        );
-    }
+//    public CompletableFuture<String> createRoutineLog(String uid) {
+//        if (currentRoutine == null) {
+//            CompletableFuture<String> future = new CompletableFuture<>();
+//            future.completeExceptionally(new IllegalStateException("Routine is not set."));
+//            return future;
+//        }
+//
+//        return routineLogService.createRoutineLog(
+//                currentRoutine.getRoutineId(),
+//                currentRoutine.getName(),
+//                uid
+//        );
+//    }
 }
