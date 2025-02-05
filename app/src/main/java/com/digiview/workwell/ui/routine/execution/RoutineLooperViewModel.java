@@ -1,5 +1,6 @@
 package com.digiview.workwell.ui.routine.execution;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -14,6 +15,7 @@ import com.digiview.workwell.data.models.RoutineExercise;
 import com.digiview.workwell.services.exercises.Exercise;
 import com.digiview.workwell.services.exercises.ExerciseFactory;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -84,7 +86,7 @@ public class RoutineLooperViewModel extends ViewModel {
                 ));
 
                 // Transition to ExerciseTransitionFragment
-                postFragmentTransition(ExerciseTransitionFragment.class);
+                postFragmentTransition(ExerciseTransitionFragment.class, exerciseEntity.getExerciseName());
 
                 // Use CountDownLatch to wait for the transition and exercise to finish
                 CountDownLatch transitionLatch = new CountDownLatch(1);
@@ -115,9 +117,32 @@ public class RoutineLooperViewModel extends ViewModel {
 
         thread.start();
     }
-
     private void postFragmentTransition(Class<? extends  Fragment> fragmentClass) {
-        new Handler(Looper.getMainLooper()).post(() -> destination.setValue(fragmentClass));
+        new Handler(Looper.getMainLooper()).post(() -> {
+            try {
+                destination.setValue(fragmentClass.newInstance());
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            } catch (InstantiationException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    private void postFragmentTransition(Class<? extends  Fragment> fragmentClass, String exerciseName) {
+        new Handler(Looper.getMainLooper()).post(() -> {
+            try {
+                Fragment fragment = fragmentClass.newInstance();
+                Bundle args = new Bundle();
+                args.putString("exerciseName", exerciseName);
+                fragment.setArguments(args);
+                destination.setValue(fragment);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            } catch (InstantiationException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     private void observeTransitionState(CountDownLatch latch) {
@@ -168,12 +193,12 @@ public class RoutineLooperViewModel extends ViewModel {
 
     // FOR NAVIGATING FRAGMENTS
 
-    private MutableLiveData<Class<? extends Fragment>> destination = new MutableLiveData<>();
-    public LiveData<Class<? extends  Fragment>> getDestination() {
+    private MutableLiveData<Fragment> destination = new MutableLiveData<>();
+    public LiveData<Fragment> getDestination() {
         return destination;
     }
 
-    public void setDestination(Class<? extends Fragment> destination) {
+    public void setDestination( Fragment destination) {
         this.destination.setValue(destination);
     }
 

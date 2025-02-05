@@ -1,7 +1,11 @@
 package com.digiview.workwell.services;
 
 import android.content.Context;
+import android.media.AudioAttributes;
 import android.speech.tts.TextToSpeech;
+
+import com.digiview.workwell.services.mediapipe.TTSInitializationListener;
+
 import java.util.Locale;
 
 public class TTSHelper {
@@ -14,10 +18,39 @@ public class TTSHelper {
             if (status == TextToSpeech.SUCCESS) {
                 // Set the language once initialized
                 int result = tts.setLanguage(Locale.US);
+//                tts.setAudioAttributes(
+//                        new AudioAttributes.Builder()
+//                                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+//                                .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+//                                .build()
+//                );
                 if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                     // Handle language not supported case here
                 } else {
                     isInitialized = true;
+                }
+            }
+        });
+    }
+
+    public TTSHelper(Context context, TTSInitializationListener listener) {
+        tts = new TextToSpeech(context, status -> {
+            if (status == TextToSpeech.SUCCESS) {
+                // Set the language once initialized
+                int result = tts.setLanguage(Locale.US);
+//                tts.setAudioAttributes(
+//                        new AudioAttributes.Builder()
+//                                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+//                                .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+//                                .build()
+//                );
+                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    // Handle language not supported case here
+                } else {
+                    isInitialized = true;
+                    if (listener != null) {
+                        listener.onTTSInitialized(); // Notify that TTS is initialized
+                    }
                 }
             }
         });

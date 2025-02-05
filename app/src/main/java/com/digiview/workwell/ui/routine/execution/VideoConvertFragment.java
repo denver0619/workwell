@@ -20,6 +20,7 @@ import com.digiview.workwell.R;
 import com.digiview.workwell.data.service.RoutineLogService;
 import com.digiview.workwell.data.service.VideoService;
 import com.digiview.workwell.databinding.FragmentVideoConvertBinding;
+import com.digiview.workwell.services.mediapipe.TTSInitializationListener;
 
 import java.io.Console;
 import java.io.File;
@@ -27,6 +28,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.UUID;
 
 public class VideoConvertFragment extends Fragment {
@@ -63,7 +65,15 @@ public class VideoConvertFragment extends Fragment {
         File saveDirectory = cameraViewModel.getSaveDirectory();
 
         // Start the video conversion with the temporary ID
-        convertToVideo(saveDirectory, tempVideoId);
+        mViewModel.setTtsHelper(requireContext(),
+                new TTSInitializationListener() {
+                    @Override
+                    public void onTTSInitialized() {
+                        Objects.requireNonNull(mViewModel.getTtsHelper().getValue()).speak("Routine is finished, processing the video.");
+                        convertToVideo(saveDirectory, tempVideoId);
+                    }
+                }
+        );
     }
 
 
