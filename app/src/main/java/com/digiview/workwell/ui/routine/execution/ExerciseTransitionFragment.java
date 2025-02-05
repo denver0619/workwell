@@ -13,9 +13,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.digiview.workwell.R;
 import com.digiview.workwell.databinding.FragmentExerciseTransitionBinding;
+import com.digiview.workwell.services.mediapipe.TTSInitializationListener;
+
+import java.util.Objects;
 
 
 public class ExerciseTransitionFragment extends Fragment {
@@ -37,7 +41,13 @@ public class ExerciseTransitionFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+
         exerciseTransitionViewModel = new ViewModelProvider(requireActivity()).get(ExerciseTransitionViewModel.class);
+
+        if (getArguments() != null) {
+            exerciseTransitionViewModel.setExerciseName(getArguments().getString("exerciseName"));
+        }
         exerciseTransitionViewModel.setContext(requireContext());
         exerciseTransitionViewModel.setMediaPlayer(new MediaPlayer());
         exerciseTransitionViewModel.getTimeLeft().observe(getViewLifecycleOwner(), new Observer<Long>() {
@@ -52,7 +62,15 @@ public class ExerciseTransitionFragment extends Fragment {
                         );
             }
         });
-        exerciseTransitionViewModel.startTransition();
+
+        exerciseTransitionViewModel.setTtsHelper(requireContext(),
+                new TTSInitializationListener() {
+                    @Override
+                    public void onTTSInitialized() {
+                        exerciseTransitionViewModel.startTransition();
+                    }
+                }
+        );
     }
 
 }

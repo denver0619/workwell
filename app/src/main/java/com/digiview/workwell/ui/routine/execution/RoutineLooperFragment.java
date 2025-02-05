@@ -146,7 +146,7 @@ public class RoutineLooperFragment extends Fragment {
         // Observe destination changes
         routineViewModel.getDestination().observe(getViewLifecycleOwner(), destinationFragment -> {
             try {
-                Fragment destination = destinationFragment.newInstance();
+                Fragment destination = destinationFragment;
                 FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(
                         android.R.anim.slide_in_left,
