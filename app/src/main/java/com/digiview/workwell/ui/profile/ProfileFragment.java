@@ -1,65 +1,88 @@
 package com.digiview.workwell.ui.profile;
 
-import androidx.lifecycle.ViewModelProvider;
-
-import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import com.digiview.workwell.ui.auth.AuthLoginActivity;
-import com.google.firebase.auth.FirebaseAuth;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import com.digiview.workwell.R;
+import com.digiview.workwell.data.models.User;
+import com.digiview.workwell.data.models.UserDTO;
+import com.digiview.workwell.data.service.UserService;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-public class ProfileFragment extends Fragment implements View.OnClickListener{
+public class ProfileFragment extends Fragment {
 
-    private ProfileViewModel mViewModel;
-
-    public static ProfileFragment newInstance() {
-        return new ProfileFragment();
-    }
+    private UserService userService;
+    private TextView tvEmail, tvName, tvAge, tvContact, tvHeight, tvWeight, tvAddress, tvAssignedProfessional;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        // Find the logout button
-        Button btnLogout = view.findViewById(R.id.btnLogout);
-
-        btnLogout.setOnClickListener(this);
-        super.onViewCreated(view, savedInstanceState);
-    }
-
     @Override
-    public void onClick(View v) {
-        if(v.getId() == R.id.btnLogout){
-            logout();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        userService = new UserService();
+
+        // Initialize UI elements
+        tvEmail = view.findViewById(R.id.tvEmail);
+        tvName = view.findViewById(R.id.tvName);
+        tvAge = view.findViewById(R.id.tvAge);
+        tvContact = view.findViewById(R.id.tvContact);
+        tvHeight = view.findViewById(R.id.tvHeight);
+        tvWeight = view.findViewById(R.id.tvWeight);
+        tvAddress = view.findViewById(R.id.tvAddress);
+        tvAssignedProfessional = view.findViewById(R.id.tvAssignedProfessional);
+
+        // Load user data
+        loadUserData();
+    }
+
+    private void loadUserData() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            Toast.makeText(getContext(), "User not logged in", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        userService.getCompleteUserData().thenAccept(user -> {
+            if (user != null) {
+                Log.d("ProfileFragment", "User fetched: " + user.getEmail());
+
+                // Apply dynamic bold styling for labels
+                tvEmail.setText(getBoldFormattedText("Email:", user.getEmail()));
+                tvName.setText(getBoldFormattedText("Name:", user.getName()));
+                tvAge.setText(getBoldFormattedText("Age:", String.valueOf(user.getAge())));
+                tvContact.setText(getBoldFormattedText("Contact:", user.getContact()));
+                tvHeight.setText(getBoldFormattedText("Height:", user.getHeight() + " cm"));
+                tvWeight.setText(getBoldFormattedText("Weight:", user.getWeight() + " kg"));
+                tvAddress.setText(getBoldFormattedText("Address:", user.getAddress()));
+                tvAssignedProfessional.setText(getBoldFormattedText("Assigned Professional:", user.getAssignedProfessionalName()));
+            }
+        }).exceptionally(ex -> {
+            Log.e("ProfileFragment", "Error fetching user data", ex);
+            Toast.makeText(getContext(), "Failed to fetch user data", Toast.LENGTH_SHORT).show();
+            return null;
+        });
     }
 
-    // Method to handle the logout
-    private void logout() {
-        // Sign out from Firebase Authentication
-        FirebaseAuth.getInstance().signOut();
-
-        // Show a toast for confirmation
-        Toast.makeText(getContext(), "Logged out successfully", Toast.LENGTH_SHORT).show();
-
-        // Navigate the user to the login screen
-        Intent intent = new Intent(getActivity(), AuthLoginActivity.class);
-        startActivity(intent);
-        getActivity().finish();  // Optionally finish the current activity to prevent user from navigating back
+    private SpannableStringBuilder getBoldFormattedText(String label, String value) {
+        SpannableStringBuilder builder = new SpannableStringBuilder(label + " " + value);
+        builder.setSpan(new StyleSpan(Typeface.BOLD), 0, label.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return builder;
     }
+
 }
