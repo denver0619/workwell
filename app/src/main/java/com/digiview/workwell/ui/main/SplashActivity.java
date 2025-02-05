@@ -31,8 +31,8 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void transitionToMainActivity() {
-//        Intent intent = new Intent(SplashActivity.this, AuthLoginActivity.class);
-        Intent intent = new Intent(SplashActivity.this, DebugActivity.class);
+        Intent intent = new Intent(SplashActivity.this, AuthLoginActivity.class);
+//        Intent intent = new Intent(SplashActivity.this, DebugActivity.class);
         startActivity(intent);
         finish(); // Prevent going back to splash screen
     }
