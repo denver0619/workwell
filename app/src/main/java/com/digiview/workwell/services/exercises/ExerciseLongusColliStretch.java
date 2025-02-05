@@ -12,22 +12,34 @@ public class ExerciseLongusColliStretch extends  Exercise {
     }
     @Override
     public ExerciseResult excerciseResult() {
-        double[] a = landmarkToArray(landmarks.get(LANDMARKS.RIGHT_EAR.getId()));
-        double[] b = landmarkToArray(landmarks.get(LANDMARKS.NOSE.getId()));
-        double[] c = landmarkToArray(landmarks.get(LANDMARKS.MOUTH_RIGHT.getId()));
+        double[] a = landmarkToArray(landmarks.get(LANDMARKS.RIGHT_SHOULDER.getId()));
+        double[] b = landmarkToArray(landmarks.get(LANDMARKS.LEFT_SHOULDER.getId()));
+        double[] c = landmarkToArray(landmarks.get(LANDMARKS.NOSE.getId()));
+        double[] d = landmarkToArray(landmarks.get(LANDMARKS.RIGHT_EAR.getId()));
+        double[] e = landmarkToArray(landmarks.get(LANDMARKS.LEFT_EAR.getId()));
+//        double[] d = landmarkToArray(landmarks.get(LANDMARKS.RIGHT_EYE.getId()));
+//        double[] e = landmarkToArray(landmarks.get(LANDMARKS.LEFT_EYE.getId()));
+//        double[] f = landmarkToArray(landmarks.get(LANDMARKS.MOUTH_RIGHT.getId()));
+//        double[] g = landmarkToArray(landmarks.get(LANDMARKS.MOUTH_LEFT.getId()));
+        double[] f = landmarkToArray(landmarks.get(LANDMARKS.RIGHT_EYE.getId()));
+        double[] g = landmarkToArray(landmarks.get(LANDMARKS.LEFT_EYE.getId()));
+
 
 
         // Run 3D calculation in a separate thread
-        Future<Double> angle3DFuture = calculateAngle3DAsync(a, b, c);
+        double[] abMid = calculateMidpoint3D(a,b);
+        double[] deMid = calculateMidpoint3D(d,e);
+        double[] fgMid = calculateMidpoint3D(f,g);
+        Future<Double> angle3DFuture = calculateAngle3DAsync(abMid, deMid, fgMid);
 
         double angle3D = 0;
 
         try {
             // Get results (this will block until the results are available)
             angle3D = angle3DFuture.get();
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException err) {
             // Handle the exception (either log it or rethrow it)
-            e.printStackTrace();
+            err.printStackTrace();
         }
 //        finally {
 //            // Shut down the executor service after use
@@ -36,14 +48,16 @@ public class ExerciseLongusColliStretch extends  Exercise {
 
         double[] angles = {angle3D , angle3D};
 
+        //TODO: Angle Threshold Test
         STATUS position;
-        if (angle3D >=13) {
+        if (angle3D >= 140) {
             position = STATUS.RESTING;
-        } else if (angle3D < 12) {
+        } else if (angle3D <= 135) {
             position = STATUS.ALIGNED;
         } else {
             position = STATUS.TRANSITIONING;
         }
+//        position = STATUS.RESTING;//TODO: Remove after debug
         // Handle state transitions
         switch (position) {
             case RESTING:

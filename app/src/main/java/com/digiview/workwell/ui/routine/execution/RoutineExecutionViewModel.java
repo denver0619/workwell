@@ -94,6 +94,13 @@ public class RoutineExecutionViewModel extends ViewModel {// TODO: Implement the
     public LiveData<Integer> getCounter() { return counter; }
     public LiveData<Long> getTimeLeft() {return timeLeft; }
 
+
+    /*TODO: Implement PoseSmoother
+    *  Pass the landmarks to it
+    *  Pass the result to exercise
+    */
+    public PoseSmoother poseSmoother = new PoseSmoother(25);
+
     public void processLandmarkerResult(PoseLandmarkerResult landmarkerResults) {
         setExecutionState(RoutineConstants.EXECUTION_STATE.PREPARING);
         if (exercise.getValue() == null) {
@@ -101,7 +108,14 @@ public class RoutineExecutionViewModel extends ViewModel {// TODO: Implement the
         }
 
         if (landmarkerResults != null && !landmarkerResults.landmarks().isEmpty()) {
-            exercise.getValue().setLandmarkerResult(landmarkerResults);
+            //pass the detected keypoints for calculation
+            //TODO: Implementing PoseSmoother
+//            exercise.getValue().setLandmarkerResult(landmarkerResults.landmarks().get(0));
+            exercise.getValue().setLandmarkerResult(
+                    poseSmoother.update(landmarkerResults.landmarks().get(0))
+            );
+
+            //get the result from calculation
             Exercise.ExerciseResult result = exercise.getValue().excerciseResult();
             Exercise.STATUS position = result.getPosition();
             lastStatus = result.getLastPosition();

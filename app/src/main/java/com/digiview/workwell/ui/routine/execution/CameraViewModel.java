@@ -29,7 +29,7 @@ public class CameraViewModel extends ViewModel {
         this.landmarkerResult.setValue(landmarkerResult);
     }
     // FOR CAMERAFRAGMENT
-    private int _model = PoseLandmarkerHelper.MODEL_POSE_LANDMARKER_FULL;
+    private int _model = PoseLandmarkerHelper.MODEL_POSE_LANDMARKER_HEAVY;
     private int _delegate = PoseLandmarkerHelper.DELEGATE_GPU;
     private float _minPoseDetectionConfidence = PoseLandmarkerHelper.DEFAULT_POSE_DETECTION_CONFIDENCE;
     private float _minPoseTrackingConfidence = PoseLandmarkerHelper.DEFAULT_POSE_TRACKING_CONFIDENCE;

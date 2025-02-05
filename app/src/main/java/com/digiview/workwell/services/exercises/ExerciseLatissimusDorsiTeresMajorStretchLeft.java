@@ -19,7 +19,7 @@ public class ExerciseLatissimusDorsiTeresMajorStretchLeft extends Exercise{
 
 //        Future<Double> leftElbowFuture = calculateAngle3DAsync(a, b, c);
         Future<Double> leftShoulderFuture = calculateAngle2DAsync(b,c,d);
-        Future<Double> rightHipFuture = calculateAngle2DAsync(b,f,g);
+        Future<Double> rightHipFuture = calculateAngle2DAsync(e,f,g);
 
 
         // vertex
@@ -43,9 +43,9 @@ public class ExerciseLatissimusDorsiTeresMajorStretchLeft extends Exercise{
 
         Exercise.STATUS position;
 
-        if (leftShoulder >= 150 && rightHip <= 160) {
+        if (leftShoulder >= 120 && rightHip >= 165) {
             position = Exercise.STATUS.RESTING;
-        } else if (leftShoulder >= 150 && rightHip >= 170 ) {
+        } else if (leftShoulder >= 120 && rightHip <= 155 ) {
             position = Exercise.STATUS.ALIGNED;
         } else {
             position = Exercise.STATUS.TRANSITIONING;

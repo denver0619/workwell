@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.digiview.workwell.R;
 import com.digiview.workwell.ui.auth.AuthLoginActivity;
+import com.digiview.workwell.ui.debug.DebugActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -30,7 +31,8 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void transitionToMainActivity() {
-        Intent intent = new Intent(SplashActivity.this, AuthLoginActivity.class);
+//        Intent intent = new Intent(SplashActivity.this, AuthLoginActivity.class);
+        Intent intent = new Intent(SplashActivity.this, DebugActivity.class);
         startActivity(intent);
         finish(); // Prevent going back to splash screen
     }
