@@ -12,10 +12,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.digiview.workwell.data.models.RoutineExercise;
-import com.digiview.workwell.services.exercises.Exercise;
+import com.digiview.workwell.services.exercises.AbstractExercise;
 import com.digiview.workwell.services.exercises.ExerciseFactory;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -35,13 +34,13 @@ public class RoutineLooperViewModel extends ViewModel {
 
     // FOR ROUTINE EXECUTION====================================
     private List<RoutineExercise> routine;
-    private final MutableLiveData<Exercise> currentExercise = new MutableLiveData<>();
+    private final MutableLiveData<AbstractExercise> currentExercise = new MutableLiveData<>();
 
     public void setRoutine(List<RoutineExercise> routine) {
         this.routine = routine;
     }
 
-    public LiveData<Exercise> getCurrentExercise() {
+    public LiveData<AbstractExercise> getCurrentExercise() {
         return currentExercise;
     }
 

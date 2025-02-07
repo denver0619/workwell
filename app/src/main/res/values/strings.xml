@@ -69,16 +69,20 @@
     <string name="video_player">Exercise Video</string>
 
     <string name="profile_account">Account</string>
-    <string name="profile_email">Email:</string>
-    <string name="profile_username">Username:</string>
+
+<!--    <string name="profile_username">Username:</string>-->
     <string name="profile_personalInfo">Personal Information</string>
-    <string name="profile_name">Name: </string>
-    <string name="profile_age">Age: </string>
-    <string name="profile_contact">Contact: </string>
-    <string name="profile_height">Height: </string>
-    <string name="profile_weight">Weight: </string>
-    <string name="profile_address">Address: </string>
-    <string name="profile_assignedDoctor">Assigned Professional: </string>
+
+
+    <string name="profile_email"><b>Email:</b> %s</string>
+    <string name="profile_name"><b>Name:</b> %s</string>
+    <string name="profile_age"><b>Age:</b> %d</string>
+    <string name="profile_contact"><b>Contact:</b> %s</string>
+    <string name="profile_height"><b>Height:</b> %.1f cm</string>
+    <string name="profile_weight"><b>Weight:</b> %.1f kg</string>
+    <string name="profile_address"><b>Address:</b> %s</string>
+    <string name="profile_assignedDoctor"><b>Assigned Professional:</b> %s</string>
+
 
 
 

@@ -1,11 +1,9 @@
 package com.digiview.workwell.services.exercises;
 
-import android.os.CountDownTimer;
-
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-public class ExerciseQuadricepsStretchRight extends Exercise {
+public class ExerciseQuadricepsStretchRight extends AbstractExercise {
 
     public ExerciseQuadricepsStretchRight(Integer repetition, Long duration) {
         super(repetition, duration);
