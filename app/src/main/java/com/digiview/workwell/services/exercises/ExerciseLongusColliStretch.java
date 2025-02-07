@@ -1,11 +1,9 @@
 package com.digiview.workwell.services.exercises;
 
-import android.os.CountDownTimer;
-
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-public class ExerciseLongusColliStretch extends  Exercise {
+public class ExerciseLongusColliStretch extends AbstractExercise {
 
     public ExerciseLongusColliStretch(Integer repetition, Long duration) {
         super(repetition, duration);

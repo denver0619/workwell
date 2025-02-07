@@ -3,16 +3,14 @@ package com.digiview.workwell.services.exercises;
 import android.os.CountDownTimer;
 
 import com.google.mediapipe.tasks.components.containers.NormalizedLandmark;
-import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarkerResult;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 
-public abstract class Exercise {
+public abstract class AbstractExercise {
     protected final ExecutorService executor = Executors.newFixedThreadPool(2);
     // class variables
     protected List<NormalizedLandmark> landmarks;
@@ -178,14 +176,14 @@ public abstract class Exercise {
     }
 
     //CONSTRUCTORS
-    public Exercise() {}
+    public AbstractExercise() {}
 
-    public Exercise(int repetition, Long duration) {
+    public AbstractExercise(int repetition, Long duration) {
         this.repetition = repetition;
         this.duration = duration;
     }
 
-    public Exercise setLandmarkerResult(List<NormalizedLandmark> landmarkerResult) {
+    public AbstractExercise setLandmarkerResult(List<NormalizedLandmark> landmarkerResult) {
         this.landmarks = landmarkerResult;
         return this;
     }

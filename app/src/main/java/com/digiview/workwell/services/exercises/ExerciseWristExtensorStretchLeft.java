@@ -3,13 +3,13 @@ package com.digiview.workwell.services.exercises;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 //NOT UPDATED DO NOT USE
-public class ExerciseWristExtensorStretchLeft extends Exercise{
+public class ExerciseWristExtensorStretchLeft extends AbstractExercise {
     public ExerciseWristExtensorStretchLeft(Integer repetition, Long duration) {
         super(repetition, duration);
     }
 
     @Override
-    public Exercise.ExerciseResult excerciseResult() {
+    public AbstractExercise.ExerciseResult excerciseResult() {
         double[] a = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.LEFT_INDEX.getId()));
         double[] b = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.LEFT_WRIST.getId()));
         double[] c = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.LEFT_ELBOW.getId()));
@@ -35,14 +35,14 @@ public class ExerciseWristExtensorStretchLeft extends Exercise{
 
         double[] angles = {leftWrist, leftElbow};// nonrelevant
 
-        Exercise.STATUS position;
+        AbstractExercise.STATUS position;
 
         if (leftElbow >= 160 && leftWrist >= 160) {
-            position = Exercise.STATUS.RESTING;
+            position = AbstractExercise.STATUS.RESTING;
         } else if (leftElbow >= 160 && leftWrist <= 110) {
-            position = Exercise.STATUS.ALIGNED;
+            position = AbstractExercise.STATUS.ALIGNED;
         } else {
-            position = Exercise.STATUS.TRANSITIONING;
+            position = AbstractExercise.STATUS.TRANSITIONING;
         }
         // Handle state transitions
         switch (position) {
