@@ -1,0 +1,137 @@
+package com.digiview.workwell.services.exercises;
+
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
+public class BaseExerciseDynamic extends AbstractExercise {
+    private List<Constraint> constraints;
+
+    public BaseExerciseDynamic(Integer repetition, Long duration) {
+        super(repetition, duration);
+    }
+
+    // DATABASE ENTITIES
+    public static class KeyPoint {
+        // required, non-null
+        private Boolean isMidpoint;
+        // required, non-null
+        private Integer pointA; // index in 33 Keypoint
+        // optional, nullable (required only when isMidpoint is true)
+        private Integer pointB; // index in 33 Kypoint
+    }
+    public static class Constraint {
+        private List<KeyPoint> keyPoints; //required, non-null (fixed 3 Keypoint)
+        private Float restingAngleThreshold; // required, non-null
+        private Float alignedAngleThreshold; // required, non-null
+    }
+    // DATABASE ENTITIES
+
+    public void setConstraints(List<Constraint> constraints) {
+        this.constraints = constraints;
+    }
+
+    @Override
+    public ExerciseResult excerciseResult() {
+        /**TODO: Loop through list of constraints and use && operator for resting and aligned
+         * if resting = true and aligned = false, position resting
+         * if resting = false and aligned = true, position aligned
+         * if both are false, position transition
+         * if both are true, position invalid
+         */
+
+
+        double[] a = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.RIGHT_SHOULDER.getId()));
+        double[] b = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.LEFT_SHOULDER.getId()));
+        double[] c = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.NOSE.getId()));
+        double[] d = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.RIGHT_EAR.getId()));
+        double[] e = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.LEFT_EAR.getId()));
+//        double[] d = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.RIGHT_EYE.getId()));
+//        double[] e = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.LEFT_EYE.getId()));
+//        double[] f = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.MOUTH_RIGHT.getId()));
+//        double[] g = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.MOUTH_LEFT.getId()));
+        double[] f = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.RIGHT_EYE.getId()));
+        double[] g = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.LEFT_EYE.getId()));
+
+
+
+        // Run 3D calculation in a separate thread
+        double[] abMid = calculateMidpoint3D(a,b);
+        double[] deMid = calculateMidpoint3D(d,e);
+        double[] fgMid = calculateMidpoint3D(f,g);
+        Future<Double> angle3DFuture = calculateAngle3DAsync(abMid, deMid, fgMid);
+
+        double angle3D = 0;
+
+        try {
+            // Get results (this will block until the results are available)
+            angle3D = angle3DFuture.get();
+        } catch (InterruptedException | ExecutionException err) {
+            // Handle the exception (either log it or rethrow it)
+            err.printStackTrace();
+        }
+//        finally {
+//            // Shut down the executor service after use
+//            executor.shutdown();
+//        }
+
+        double[] angles = {angle3D , angle3D};
+
+        boolean resting = false;
+        boolean aligned = false;
+        //TODO: Angle Threshold Test
+        STATUS position;
+        if (angle3D >= 140) {
+            position = STATUS.RESTING;
+        } else if (angle3D <= 135) {
+            position = STATUS.ALIGNED;
+        } else {
+            position = STATUS.TRANSITIONING;
+        }
+//        position = STATUS.RESTING;//TODO: Remove after debug
+        // Handle state transitions
+        switch (position) {
+            case RESTING:
+                // mark new timer as current
+                if (isRepFinished){
+                    isRepFinished = false;
+                    restartTimer();
+                }
+                isTimerReset = false;
+                relaxedCount++;
+                stretchedCount = 0;
+                pauseTimer(); // Pause the timer
+                if (relaxedCount >= stateThreshold && lastStatus != STATUS.RESTING) {
+                    lastStatus = STATUS.RESTING;
+                }
+                break;
+
+            case ALIGNED:
+                stretchedCount++;
+                relaxedCount = 0;
+                if (stretchedCount >= stateThreshold && lastStatus != STATUS.ALIGNED) {
+                    resumeTimer(); // Resume the timer
+                    lastStatus = STATUS.ALIGNED;
+                }
+                break;
+
+            case TRANSITIONING:
+                relaxedCount = 0;
+                stretchedCount = 0;
+                pauseTimer(); // Pause the timer
+                lastStatus = STATUS.TRANSITIONING;
+                break;
+        }
+
+
+
+
+        // Check if current rep is Finished
+        STATUS repCheck = (isRepFinished) ? STATUS.REP_FINISHED : position;
+
+        // Check if the counter has reached the target value
+        STATUS finalStatus = (counter >= repetition) ? STATUS.FINISHED : repCheck;
+
+        return new ExerciseResult(angles, finalStatus, lastStatus, counter, timeLeft);
+    }
+}
