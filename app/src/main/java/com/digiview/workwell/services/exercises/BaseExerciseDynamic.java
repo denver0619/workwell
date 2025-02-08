@@ -1,5 +1,8 @@
 package com.digiview.workwell.services.exercises;
 
+import org.checkerframework.checker.units.qual.C;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -14,21 +17,51 @@ public class BaseExerciseDynamic extends AbstractExercise {
     // DATABASE ENTITIES
     public static class KeyPoint {
         // required, non-null
-        private Boolean isMidpoint;
+        public Boolean isMidpoint;
         // required, non-null
-        private Integer pointA; // index in 33 Keypoint
+        public Integer pointA; // index in 33 Keypoint
         // optional, nullable (required only when isMidpoint is true)
-        private Integer pointB; // index in 33 Kypoint
+        public Integer pointB; // index in 33 Kypoint
     }
+
     public static class Constraint {
-        private List<KeyPoint> keyPoints; //required, non-null (fixed 3 Keypoint)
-        private Float restingAngleThreshold; // required, non-null
-        private Float alignedAngleThreshold; // required, non-null
+        public List<KeyPoint> keyPoints; //required, non-null (fixed 3 Keypoint)
+        public Float restingAngleThreshold; // required, non-null
+        public Float alignedAngleThreshold; // required, non-null
+
+        /**
+         * Only two option
+         * "lt" for less than
+         * "gt" for greater than
+         * NOTE: should put warning or prevent the doctor if inputting invalid states (for combination of thresholds and comparator)
+         */
+        public String restingAngleComparator; // required, non-null
+    }
+
+    public static class Exercise {
+        public String name;
+        public String description;
+        public List<Constraint> constraints;
     }
     // DATABASE ENTITIES
 
     public void setConstraints(List<Constraint> constraints) {
         this.constraints = constraints;
+    }
+
+    private double[] keyPointToCoordinateConversion(KeyPoint keyPoint) {
+
+        double[] result;
+
+        if(keyPoint.isMidpoint) {
+            result = calculateMidpoint3D(
+                    landmarkToArray(landmarks.get(keyPoint.pointA)),
+                    landmarkToArray(landmarks.get(keyPoint.pointB))
+            );
+        } else {
+            result = landmarkToArray(landmarks.get(keyPoint.pointA));
+        }
+        return result;
     }
 
     @Override
@@ -40,56 +73,70 @@ public class BaseExerciseDynamic extends AbstractExercise {
          * if both are true, position invalid
          */
 
+        List<Double> angleResults = new ArrayList<>();
+        boolean resting = true;
+        boolean aligned = true;
 
-        double[] a = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.RIGHT_SHOULDER.getId()));
-        double[] b = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.LEFT_SHOULDER.getId()));
-        double[] c = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.NOSE.getId()));
-        double[] d = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.RIGHT_EAR.getId()));
-        double[] e = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.LEFT_EAR.getId()));
-//        double[] d = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.RIGHT_EYE.getId()));
-//        double[] e = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.LEFT_EYE.getId()));
-//        double[] f = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.MOUTH_RIGHT.getId()));
-//        double[] g = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.MOUTH_LEFT.getId()));
-        double[] f = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.RIGHT_EYE.getId()));
-        double[] g = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.LEFT_EYE.getId()));
+        Future<Double> angle3DFuture;
 
+        for (Constraint constraint : constraints) {
+            List<KeyPoint> keyPoints = constraint.keyPoints;
+            double[] pointA = keyPointToCoordinateConversion(keyPoints.get(0));
+            double[] pointB = keyPointToCoordinateConversion(keyPoints.get(1));
+            double[] pointC = keyPointToCoordinateConversion(keyPoints.get(2));
 
+            angle3DFuture = calculateAngle3DAsync(pointA, pointB, pointC);
+            double angle3d = 0;
+            try {
+                // Get results (this will block until the results are available)
+                angle3d = angle3DFuture.get();
+            } catch (InterruptedException | ExecutionException err) {
+                // Handle the exception (either log it or rethrow it)
+                err.printStackTrace();
+            }
 
-        // Run 3D calculation in a separate thread
-        double[] abMid = calculateMidpoint3D(a,b);
-        double[] deMid = calculateMidpoint3D(d,e);
-        double[] fgMid = calculateMidpoint3D(f,g);
-        Future<Double> angle3DFuture = calculateAngle3DAsync(abMid, deMid, fgMid);
+            angleResults.add(angle3d);
+            // if "lt" the status will be resting if less than the resting threshold and aligned if greater than the aligned threshold
+            // if "gt" the status will be resting of greater than the resting threshold and aligned if less than the aligned threshold
+            if (constraint.restingAngleComparator.equals("lt")) {
+                if (angle3d < constraint.restingAngleThreshold){
+                    resting = resting && true;
+                } else {
+                    resting = resting && false;
+                }
 
-        double angle3D = 0;
+                if (angle3d > constraint.alignedAngleThreshold) {
+                    aligned = aligned && true;
+                } else {
+                    aligned = aligned && false;
+                }
+            } else if (constraint.restingAngleComparator.equals("gt")) {
+                if (angle3d > constraint.restingAngleThreshold){
+                    resting = resting && true;
+                } else {
+                    resting = resting && false;
+                }
 
-        try {
-            // Get results (this will block until the results are available)
-            angle3D = angle3DFuture.get();
-        } catch (InterruptedException | ExecutionException err) {
-            // Handle the exception (either log it or rethrow it)
-            err.printStackTrace();
+                if (angle3d < constraint.alignedAngleThreshold) {
+                    aligned = aligned && true;
+                } else {
+                    aligned = aligned && false;
+                }
+
+            }
         }
-//        finally {
-//            // Shut down the executor service after use
-//            executor.shutdown();
-//        }
 
-        double[] angles = {angle3D , angle3D};
-
-        boolean resting = false;
-        boolean aligned = false;
-        //TODO: Angle Threshold Test
         STATUS position;
-        if (angle3D >= 140) {
+        if (resting && !aligned) {
             position = STATUS.RESTING;
-        } else if (angle3D <= 135) {
+        } else  if (!resting && aligned) {
             position = STATUS.ALIGNED;
-        } else {
+        } else if (!resting && aligned) {
             position = STATUS.TRANSITIONING;
+        } else {
+            position = STATUS.NO_PERSON;
         }
-//        position = STATUS.RESTING;//TODO: Remove after debug
-        // Handle state transitions
+
         switch (position) {
             case RESTING:
                 // mark new timer as current
@@ -125,7 +172,7 @@ public class BaseExerciseDynamic extends AbstractExercise {
 
 
 
-
+        double[] angles = angleResults.stream().mapToDouble(Double::doubleValue).toArray();
         // Check if current rep is Finished
         STATUS repCheck = (isRepFinished) ? STATUS.REP_FINISHED : position;
 
@@ -133,5 +180,20 @@ public class BaseExerciseDynamic extends AbstractExercise {
         STATUS finalStatus = (counter >= repetition) ? STATUS.FINISHED : repCheck;
 
         return new ExerciseResult(angles, finalStatus, lastStatus, counter, timeLeft);
+    }
+
+    public void sample() {
+        Constraint constraint1 = new Constraint();
+        constraint1.restingAngleThreshold = 140.f;
+        constraint1.alignedAngleThreshold = 135.f;
+        constraint1.restingAngleComparator = "gt";
+
+        KeyPoint keypointA1 = new KeyPoint();
+        keypointA1.isMidpoint = true;
+        keypointA1.pointA = LANDMARKS_FLIPPED.LEFT_EYE.getId();
+        keypointA1.pointB =LANDMARKS_FLIPPED.RIGHT_EYE.getId();
+
+        KeyPoint keypointA2 = new KeyPoint();
+        KeyPoint keypointA3 = new KeyPoint();
     }
 }

@@ -66,6 +66,56 @@ public class RoutineLooperViewModel extends ViewModel {
         this.executionState.setValue(RoutineConstants.EXECUTION_STATE.NONE);
     }
 
+//    public void executeRoutine() {
+//        ExerciseFactory exerciseFactory = new ExerciseFactory();
+//        Thread thread = new Thread(() -> {
+//            int counter = 0;
+//            for (RoutineExercise exerciseEntity : routine) {
+//                // Update the UI with the current counter
+//                counter++;
+//                toastMsg.postValue(String.valueOf(counter));
+//
+//                // Create and post the current exercise
+//                currentExercise.postValue(exerciseFactory.createExercise(
+//                        exerciseEntity.getExerciseName(),
+//                        exerciseEntity.getReps(),
+//                        exerciseEntity.getDuration()
+//                ));
+//
+//                // Transition to ExerciseTransitionFragment
+//                postFragmentTransition(ExerciseTransitionFragment.class, exerciseEntity.getExerciseName());
+//
+//                // Use CountDownLatch to wait for the transition and exercise to finish
+//                CountDownLatch transitionLatch = new CountDownLatch(1);
+//                CountDownLatch executionLatch = new CountDownLatch(1);
+//
+//                // Observer for transition state
+//                observeTransitionState(transitionLatch);
+//
+//                // Wait for the transition to finish
+//                awaitLatch(transitionLatch, "Waiting for transition to finish..."+counter);
+//
+//                // Post to change the fragment to RoutineExecutionFragment
+//                postFragmentTransition(RoutineExecutionFragment.class);
+//
+//                // Observer for execution state
+//                observeExecutionState(executionLatch);
+//                // Wait for the exercise to finish
+//                awaitLatch(executionLatch, "Waiting for exercise to finish..."+counter);
+//                try {
+//                    Thread.sleep(3000);
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//
+//            postFragmentTransition(VideoConvertFragment.class);
+//        });
+//
+//        thread.start();
+//    }
+
+    //
 
 
     public void executeRoutine() {
@@ -116,6 +166,7 @@ public class RoutineLooperViewModel extends ViewModel {
 
         thread.start();
     }
+
     private void postFragmentTransition(Class<? extends  Fragment> fragmentClass) {
         new Handler(Looper.getMainLooper()).post(() -> {
             try {
