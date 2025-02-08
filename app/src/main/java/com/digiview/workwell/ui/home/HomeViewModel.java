@@ -4,50 +4,71 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.digiview.workwell.data.models.UserDTO;
 import com.digiview.workwell.data.service.UserService;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 public class HomeViewModel extends ViewModel {
 
-    private UserService userService;
-    private MutableLiveData<String> displayName = new MutableLiveData<>();
-    private MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
+    private final UserService userService;
+    private final MutableLiveData<String> displayName = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
+    private final MutableLiveData<String> height = new MutableLiveData<>();
+    private final MutableLiveData<String> weight = new MutableLiveData<>();
+    private final MutableLiveData<String> assignedProfessional = new MutableLiveData<>();
 
     public HomeViewModel() {
-        userService = new UserService();  // Initialize the UserService
+        userService = new UserService(); // Initialize UserService
     }
 
-    // Fetch user data from Firebase
+    // Fetch complete user data
     public void fetchUserData() {
-        isLoading.setValue(true);  // Set loading to true when starting to fetch data
-        userService.getUserData().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    // Fetch the user's first and last name from Firestore
-                    String firstName = document.getString("FirstName");
-                    String lastName = document.getString("LastName");
+        isLoading.setValue(true); // Start loading
 
-                    // Combine first name and last name
-                    String fullName = (firstName != null ? firstName : "") + " " + (lastName != null ? lastName : "");
+        userService.getCompleteUserData().thenAccept(userDTO -> {
+            if (userDTO != null) {
+                // Manually create Full Name by appending FirstName and LastName
+                String fullName = userDTO.getName();
 
-                    // Update LiveData with the full name
-                    displayName.setValue(fullName);
-                }
-            } else {
-                // Handle error in fetching data
-                displayName.setValue("Error fetching data");
+                displayName.postValue(fullName.trim().isEmpty() ? "Unknown User" : fullName);
+
+                // Convert Double height/weight to String with formatting
+                height.postValue(userDTO.getHeight() != 0 ? String.format("%.2f cm", userDTO.getHeight()) : "N/A");
+                weight.postValue(userDTO.getWeight() != 0 ? String.format("%.2f kg", userDTO.getWeight()) : "N/A");
+
+
+                // Set Assigned Professional Name
+                assignedProfessional.postValue(userDTO.getAssignedProfessionalName() != null ?
+                        userDTO.getAssignedProfessionalName() : "Unassigned");
             }
-            isLoading.setValue(false);  // Set loading to false after data fetching is done
+            isLoading.postValue(false); // Stop loading
+        }).exceptionally(e -> {
+            displayName.postValue("Error fetching data");
+            height.postValue("N/A");
+            weight.postValue("N/A");
+            assignedProfessional.postValue("Unassigned");
+            isLoading.postValue(false);
+            return null;
         });
     }
 
-    // Expose LiveData for full name to the fragment
+    // Expose LiveData to the fragment
     public LiveData<String> getDisplayName() {
         return displayName;
     }
 
     public LiveData<Boolean> getIsLoading() {
         return isLoading;
+    }
+
+    public LiveData<String> getHeight() {
+        return height;
+    }
+
+    public LiveData<String> getWeight() {
+        return weight;
+    }
+
+    public LiveData<String> getAssignedProfessional() {
+        return assignedProfessional;
     }
 }

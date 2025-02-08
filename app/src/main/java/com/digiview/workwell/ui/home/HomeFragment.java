@@ -1,27 +1,29 @@
 package com.digiview.workwell.ui.home;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.Button;
 import com.digiview.workwell.R;
-import com.digiview.workwell.data.util.AuthHelper;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import com.digiview.workwell.ui.routine.RoutineFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel mViewModel;
-    private TextView tvUsername;
+    private TextView tvUsername, tvHeight, tvWeight, tvProfessional;
     private ProgressBar progressBar;
 
     public static HomeFragment newInstance() {
@@ -37,45 +39,61 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         // Initialize views
         tvUsername = view.findViewById(R.id.tvUsername);
-        progressBar = view.findViewById(R.id.progressBar);  // Initialize ProgressBar
+        progressBar = view.findViewById(R.id.progressBar);
+        tvHeight = view.findViewById(R.id.tvHeight);
+        tvWeight = view.findViewById(R.id.tvWeight);
+        tvProfessional = view.findViewById(R.id.tvProfessional);
+        Button btnStartRoutine = view.findViewById(R.id.btnStartRoutine);
+
+        btnStartRoutine.setOnClickListener(v -> {
+            // Get the BottomNavigationView from the activity
+            BottomNavigationView bottomNav = requireActivity().findViewById(R.id.bottomNav);
+
+            // Set the selected item to Routine
+            bottomNav.setSelectedItemId(R.id.menu_routine);
+        });
+
 
         // Initialize the ViewModel
         mViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
-        // Observe the displayName LiveData
+        // Observe and update the username
         mViewModel.getDisplayName().observe(getViewLifecycleOwner(), fullName -> {
-            // Set the full name when it's available
-            tvUsername.setText(fullName);
-        });
-
-        // Observe the isLoading LiveData
-        mViewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
-            if (isLoading != null && isLoading) {
-                progressBar.setVisibility(View.VISIBLE);  // Show loading indicator
-                tvUsername.setVisibility(View.GONE);  // Hide username until data is loaded
-            } else {
-                progressBar.setVisibility(View.GONE);  // Hide loading indicator
-                tvUsername.setVisibility(View.VISIBLE);  // Show username
+            if (fullName != null) {
+                String formattedText = getString(R.string.user_name, fullName);
+                tvUsername.setText(formattedText);
             }
         });
 
+        // Observe and update loading state
+        mViewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
+            if (isLoading != null && isLoading) {
+                progressBar.setVisibility(View.VISIBLE);
+                tvUsername.setVisibility(View.GONE);
+            } else {
+                progressBar.setVisibility(View.GONE);
+                tvUsername.setVisibility(View.VISIBLE);
+            }
+        });
 
+        // Observe and update height and weight
+        mViewModel.getHeight().observe(getViewLifecycleOwner(), height -> {
+            tvHeight.setText(height != null ? height : "N/A");
+        });
 
-        // Fetch user data from the ViewModel
+        mViewModel.getWeight().observe(getViewLifecycleOwner(), weight -> {
+            tvWeight.setText(weight != null ? weight : "N/A");
+        });
+
+        // Observe and update assigned professional
+        mViewModel.getAssignedProfessional().observe(getViewLifecycleOwner(), professional -> {
+            tvProfessional.setText(professional != null ? professional : "Unassigned");
+        });
+
+        // Fetch user data
         mViewModel.fetchUserData();
     }
-
-    private void testGetOrganizationId() {
-        AuthHelper.getOrganizationIdFromToken()
-                .thenAccept(organizationId -> {
-                    Log.d("TestOrgId", "OrganizationId retrieved: " + organizationId);
-                })
-                .exceptionally(e -> {
-                    Log.e("TestOrgId", "Failed to retrieve OrganizationId", e);
-                    return null;
-                });
-    }
-
 }
