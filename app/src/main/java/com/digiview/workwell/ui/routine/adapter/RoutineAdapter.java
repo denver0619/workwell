@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -44,10 +45,32 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.ViewHold
         holder.itemTitle.setText(routine.getName());
         holder.routineDate.setText(String.format("%s - %s", routine.getFormattedStartDate(), routine.getFormattedEndDate()));
 
+        // Set image based on TargetArea
+        int imageResId;
+        switch (routine.getTargetArea()) {
+            case "Neck":
+                imageResId = R.drawable.img_neck;
+                break;
+            case "Shoulder":
+                imageResId = R.drawable.img_shoulder;
+                break;
+            case "Thigh":
+                imageResId = R.drawable.img_knees;
+                break;
+            case "LowerBack":
+                imageResId = R.drawable.img_lower_back;
+                break;
+            default:
+                imageResId = R.drawable.img_neck; // Default image
+                break;
+        }
+        holder.heroImage.setImageResource(imageResId);
+
         holder.button.setOnClickListener(v -> {
             onRoutineClickListener.onRoutineClicked(routine); // Pass the Routine object
         });
     }
+
 
 
     @Override
@@ -57,18 +80,19 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView itemTitle;
-//        public TextView itemDescription; // Added a field for description
         public TextView routineDate;
         public Button button;
+        public ImageView heroImage; // Added ImageView reference
 
         public ViewHolder(View view) {
             super(view);
             itemTitle = view.findViewById(R.id.tvItemTitle);
-//            itemDescription = view.findViewById(R.id.tvItemDescription); // Assuming description TextView ID
             routineDate = view.findViewById(R.id.tvRoutineDate);
             button = view.findViewById(R.id.btnStartRoutine);
+            heroImage = view.findViewById(R.id.ivHero); // Ensure this ID matches item_routine.xml
         }
     }
+
 
     public interface OnRoutineClickListener {
         void onRoutineClicked(Routine routine); // Pass Routine object

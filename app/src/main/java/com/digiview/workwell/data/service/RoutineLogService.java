@@ -54,7 +54,6 @@ public class RoutineLogService {
                     routineLog.setRoutineLogName(routineLogName);
                     routineLog.setUid(uid);
                     routineLog.setOrganizationId(organizationId); // Set OrganizationId
-                    routineLog.setCreatedAt(null);
                     routineLog.setSelfAssessmentId(selfAssessmentId);
                     routineLog.setVideoId(videoId);
                     routineLog.setJournalId(null);

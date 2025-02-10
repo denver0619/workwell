@@ -68,6 +68,7 @@ public class RoutineLogRepository {
         // Set the generated ID into the routineLog object
         routineLog.setRoutineLogId(generatedId);
 
+
         // Create a map to explicitly include only required fields
         Map<String, Object> data = new HashMap<>();
         data.put("RoutineLogId", generatedId);
