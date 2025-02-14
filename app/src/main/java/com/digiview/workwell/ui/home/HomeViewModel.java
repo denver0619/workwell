@@ -15,43 +15,40 @@ public class HomeViewModel extends ViewModel {
     private final MutableLiveData<String> height = new MutableLiveData<>();
     private final MutableLiveData<String> weight = new MutableLiveData<>();
     private final MutableLiveData<String> assignedProfessional = new MutableLiveData<>();
+    private boolean isDataLoaded = false; // Flag to track if data is already fetched
 
     public HomeViewModel() {
-        userService = new UserService(); // Initialize UserService
+        userService = new UserService();
     }
 
-    // Fetch complete user data
     public void fetchUserData() {
-        isLoading.setValue(true); // Start loading
+        if (isDataLoaded) return; // Prevent redundant fetching
+        isLoading.setValue(true);
+
+        // If cached values exist, use them immediately
+        if (displayName.getValue() != null) {
+            isLoading.setValue(false);
+            return;
+        }
 
         userService.getCompleteUserData().thenAccept(userDTO -> {
             if (userDTO != null) {
-                // Manually create Full Name by appending FirstName and LastName
-                String fullName = userDTO.getName();
-
-                displayName.postValue(fullName.trim().isEmpty() ? "Unknown User" : fullName);
-
-                // Convert Double height/weight to String with formatting
+                displayName.postValue(userDTO.getName().trim().isEmpty() ? "Unknown User" : userDTO.getName());
                 height.postValue(userDTO.getHeight() != 0 ? String.format("%.2f cm", userDTO.getHeight()) : "N/A");
                 weight.postValue(userDTO.getWeight() != 0 ? String.format("%.2f kg", userDTO.getWeight()) : "N/A");
-
-
-                // Set Assigned Professional Name
                 assignedProfessional.postValue(userDTO.getAssignedProfessionalName() != null ?
                         userDTO.getAssignedProfessionalName() : "Unassigned");
+
+                isDataLoaded = true;
             }
-            isLoading.postValue(false); // Stop loading
+            isLoading.postValue(false);
         }).exceptionally(e -> {
-            displayName.postValue("Error fetching data");
-            height.postValue("N/A");
-            weight.postValue("N/A");
-            assignedProfessional.postValue("Unassigned");
             isLoading.postValue(false);
             return null;
         });
     }
 
-    // Expose LiveData to the fragment
+
     public LiveData<String> getDisplayName() {
         return displayName;
     }
@@ -72,3 +69,4 @@ public class HomeViewModel extends ViewModel {
         return assignedProfessional;
     }
 }
+

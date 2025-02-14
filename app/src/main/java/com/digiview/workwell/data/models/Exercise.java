@@ -2,6 +2,8 @@ package com.digiview.workwell.data.models;
 
 import com.google.firebase.firestore.PropertyName;
 
+import java.util.List;
+
 public class Exercise {
 
     private String ExerciseId; // Firestore ID
@@ -9,7 +11,7 @@ public class Exercise {
     private String Description; // Exercise description
     private String TargetArea; // Changed to string to align with Firestore
     private String OrganizationId; // ID of the organization the exercise belongs to
-
+    private List<String> Constraints;
     // Default constructor (required for Firestore)
     public Exercise() {
     }
@@ -57,6 +59,14 @@ public class Exercise {
     @PropertyName("OrganizationId")
     public void setOrganizationId(String organizationId) {
         this.OrganizationId = organizationId; // Set the organization ID
+    }
+
+    public List<String> getConstraints() {
+        return Constraints;
+    }
+
+    public void setConstraints(List<String> constraints) {
+        Constraints = constraints;
     }
 
     @Override
