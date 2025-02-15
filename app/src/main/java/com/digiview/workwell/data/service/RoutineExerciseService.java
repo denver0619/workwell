@@ -70,6 +70,7 @@ public class RoutineExerciseService {
                                                 detail.setAlignedThreshold(constraint.getAlignedThreshold());
                                                 detail.setRestingThreshold(constraint.getRestingThreshold());
                                                 detail.setRestingComparator(constraint.getRestingComparator());
+                                                detail.setAlignedComparator(constraint.getAlignedComparator());
                                                 detail.setKeypoints(keypointList);
                                                 return Tasks.forResult(detail);
                                             });
