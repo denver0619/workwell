@@ -111,17 +111,19 @@ public class RoutineExerciseDetailDTO implements Serializable {
         private int alignedThreshold;
         private int restingThreshold;
         private String restingComparator;
+        private String alignedComparator;
         private List<Keypoint> keypoints; // Detailed keypoint info
 
         public ConstraintDetailDTO() {
         }
 
         public ConstraintDetailDTO(String constraintId, int alignedThreshold, int restingThreshold,
-                                   String restingComparator, List<Keypoint> keypoints) {
+                                   String restingComparator, String alignedComparator, List<Keypoint> keypoints) {
             this.constraintId = constraintId;
             this.alignedThreshold = alignedThreshold;
             this.restingThreshold = restingThreshold;
             this.restingComparator = restingComparator;
+            this.alignedComparator = alignedComparator;
             this.keypoints = keypoints;
         }
 
@@ -155,6 +157,14 @@ public class RoutineExerciseDetailDTO implements Serializable {
 
         public void setRestingComparator(String restingComparator) {
             this.restingComparator = restingComparator;
+        }
+
+        public String getAlignedComparator() {
+            return alignedComparator;
+        }
+
+        public void setAlignedComparator(String alignedComparator) {
+            this.alignedComparator = alignedComparator;
         }
 
         public List<Keypoint> getKeypoints() {

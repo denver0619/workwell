@@ -7,6 +7,7 @@ public class Constraint {
     private int AlignedThreshold;
     private int RestingThreshold;
     private String RestingComparator;
+    private String AlignedComparator;
     private List<String> Keypoints;
 
     public String getConstraintId() {
@@ -40,6 +41,16 @@ public class Constraint {
     public void setRestingComparator(String restingComparator) {
         RestingComparator = restingComparator;
     }
+
+    public String getAlignedComparator() {
+        return AlignedComparator;
+    }
+
+    public void setAlignedComparator(String alignedComparator) {
+        AlignedComparator = alignedComparator;
+    }
+
+
 
     public List<String> getKeypoints() {
         return Keypoints;
