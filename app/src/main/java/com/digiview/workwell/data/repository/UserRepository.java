@@ -27,7 +27,7 @@ public class UserRepository {
      */
     public Task<DocumentSnapshot> getUserData() {
         if (currentUser != null) {
-            return db.collection("users") // Assuming "users" is your collection name
+            return db.collection("users")
                     .document(currentUser.getUid())
                     .get();
         } else {

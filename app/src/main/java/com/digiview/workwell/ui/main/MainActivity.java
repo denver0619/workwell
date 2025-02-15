@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.digiview.workwell.R;
 import com.digiview.workwell.data.models.RoutineExercise;
+import com.digiview.workwell.data.models.RoutineExerciseDetailDTO;
 import com.digiview.workwell.ui.fitnesslog.FitnessLogFragment;
 import com.digiview.workwell.ui.home.HomeFragment;
 import com.digiview.workwell.ui.profile.ProfileFragment;
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    public void startRoutineActivity(ArrayList<RoutineExercise> exercises, String routineId, String routineName) {
+    public void startRoutineActivity(ArrayList<RoutineExerciseDetailDTO> exercises, String routineId, String routineName) {
         Intent intent = new Intent(this, RoutineActivity.class);
         intent.putExtra("EXERCISES", exercises);
         intent.putExtra("ROUTINE_ID", routineId);

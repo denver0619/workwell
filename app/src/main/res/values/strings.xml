@@ -3,6 +3,7 @@
 
     <string name="disclaimer_text">The WorkWell application is designed to support and enhance ergonomic wellness through guided exercises and posture correction tools. However, it is not a substitute for professional medical advice, diagnosis, or treatment to existing medical conditions.</string>
     <string name="welcome_msg1">Login</string>
+    <string name="welcome_back">Welcome Back!</string>
     <string name="welcome_msg2">Welcome Aboard!</string>
     <string name="login_img_description">Login Image</string>
     <string name="sign_up_img_description">Signup Image</string>
@@ -17,6 +18,12 @@
     <string name="sign_up_alternative">Already have an account?</string>
     <string name="google_alternative">OR</string>
     <string name="login_google">Continue with Google</string>
+    <string name="height_label">Height</string>
+    <string name="height_placeholder">%s cm</string>
+    <string name="weight_label">Weight</string>
+    <string name="weight_placeholder">%s kg</string>
+    <string name="professional_label">Assigned Professional</string>
+    <string name="professional_placeholder">%s</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_routine">Routine</string>
@@ -24,7 +31,7 @@
     <string name="menu_profile">Profile</string>
 
     <string name="avatar_desc">User Avatar</string>
-    <string name="user_name">Username</string>
+    <string name="user_name">Hello, %s</string>
     <string name="hero_text">Start Your Ergonomic\nJourney</string>
     <string name="hero_button_text">Start Routine</string>
     <string name="hero_img_desc">Hero Image - Lady Stretching</string>
