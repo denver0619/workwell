@@ -152,6 +152,7 @@ public class RoutineDetailFragment extends Fragment implements RoutineDetailAdap
                                 Log.d("RoutineDetailFragment", "    AlignedThreshold: " + constraint.getAlignedThreshold());
                                 Log.d("RoutineDetailFragment", "    RestingThreshold: " + constraint.getRestingThreshold());
                                 Log.d("RoutineDetailFragment", "    RestingComparator: " + constraint.getRestingComparator());
+                                Log.d("RoutineDetailFragment", "    AlignedComparator: " + constraint.getAlignedComparator());
 
                                 // Keypoints
                                 List<Keypoint> keypoints = constraint.getKeypoints();
