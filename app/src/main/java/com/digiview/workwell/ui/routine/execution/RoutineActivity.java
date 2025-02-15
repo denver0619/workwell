@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.digiview.workwell.R;
 import com.digiview.workwell.data.models.RoutineExercise;
+import com.digiview.workwell.data.models.RoutineExerciseDetailDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class RoutineActivity extends AppCompatActivity implements RoutineLooperF
 
         routineId = getIntent().getStringExtra("ROUTINE_ID");
         routineName = getIntent().getStringExtra("ROUTINE_NAME");
-        ArrayList<RoutineExercise> exercises = (ArrayList<RoutineExercise>) getIntent().getSerializableExtra("EXERCISES");
+        ArrayList<RoutineExerciseDetailDTO> exercises = (ArrayList<RoutineExerciseDetailDTO>) getIntent().getSerializableExtra("EXERCISES");
 
         if (savedInstanceState == null) {
             RoutineLooperFragment routineLooperFragment = RoutineLooperFragment.newInstance();
@@ -44,7 +45,7 @@ public class RoutineActivity extends AppCompatActivity implements RoutineLooperF
     }
 
     @Override
-    public void onRoutineFinished(List<RoutineExercise> exercises) {
+    public void onRoutineFinished(List<RoutineExerciseDetailDTO> exercises) {
         Log.d("RoutineActivity", "onRoutineFinished called with videoId: " + videoId);
 
         Intent resultIntent = new Intent();

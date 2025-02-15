@@ -180,11 +180,11 @@ public class RoutineDetailFragment extends Fragment implements RoutineDetailAdap
 
                     // Now you have a list of fully hydrated DTOs
                     // Pass them to your next activity, or do whatever you need:
-//                    String routineId = mViewModel.getRoutine().getRoutineId();
-//                    String routineName = mViewModel.getRoutine().getName();
-//
-//                    ((MainActivity) requireActivity())
-//                            .startRoutineActivity(new ArrayList<>(detailDTOs), routineId, routineName);
+                    String routineId = mViewModel.getRoutine().getRoutineId();
+                    String routineName = mViewModel.getRoutine().getName();
+
+                    ((MainActivity) requireActivity())
+                            .startRoutineActivity(new ArrayList<>(detailDTOs), routineId, routineName);
 
                 })
                 .addOnFailureListener(e -> {

@@ -1,5 +1,8 @@
 package com.digiview.workwell.services.exercises;
 
+import com.digiview.workwell.data.models.Keypoint;
+import com.digiview.workwell.data.models.RoutineExerciseDetailDTO;
+
 import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
@@ -8,59 +11,55 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class BaseExerciseDynamic extends AbstractExercise {
-    private List<Constraint> constraints;
-
-    public BaseExerciseDynamic(Integer repetition, Long duration) {
-        super(repetition, duration);
+    private RoutineExerciseDetailDTO routineExerciseDetailDTO;
+    public BaseExerciseDynamic(RoutineExerciseDetailDTO routineExerciseDetailDTO) {
+        super(routineExerciseDetailDTO.getReps(), routineExerciseDetailDTO.getDuration());
+        this.routineExerciseDetailDTO = routineExerciseDetailDTO;
     }
 
-    // DATABASE ENTITIES
-    public static class KeyPoint {
-        // required, non-null
-        public Boolean isMidpoint;
-        // required, non-null
-        public Integer pointA; // index in 33 Keypoint
-        // optional, nullable (required only when isMidpoint is true)
-        public Integer pointB; // index in 33 Kypoint
-    }
+//    // DATABASE ENTITIES
+//    public static class KeyPoint {
+//        // required, non-null
+//        public Boolean isMidpoint;
+//        // required, non-null
+//        public Integer pointA; // index in 33 Keypoint
+//        // optional, nullable (required only when isMidpoint is true)
+//        public Integer pointB; // index in 33 Kypoint
+//    }
+//
+//    public static class Constraint {
+//        public List<KeyPoint> keyPoints; //required, non-null (fixed 3 Keypoint)
+//        public Float restingAngleThreshold; // required, non-null
+//        public Float alignedAngleThreshold; // required, non-null
+//
+//        /**
+//         * Only two option
+//         * "lt" for less than
+//         * "gt" for greater than
+//         * NOTE: should put warning or prevent the doctor if inputting invalid states (for combination of thresholds and comparator)
+//         */
+//        public String restingAngleComparator; // required, non-null
+//        public String alignedAngleComparator;//required, non-null
+//    }
+//
+//    public static class Exercise {
+//        public String name;
+//        public String description;
+//        public List<Constraint> constraints;
+//    }
+//    // DATABASE ENTITIES
 
-    public static class Constraint {
-        public List<KeyPoint> keyPoints; //required, non-null (fixed 3 Keypoint)
-        public Float restingAngleThreshold; // required, non-null
-        public Float alignedAngleThreshold; // required, non-null
-
-        /**
-         * Only two option
-         * "lt" for less than
-         * "gt" for greater than
-         * NOTE: should put warning or prevent the doctor if inputting invalid states (for combination of thresholds and comparator)
-         */
-        public String restingAngleComparator; // required, non-null
-        public String alignedAngleComparator;//required, non-null
-    }
-
-    public static class Exercise {
-        public String name;
-        public String description;
-        public List<Constraint> constraints;
-    }
-    // DATABASE ENTITIES
-
-    public void setConstraints(List<Constraint> constraints) {
-        this.constraints = constraints;
-    }
-
-    private double[] keyPointToCoordinateConversion(KeyPoint keyPoint) {
+    private double[] keyPointToCoordinateConversion(Keypoint keyPoint) {
 
         double[] result;
 
-        if(keyPoint.isMidpoint) {
+        if(keyPoint.isMidpoint()) {
             result = calculateMidpoint3D(
-                    landmarkToArray(landmarks.get(keyPoint.pointA)),
-                    landmarkToArray(landmarks.get(keyPoint.pointB))
+                    landmarkToArray(landmarks.get(LANDMARKS.fromString(keyPoint.getKeypoint()).getId())),
+                    landmarkToArray(landmarks.get(LANDMARKS.fromString(keyPoint.getSecondaryKeypoint()).getId()))
             );
         } else {
-            result = landmarkToArray(landmarks.get(keyPoint.pointA));
+            result = landmarkToArray(landmarks.get(LANDMARKS.fromString(keyPoint.getKeypoint()).getId()));
         }
         return result;
     }
@@ -80,8 +79,8 @@ public class BaseExerciseDynamic extends AbstractExercise {
 
         Future<Double> angle3DFuture;
 
-        for (Constraint constraint : constraints) {
-            List<KeyPoint> keyPoints = constraint.keyPoints;
+        for (RoutineExerciseDetailDTO.ConstraintDetailDTO constraint : routineExerciseDetailDTO.getConstraints()) {
+            List<Keypoint> keyPoints = constraint.getKeypoints();
             double[] pointA = keyPointToCoordinateConversion(keyPoints.get(0));
             double[] pointB = keyPointToCoordinateConversion(keyPoints.get(1));
             double[] pointC = keyPointToCoordinateConversion(keyPoints.get(2));
@@ -176,13 +175,13 @@ public class BaseExerciseDynamic extends AbstractExercise {
 //                }
 //            }
             //====================
-            if (constraint.restingAngleComparator.equals("lt")) {
-                resting = resting && (angle3d < constraint.restingAngleThreshold);
-            } else if (constraint.restingAngleComparator.equals("gt")) {
-                resting = resting && (angle3d > constraint.restingAngleThreshold);
+            if (constraint.getRestingComparator().equals("lt")) {
+                resting = resting && (angle3d < constraint.getRestingThreshold());
+            } else if (constraint.getRestingComparator().equals("gt")) {
+                resting = resting && (angle3d > constraint.getRestingThreshold());
             }
 
-            if (constraint.alignedAngleComparator.equals("lt")) {
+            if (constraint.getRestingComparator().equals("lt")) {
                 aligned = aligned && (angle3d < constraint.alignedAngleThreshold);
             } else if (constraint.alignedAngleComparator.equals("gt")) {
                 aligned = aligned && (angle3d > constraint.alignedAngleThreshold);
@@ -245,18 +244,4 @@ public class BaseExerciseDynamic extends AbstractExercise {
         return new ExerciseResult(angles, finalStatus, lastStatus, counter, timeLeft);
     }
 
-    public void sample() {
-        Constraint constraint1 = new Constraint();
-        constraint1.restingAngleThreshold = 140.f;
-        constraint1.alignedAngleThreshold = 135.f;
-        constraint1.restingAngleComparator = "gt";
-
-        KeyPoint keypointA1 = new KeyPoint();
-        keypointA1.isMidpoint = true;
-        keypointA1.pointA = LANDMARKS_FLIPPED.LEFT_EYE.getId();
-        keypointA1.pointB =LANDMARKS_FLIPPED.RIGHT_EYE.getId();
-
-        KeyPoint keypointA2 = new KeyPoint();
-        KeyPoint keypointA3 = new KeyPoint();
-    }
 }

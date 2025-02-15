@@ -9,6 +9,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.stream.IntStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class AbstractExercise {
     protected final ExecutorService executor = Executors.newFixedThreadPool(2);
@@ -40,48 +42,113 @@ public abstract class AbstractExercise {
     }
 
     // landmark index
-    public enum LANDMARKS {
-        NOSE(0),
-        LEFT_EYE_INNER(1),
-        LEFT_EYE(2),
-        LEFT_EYE_OUTER(3),
-        RIGHT_EYE_INNER(4),
-        RIGHT_EYE(5),
-        RIGHT_EYE_OUTER(6),
-        LEFT_EAR(7),
-        RIGHT_EAR(8),
-        MOUTH_LEFT(9),
-        MOUTH_RIGHT(10),
-        LEFT_SHOULDER(11),
-        RIGHT_SHOULDER(12),
-        LEFT_ELBOW(13),
-        RIGHT_ELBOW(14),
-        LEFT_WRIST(15),
-        RIGHT_WRIST(16),
-        LEFT_PINKY(17),
-        RIGHT_PINKY(18),
-        LEFT_INDEX(19),
-        RIGHT_INDEX(20),
-        LEFT_THUMB(21),
-        RIGHT_THUMB(22),
-        LEFT_HIP(23),
-        RIGHT_HIP(24),
-        LEFT_KNEE(25),
-        RIGHT_KNEE(26),
-        LEFT_ANKLE(27),
-        RIGHT_ANKLE(28),
-        LEFT_HEEL(29),
-        RIGHT_HEEL(30),
-        LEFT_FOOT_INDEX(31),
-        RIGHT_FOOT_INDEX(32);
+//    public enum LANDMARKS {
+//        NOSE(0),
+//        LEFT_EYE_INNER(1),
+//        LEFT_EYE(2),
+//        LEFT_EYE_OUTER(3),
+//        RIGHT_EYE_INNER(4),
+//        RIGHT_EYE(5),
+//        RIGHT_EYE_OUTER(6),
+//        LEFT_EAR(7),
+//        RIGHT_EAR(8),
+//        MOUTH_LEFT(9),
+//        MOUTH_RIGHT(10),
+//        LEFT_SHOULDER(11),
+//        RIGHT_SHOULDER(12),
+//        LEFT_ELBOW(13),
+//        RIGHT_ELBOW(14),
+//        LEFT_WRIST(15),
+//        RIGHT_WRIST(16),
+//        LEFT_PINKY(17),
+//        RIGHT_PINKY(18),
+//        LEFT_INDEX(19),
+//        RIGHT_INDEX(20),
+//        LEFT_THUMB(21),
+//        RIGHT_THUMB(22),
+//        LEFT_HIP(23),
+//        RIGHT_HIP(24),
+//        LEFT_KNEE(25),
+//        RIGHT_KNEE(26),
+//        LEFT_ANKLE(27),
+//        RIGHT_ANKLE(28),
+//        LEFT_HEEL(29),
+//        RIGHT_HEEL(30),
+//        LEFT_FOOT_INDEX(31),
+//        RIGHT_FOOT_INDEX(32);
+//
+//        private int id;
+//        LANDMARKS(int id) {
+//            this.id = id;
+//        }
+//
+//        public int getId() {
+//            return id;
+//        }
+//    }
 
-        private int id;
-        LANDMARKS(int id) {
+    public enum LANDMARKS {
+        NOSE(0, "NOSE"),
+        LEFT_EYE_INNER(1, "LEFT_EYE_INNER"),
+        LEFT_EYE(2, "LEFT_EYE"),
+        LEFT_EYE_OUTER(3, "LEFT_EYE_OUTER"),
+        RIGHT_EYE_INNER(4, "RIGHT_EYE_INNER"),
+        RIGHT_EYE(5, "RIGHT_EYE"),
+        RIGHT_EYE_OUTER(6, "RIGHT_EYE_OUTER"),
+        LEFT_EAR(7, "LEFT_EAR"),
+        RIGHT_EAR(8, "RIGHT_EAR"),
+        MOUTH_LEFT(9, "MOUTH_LEFT"),
+        MOUTH_RIGHT(10, "MOUTH_RIGHT"),
+        LEFT_SHOULDER(11, "LEFT_SHOULDER"),
+        RIGHT_SHOULDER(12, "RIGHT_SHOULDER"),
+        LEFT_ELBOW(13, "LEFT_ELBOW"),
+        RIGHT_ELBOW(14, "RIGHT_ELBOW"),
+        LEFT_WRIST(15, "LEFT_WRIST"),
+        RIGHT_WRIST(16, "RIGHT_WRIST"),
+        LEFT_PINKY(17, "LEFT_PINKY"),
+        RIGHT_PINKY(18, "RIGHT_PINKY"),
+        LEFT_INDEX(19, "LEFT_INDEX"),
+        RIGHT_INDEX(20, "RIGHT_INDEX"),
+        LEFT_THUMB(21, "LEFT_THUMB"),
+        RIGHT_THUMB(22, "RIGHT_THUMB"),
+        LEFT_HIP(23, "LEFT_HIP"),
+        RIGHT_HIP(24, "RIGHT_HIP"),
+        LEFT_KNEE(25, "LEFT_KNEE"),
+        RIGHT_KNEE(26, "RIGHT_KNEE"),
+        LEFT_ANKLE(27, "LEFT_ANKLE"),
+        RIGHT_ANKLE(28, "RIGHT_ANKLE"),
+        LEFT_HEEL(29, "LEFT_HEEL"),
+        RIGHT_HEEL(30, "RIGHT_HEEL"),
+        LEFT_FOOT_INDEX(31, "LEFT_FOOT_INDEX"),
+        RIGHT_FOOT_INDEX(32, "RIGHT_FOOT_INDEX");
+
+        private static final Map<String, LANDMARKS> NAME_MAP = new HashMap<>();
+
+        static {
+            for (LANDMARKS landmark : values()) {
+                NAME_MAP.put(landmark.name, landmark);
+            }
+        }
+
+        private final int id;
+        private final String name;
+
+        LANDMARKS(int id, String name) {
             this.id = id;
+            this.name = name;
         }
 
         public int getId() {
             return id;
+        }
+
+        public String getStr() {
+            return name;
+        }
+
+        // Factory Method
+        public static LANDMARKS fromString(String name) {
+            return NAME_MAP.getOrDefault(name, null);
         }
     }
 

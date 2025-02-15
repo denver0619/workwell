@@ -12,7 +12,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.digiview.workwell.data.models.RoutineExercise;
+import com.digiview.workwell.data.models.RoutineExerciseDetailDTO;
 import com.digiview.workwell.services.exercises.AbstractExercise;
+import com.digiview.workwell.services.exercises.BaseExerciseDynamic;
 import com.digiview.workwell.services.exercises.ExerciseFactory;
 
 import java.util.List;
@@ -33,10 +35,10 @@ public class RoutineLooperViewModel extends ViewModel {
 
 
     // FOR ROUTINE EXECUTION====================================
-    private List<RoutineExercise> routine;
+    private List<RoutineExerciseDetailDTO> routine;
     private final MutableLiveData<AbstractExercise> currentExercise = new MutableLiveData<>();
 
-    public void setRoutine(List<RoutineExercise> routine) {
+    public void setRoutine(List<RoutineExerciseDetailDTO> routine) {
         this.routine = routine;
     }
 
@@ -122,17 +124,21 @@ public class RoutineLooperViewModel extends ViewModel {
         ExerciseFactory exerciseFactory = new ExerciseFactory();
         Thread thread = new Thread(() -> {
             int counter = 0;
-            for (RoutineExercise exerciseEntity : routine) {
+            for (RoutineExerciseDetailDTO exerciseEntity : routine) {
                 // Update the UI with the current counter
                 counter++;
                 toastMsg.postValue(String.valueOf(counter));
 
                 // Create and post the current exercise
-                currentExercise.postValue(exerciseFactory.createExercise(
-                        exerciseEntity.getExerciseName(),
-                        exerciseEntity.getReps(),
-                        exerciseEntity.getDuration()
-                ));
+//                currentExercise.postValue(exerciseFactory.createExercise(
+//                        exerciseEntity.getExerciseName(),
+//                        exerciseEntity.getReps(),
+//                        exerciseEntity.getDuration()
+//                ));
+
+                currentExercise.postValue(
+                        new BaseExerciseDynamic(exerciseEntity)
+                );
 
                 // Transition to ExerciseTransitionFragment
                 postFragmentTransition(ExerciseTransitionFragment.class, exerciseEntity.getExerciseName());

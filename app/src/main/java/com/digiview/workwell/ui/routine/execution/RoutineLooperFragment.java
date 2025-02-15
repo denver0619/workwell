@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.digiview.workwell.R;
 
 import com.digiview.workwell.data.models.RoutineExercise;
+import com.digiview.workwell.data.models.RoutineExerciseDetailDTO;
 import com.digiview.workwell.databinding.FragmentRoutineLooperBinding;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class RoutineLooperFragment extends Fragment {
     private ProcessCameraProvider cameraProvider;
 
     private String routineLogId;
-    private List<RoutineExercise> exercises;
+    private List<RoutineExerciseDetailDTO> exercises;
     private OnRoutineFinishedListener onRoutineFinishedListener;
 
     // SAMPLE DATABASE MOCK DATA
@@ -96,7 +97,7 @@ public class RoutineLooperFragment extends Fragment {
         Bundle arguments = getArguments();
         if (arguments != null) {
             routineLogId = arguments.getString("ROUTINE_LOG_ID");
-            exercises = (ArrayList<RoutineExercise>) arguments.getSerializable("EXERCISES");
+            exercises = (ArrayList<RoutineExerciseDetailDTO>) arguments.getSerializable("EXERCISES");
             Log.d("RoutineLooperFragment", "RoutineLogId: " + routineLogId);
 
             if (exercises != null) {
@@ -195,9 +196,8 @@ public class RoutineLooperFragment extends Fragment {
     }
 
     public interface OnRoutineFinishedListener {
-        void onRoutineFinished(List<RoutineExercise> exercises);
+        void onRoutineFinished(List<RoutineExerciseDetailDTO> exercises);
     }
-
 
 
 }
