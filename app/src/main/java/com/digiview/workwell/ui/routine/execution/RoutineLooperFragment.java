@@ -101,7 +101,7 @@ public class RoutineLooperFragment extends Fragment {
             Log.d("RoutineLooperFragment", "RoutineLogId: " + routineLogId);
 
             if (exercises != null) {
-                for (RoutineExercise exercise : exercises) {
+                for (RoutineExerciseDetailDTO exercise : exercises) {
                     Log.d("RoutineLooperFragment", "Exercise: " + exercise.getExerciseName());
                 }
             }

@@ -2,7 +2,9 @@ package com.digiview.workwell.data.models;
 
 import com.google.firebase.firestore.PropertyName;
 
-public class Keypoint {
+import java.io.Serializable;
+
+public class Keypoint implements Serializable {
     private String KeypointId;
     private String Keypoint;
     private String SecondaryKeypoint;

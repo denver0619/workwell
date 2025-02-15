@@ -11,7 +11,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class BaseExerciseDynamic extends AbstractExercise {
-    private RoutineExerciseDetailDTO routineExerciseDetailDTO;
+    private final RoutineExerciseDetailDTO routineExerciseDetailDTO;
+    public boolean restingState;
+    public boolean alignedState;
     public BaseExerciseDynamic(RoutineExerciseDetailDTO routineExerciseDetailDTO) {
         super(routineExerciseDetailDTO.getReps(), routineExerciseDetailDTO.getDuration());
         this.routineExerciseDetailDTO = routineExerciseDetailDTO;
@@ -72,12 +74,16 @@ public class BaseExerciseDynamic extends AbstractExercise {
          * if both are false, position transition
          * if both are true, position invalid
          */
+        /**
+         * TODO:
+         * Fix bug with resting and aligned comparators
+         */
 
         List<Double> angleResults = new ArrayList<>();
+        Future<Double> angle3DFuture;
         boolean resting = true;
         boolean aligned = true;
 
-        Future<Double> angle3DFuture;
 
         for (RoutineExerciseDetailDTO.ConstraintDetailDTO constraint : routineExerciseDetailDTO.getConstraints()) {
             List<Keypoint> keyPoints = constraint.getKeypoints();
@@ -90,6 +96,8 @@ public class BaseExerciseDynamic extends AbstractExercise {
             try {
                 // Get results (this will block until the results are available)
                 angle3d = angle3DFuture.get();
+                angleResults.add(angle3d);
+                angleResults.add(angle3d);
             } catch (InterruptedException | ExecutionException err) {
                 // Handle the exception (either log it or rethrow it)
                 err.printStackTrace();
@@ -125,66 +133,78 @@ public class BaseExerciseDynamic extends AbstractExercise {
 //
 //            }
             //=================================================
-//            if (constraint.restingAngleComparator.equals("lt") && constraint.alignedAngleComparator.equals("lt")) {
-//                if (angle3d < constraint.restingAngleThreshold) {
+//            if (constraint.getRestingComparator().equals("lt") && constraint.getAlignedComparator().equals("lt")) {
+//                if (angle3d < constraint.getRestingThreshold()) {
 //                    resting = resting && true;
 //                } else {
 //                    resting = resting && false;
 //                }
 //
-//                if (angle3d < constraint.alignedAngleThreshold) {
+//                if (angle3d < constraint.getAlignedThreshold()) {
 //                    aligned = aligned && true;
 //                } else {
 //                    aligned = aligned && false;
 //                }
-//            } else if (constraint.restingAngleComparator.equals("gt") && constraint.alignedAngleComparator.equals("gt")) {
-//                if (angle3d > constraint.restingAngleThreshold) {
+//            } else if (constraint.getRestingComparator().equals("gt") && constraint.getAlignedComparator().equals("gt")) {
+//                if (angle3d > constraint.getRestingThreshold()) {
 //                    resting = resting && true;
 //                } else {
 //                    resting = resting && false;
 //                }
 //
-//                if (angle3d > constraint.alignedAngleThreshold) {
+//                if (angle3d > constraint.getAlignedThreshold()) {
 //                    aligned = aligned && true;
 //                } else {
 //                    aligned = aligned && false;
 //                }
-//            } else if (constraint.restingAngleComparator.equals("lt") && constraint.alignedAngleComparator.equals("gt")) {
-//                if (angle3d < constraint.restingAngleThreshold) {
+//            } else if (constraint.getRestingComparator().equals("lt") && constraint.getAlignedComparator().equals("gt")) {
+//                if (angle3d < constraint.getRestingThreshold()) {
 //                    resting = resting && true;
 //                } else {
 //                    resting = resting && false;
 //                }
 //
-//                if (angle3d > constraint.alignedAngleThreshold) {
+//                if (angle3d > constraint.getAlignedThreshold()) {
 //                    aligned = aligned && true;
 //                } else {
 //                    aligned = aligned && false;
 //                }
-//            } else if (constraint.restingAngleComparator.equals("gt") && constraint.alignedAngleComparator.equals("lt")) {
-//                if (angle3d > constraint.restingAngleThreshold) {
+//            } else if (constraint.getRestingComparator().equals("gt") && constraint.getAlignedComparator().equals("lt")) {
+//                if (angle3d > constraint.getRestingThreshold()) {
 //                    resting = resting && true;
 //                } else {
 //                    resting = resting && false;
 //                }
 //
-//                if (angle3d < constraint.alignedAngleThreshold) {
+//                if (angle3d < constraint.getAlignedThreshold()) {
 //                    aligned = aligned && true;
 //                } else {
 //                    aligned = aligned && false;
 //                }
 //            }
             //====================
+//            if (constraint.getRestingComparator().equals("lt")) {
+//                resting = resting && (angle3d < constraint.getRestingThreshold());
+//            } else if (constraint.getRestingComparator().equals("gt")) {
+//                resting = resting && (angle3d > constraint.getRestingThreshold());
+//            }
+//
+//            if (constraint.getAlignedComparator().equals("lt")) {
+//                aligned = aligned && (angle3d < constraint.getAlignedThreshold());
+//            } else if (constraint.getAlignedComparator().equals("gt")) {
+//                aligned = aligned && (angle3d > constraint.getAlignedThreshold());
+//            }
+            //===================
             if (constraint.getRestingComparator().equals("lt")) {
                 resting = resting && (angle3d < constraint.getRestingThreshold());
             } else if (constraint.getRestingComparator().equals("gt")) {
                 resting = resting && (angle3d > constraint.getRestingThreshold());
             }
 
-            if (constraint.getRestingComparator().equals("lt")) {
-                aligned = aligned && (angle3d < constraint.alignedAngleThreshold);
-            } else if (constraint.alignedAngleComparator.equals("gt")) {
-                aligned = aligned && (angle3d > constraint.alignedAngleThreshold);
+            if (constraint.getAlignedComparator().equals("lt")) {
+                aligned = aligned && (angle3d < constraint.getAlignedThreshold());
+            } else if (constraint.getAlignedComparator().equals("gt")) {
+                aligned = aligned && (angle3d > constraint.getAlignedThreshold());
             }
         }
 
@@ -193,12 +213,13 @@ public class BaseExerciseDynamic extends AbstractExercise {
             position = STATUS.RESTING;
         } else  if (!resting && aligned) {
             position = STATUS.ALIGNED;
-        } else if (!resting && aligned) {
+        } else if (!resting && !aligned) {
             position = STATUS.TRANSITIONING;
         } else {
             position = STATUS.NO_PERSON;
         }
-
+        restingState = resting;
+        alignedState = aligned;
         switch (position) {
             case RESTING:
                 // mark new timer as current

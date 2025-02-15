@@ -5,6 +5,7 @@ import android.content.res.AssetFileDescriptor;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -12,9 +13,11 @@ import androidx.lifecycle.ViewModel;
 
 import com.digiview.workwell.services.TTSHelper;
 import com.digiview.workwell.services.exercises.AbstractExercise;
+import com.digiview.workwell.services.exercises.BaseExerciseDynamic;
 import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarkerResult;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Objects;
 
 public class RoutineExecutionViewModel extends ViewModel {// TODO: Implement the ViewModel
@@ -31,13 +34,13 @@ public class RoutineExecutionViewModel extends ViewModel {// TODO: Implement the
         this.context = context;
     }
 
-    private final MutableLiveData<AbstractExercise> exercise = new MutableLiveData<>();
-    public void setExercise(AbstractExercise exercise) {
+    private final MutableLiveData<BaseExerciseDynamic> exercise = new MutableLiveData<>();
+    public void setExercise(BaseExerciseDynamic exercise) {
         this.exercise.setValue(exercise);
     }
 
-    private final MutableLiveData<AbstractExercise.ExerciseResult> exerciseResult = new MutableLiveData<>();
-    public void setExerciseResult(AbstractExercise.ExerciseResult exerciseResult) {
+    private final MutableLiveData<BaseExerciseDynamic.ExerciseResult> exerciseResult = new MutableLiveData<>();
+    public void setExerciseResult(BaseExerciseDynamic.ExerciseResult exerciseResult) {
         this.exerciseResult.setValue(exerciseResult);
     }
 
@@ -102,6 +105,7 @@ public class RoutineExecutionViewModel extends ViewModel {// TODO: Implement the
     public PoseSmoother poseSmoother = new PoseSmoother(25);
 
     public void processLandmarkerResult(PoseLandmarkerResult landmarkerResults) {
+
         setExecutionState(RoutineConstants.EXECUTION_STATE.PREPARING);
         if (exercise.getValue() == null) {
             return;
@@ -124,7 +128,9 @@ public class RoutineExecutionViewModel extends ViewModel {// TODO: Implement the
             angle2d.setValue(result.getAngles()[0]);
             angle3d.setValue(result.getAngles()[1]);
             timeLeft.setValue(result.getTimeLeft());
-            Log.d("=====Exercise.STATUS=====", result.getPosition().name() );
+//            Toast.makeText(context, "resting: " + exercise.getValue().restingState + ", aligned: " + exercise.getValue().alignedState, Toast.LENGTH_LONG).show();
+//            Log.d("=====Exercise.STATUS=====", result.getPosition().name() );
+            Log.d("Position status", "resting: " + exercise.getValue().restingState + ", aligned: " + exercise.getValue().alignedState);
 
             switch (position) {
                 case RESTING:

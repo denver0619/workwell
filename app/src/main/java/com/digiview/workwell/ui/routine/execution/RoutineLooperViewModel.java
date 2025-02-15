@@ -36,13 +36,13 @@ public class RoutineLooperViewModel extends ViewModel {
 
     // FOR ROUTINE EXECUTION====================================
     private List<RoutineExerciseDetailDTO> routine;
-    private final MutableLiveData<AbstractExercise> currentExercise = new MutableLiveData<>();
+    private final MutableLiveData<BaseExerciseDynamic> currentExercise = new MutableLiveData<>();
 
     public void setRoutine(List<RoutineExerciseDetailDTO> routine) {
         this.routine = routine;
     }
 
-    public LiveData<AbstractExercise> getCurrentExercise() {
+    public LiveData<BaseExerciseDynamic> getCurrentExercise() {
         return currentExercise;
     }
 

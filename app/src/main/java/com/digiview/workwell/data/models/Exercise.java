@@ -2,9 +2,10 @@ package com.digiview.workwell.data.models;
 
 import com.google.firebase.firestore.PropertyName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Exercise {
+public class Exercise implements Serializable {
 
     private String ExerciseId; // Firestore ID
     private String Name;       // Exercise name
