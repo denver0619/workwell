@@ -15,66 +15,75 @@
         app:cardCornerRadius="12dp"
         app:cardBackgroundColor="@color/secondary_color"
         android:layout_marginTop="16dp"
-        >
+        android:paddingEnd="32dp">
 
-        <RelativeLayout
+        <!-- Background Image Overlay -->
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:padding="16dp">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tvItemTitle"
-                android:layout_width="363dp"
-                android:layout_height="37dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:gravity="start"
-                android:text="@string/placeholder_routine_name"
-                android:textColor="@color/neutral_dark_color"
-                android:textFontWeight="600"
-                android:textSize="20sp" />
+            <!-- Image as Background Overlay -->
+            <ImageView
+                android:id="@+id/ivHeroBackground"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_texture"
+                android:alpha="0.5"/> <!-- Adjust transparency for overlay effect -->
 
-            <TextView
-                android:id="@+id/tvRoutineDate"
-                android:layout_width="201dp"
-                android:layout_height="40dp"
-                android:layout_below="@+id/tvItemTitle"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="0dp"
-                android:gravity="start"
-                android:text="@string/placeholder_routine_name"
-                android:textColor="@color/neutral_dark_color"
-                android:textFontWeight="600"
-                android:textSize="14sp" />
+            <!-- Content Container (Above Background) -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:padding="16dp">
 
+                <TextView
+                    android:id="@+id/tvItemTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/placeholder_routine_name"
+                    android:textColor="@color/neutral_dark_color"
+                    android:textFontWeight="600"
+                    android:textSize="20sp" />
 
-            <Button
-                android:id="@+id/btnStartRoutine"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/accent_color"
-                android:minHeight="48dp"
-                android:text="@string/hero_button_text"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/tvRoutineDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvItemTitle"
+                    android:layout_alignEnd="@id/tvItemTitle"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/placeholder_routine_date"
+                    android:textColor="@color/neutral_dark_color"
+                    android:textFontWeight="600"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/btnStartRoutine"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvRoutineDate"
+                    android:layout_alignEnd="@id/tvRoutineDate"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="@color/accent_color"
+                    android:minHeight="48dp"
+                    android:text="@string/hero_button_text"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+        </FrameLayout>
     </androidx.cardview.widget.CardView>
 
-<!--    <ImageView-->
-<!--        android:id="@+id/ivHero"-->
-<!--        android:layout_width="176dp"-->
-<!--        android:layout_height="184dp"-->
-<!--        android:elevation="8dp"-->
-<!--        android:translationY="-8dp"-->
-<!--        android:scaleType="centerCrop"-->
-<!--        android:src="@drawable/img_lower_back_1"-->
-<!--        android:contentDescription="@string/hero_img_desc"/>-->
+    <ImageView
+        android:id="@+id/ivHero"
+        android:layout_width="176dp"
+        android:layout_height="184dp"
+        android:elevation="8dp"
+        android:translationY="1dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_neck"
+        android:contentDescription="@string/hero_img_desc"/>
 
 </FrameLayout>

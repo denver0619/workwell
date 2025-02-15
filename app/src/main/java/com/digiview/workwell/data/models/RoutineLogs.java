@@ -33,6 +33,7 @@ public class RoutineLogs implements Serializable {
     @PropertyName("OrganizationId")
     private String organizationId; // New field for organization ID
 
+    @ServerTimestamp
     @PropertyName("CreatedAt")
     private Date createdAt;
 
