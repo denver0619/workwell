@@ -125,54 +125,67 @@ public class BaseExerciseDynamic extends AbstractExercise {
 //                }
 //
 //            }
-            if (constraint.restingAngleComparator.equals("lt") && constraint.alignedAngleComparator.equals("lt")) {
-                if (angle3d < constraint.restingAngleThreshold) {
-                    resting = resting && true;
-                } else {
-                    resting = resting && false;
-                }
+            //=================================================
+//            if (constraint.restingAngleComparator.equals("lt") && constraint.alignedAngleComparator.equals("lt")) {
+//                if (angle3d < constraint.restingAngleThreshold) {
+//                    resting = resting && true;
+//                } else {
+//                    resting = resting && false;
+//                }
+//
+//                if (angle3d < constraint.alignedAngleThreshold) {
+//                    aligned = aligned && true;
+//                } else {
+//                    aligned = aligned && false;
+//                }
+//            } else if (constraint.restingAngleComparator.equals("gt") && constraint.alignedAngleComparator.equals("gt")) {
+//                if (angle3d > constraint.restingAngleThreshold) {
+//                    resting = resting && true;
+//                } else {
+//                    resting = resting && false;
+//                }
+//
+//                if (angle3d > constraint.alignedAngleThreshold) {
+//                    aligned = aligned && true;
+//                } else {
+//                    aligned = aligned && false;
+//                }
+//            } else if (constraint.restingAngleComparator.equals("lt") && constraint.alignedAngleComparator.equals("gt")) {
+//                if (angle3d < constraint.restingAngleThreshold) {
+//                    resting = resting && true;
+//                } else {
+//                    resting = resting && false;
+//                }
+//
+//                if (angle3d > constraint.alignedAngleThreshold) {
+//                    aligned = aligned && true;
+//                } else {
+//                    aligned = aligned && false;
+//                }
+//            } else if (constraint.restingAngleComparator.equals("gt") && constraint.alignedAngleComparator.equals("lt")) {
+//                if (angle3d > constraint.restingAngleThreshold) {
+//                    resting = resting && true;
+//                } else {
+//                    resting = resting && false;
+//                }
+//
+//                if (angle3d < constraint.alignedAngleThreshold) {
+//                    aligned = aligned && true;
+//                } else {
+//                    aligned = aligned && false;
+//                }
+//            }
+            //====================
+            if (constraint.restingAngleComparator.equals("lt")) {
+                resting = resting && (angle3d < constraint.restingAngleThreshold);
+            } else if (constraint.restingAngleComparator.equals("gt")) {
+                resting = resting && (angle3d > constraint.restingAngleThreshold);
+            }
 
-                if (angle3d < constraint.alignedAngleThreshold) {
-                    aligned = aligned && true;
-                } else {
-                    aligned = aligned && false;
-                }
-            } else if (constraint.restingAngleComparator.equals("gt") && constraint.alignedAngleComparator.equals("gt")) {
-                if (angle3d > constraint.restingAngleThreshold) {
-                    resting = resting && true;
-                } else {
-                    resting = resting && false;
-                }
-
-                if (angle3d > constraint.alignedAngleThreshold) {
-                    aligned = aligned && true;
-                } else {
-                    aligned = aligned && false;
-                }
-            } else if (constraint.restingAngleComparator.equals("lt") && constraint.alignedAngleComparator.equals("gt")) {
-                if (angle3d < constraint.restingAngleThreshold) {
-                    resting = resting && true;
-                } else {
-                    resting = resting && false;
-                }
-
-                if (angle3d > constraint.alignedAngleThreshold) {
-                    aligned = aligned && true;
-                } else {
-                    aligned = aligned && false;
-                }
-            } else if (constraint.restingAngleComparator.equals("gt") && constraint.alignedAngleComparator.equals("lt")) {
-                if (angle3d > constraint.restingAngleThreshold) {
-                    resting = resting && true;
-                } else {
-                    resting = resting && false;
-                }
-
-                if (angle3d < constraint.alignedAngleThreshold) {
-                    aligned = aligned && true;
-                } else {
-                    aligned = aligned && false;
-                }
+            if (constraint.alignedAngleComparator.equals("lt")) {
+                aligned = aligned && (angle3d < constraint.alignedAngleThreshold);
+            } else if (constraint.alignedAngleComparator.equals("gt")) {
+                aligned = aligned && (angle3d > constraint.alignedAngleThreshold);
             }
         }
 
