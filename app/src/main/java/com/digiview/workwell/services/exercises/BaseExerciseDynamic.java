@@ -74,10 +74,6 @@ public class BaseExerciseDynamic extends AbstractExercise {
          * if both are false, position transition
          * if both are true, position invalid
          */
-        /**
-         * TODO:
-         * Fix bug with resting and aligned comparators
-         */
 
         List<Double> angleResults = new ArrayList<>();
         Future<Double> angle3DFuture;
