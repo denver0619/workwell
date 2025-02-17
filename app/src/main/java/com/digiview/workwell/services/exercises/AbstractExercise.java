@@ -151,51 +151,117 @@ public abstract class AbstractExercise {
             return NAME_MAP.getOrDefault(name, null);
         }
     }
+//
+//    public enum LANDMARKS_FLIPPED {
+//        NOSE(LANDMARKS.NOSE.getId()),
+//        LEFT_EYE_INNER(LANDMARKS.RIGHT_EYE_INNER.getId()),
+//        LEFT_EYE(LANDMARKS.RIGHT_EYE.getId()),
+//        LEFT_EYE_OUTER(LANDMARKS.RIGHT_EYE_OUTER.getId()),
+//        RIGHT_EYE_INNER(LANDMARKS.LEFT_EYE_INNER.getId()),
+//        RIGHT_EYE(LANDMARKS.LEFT_EYE.getId()),
+//        RIGHT_EYE_OUTER(LANDMARKS.LEFT_EYE_OUTER.getId()),
+//        LEFT_EAR(LANDMARKS.RIGHT_EAR.getId()),
+//        RIGHT_EAR(LANDMARKS.LEFT_EAR.getId()),
+//        MOUTH_LEFT(LANDMARKS.MOUTH_RIGHT.getId()),
+//        MOUTH_RIGHT(LANDMARKS.MOUTH_LEFT.getId()),
+//        LEFT_SHOULDER(LANDMARKS.RIGHT_SHOULDER.getId()),
+//        RIGHT_SHOULDER(LANDMARKS.LEFT_SHOULDER.getId()),
+//        LEFT_ELBOW(LANDMARKS.RIGHT_ELBOW.getId()),
+//        RIGHT_ELBOW(LANDMARKS.LEFT_ELBOW.getId()),
+//        LEFT_WRIST(LANDMARKS.RIGHT_WRIST.getId()),
+//        RIGHT_WRIST(LANDMARKS.LEFT_WRIST.getId()),
+//        LEFT_PINKY(LANDMARKS.RIGHT_PINKY.getId()),
+//        RIGHT_PINKY(LANDMARKS.LEFT_PINKY.getId()),
+//        LEFT_INDEX(LANDMARKS.RIGHT_INDEX.getId()),
+//        RIGHT_INDEX(LANDMARKS.LEFT_INDEX.getId()),
+//        LEFT_THUMB(LANDMARKS.RIGHT_THUMB.getId()),
+//        RIGHT_THUMB(LANDMARKS.LEFT_THUMB.getId()),
+//        LEFT_HIP(LANDMARKS.RIGHT_HIP.getId()),
+//        RIGHT_HIP(LANDMARKS.LEFT_HIP.getId()),
+//        LEFT_KNEE(LANDMARKS.RIGHT_KNEE.getId()),
+//        RIGHT_KNEE(LANDMARKS.LEFT_KNEE.getId()),
+//        LEFT_ANKLE(LANDMARKS.RIGHT_ANKLE.getId()),
+//        RIGHT_ANKLE(LANDMARKS.LEFT_ANKLE.getId()),
+//        LEFT_HEEL(LANDMARKS.RIGHT_HEEL.getId()),
+//        RIGHT_HEEL(LANDMARKS.LEFT_HEEL.getId()),
+//        LEFT_FOOT_INDEX(LANDMARKS.RIGHT_FOOT_INDEX.getId()),
+//        RIGHT_FOOT_INDEX(LANDMARKS.LEFT_FOOT_INDEX.getId());
+//
+//        private int id;
+//        LANDMARKS_FLIPPED(int id) {
+//            this.id = id;
+//        }
+//
+//        public int getId() {
+//            return id;
+//        }
+//    }
 
     public enum LANDMARKS_FLIPPED {
-        NOSE(LANDMARKS.NOSE.getId()),
-        LEFT_EYE_INNER(LANDMARKS.RIGHT_EYE_INNER.getId()),
-        LEFT_EYE(LANDMARKS.RIGHT_EYE.getId()),
-        LEFT_EYE_OUTER(LANDMARKS.RIGHT_EYE_OUTER.getId()),
-        RIGHT_EYE_INNER(LANDMARKS.LEFT_EYE_INNER.getId()),
-        RIGHT_EYE(LANDMARKS.LEFT_EYE.getId()),
-        RIGHT_EYE_OUTER(LANDMARKS.LEFT_EYE_OUTER.getId()),
-        LEFT_EAR(LANDMARKS.RIGHT_EAR.getId()),
-        RIGHT_EAR(LANDMARKS.LEFT_EAR.getId()),
-        MOUTH_LEFT(LANDMARKS.MOUTH_RIGHT.getId()),
-        MOUTH_RIGHT(LANDMARKS.MOUTH_LEFT.getId()),
-        LEFT_SHOULDER(LANDMARKS.RIGHT_SHOULDER.getId()),
-        RIGHT_SHOULDER(LANDMARKS.LEFT_SHOULDER.getId()),
-        LEFT_ELBOW(LANDMARKS.RIGHT_ELBOW.getId()),
-        RIGHT_ELBOW(LANDMARKS.LEFT_ELBOW.getId()),
-        LEFT_WRIST(LANDMARKS.RIGHT_WRIST.getId()),
-        RIGHT_WRIST(LANDMARKS.LEFT_WRIST.getId()),
-        LEFT_PINKY(LANDMARKS.RIGHT_PINKY.getId()),
-        RIGHT_PINKY(LANDMARKS.LEFT_PINKY.getId()),
-        LEFT_INDEX(LANDMARKS.RIGHT_INDEX.getId()),
-        RIGHT_INDEX(LANDMARKS.LEFT_INDEX.getId()),
-        LEFT_THUMB(LANDMARKS.RIGHT_THUMB.getId()),
-        RIGHT_THUMB(LANDMARKS.LEFT_THUMB.getId()),
-        LEFT_HIP(LANDMARKS.RIGHT_HIP.getId()),
-        RIGHT_HIP(LANDMARKS.LEFT_HIP.getId()),
-        LEFT_KNEE(LANDMARKS.RIGHT_KNEE.getId()),
-        RIGHT_KNEE(LANDMARKS.LEFT_KNEE.getId()),
-        LEFT_ANKLE(LANDMARKS.RIGHT_ANKLE.getId()),
-        RIGHT_ANKLE(LANDMARKS.LEFT_ANKLE.getId()),
-        LEFT_HEEL(LANDMARKS.RIGHT_HEEL.getId()),
-        RIGHT_HEEL(LANDMARKS.LEFT_HEEL.getId()),
-        LEFT_FOOT_INDEX(LANDMARKS.RIGHT_FOOT_INDEX.getId()),
-        RIGHT_FOOT_INDEX(LANDMARKS.LEFT_FOOT_INDEX.getId());
+        NOSE(LANDMARKS.NOSE.getId(), "NOSE"),
+        LEFT_EYE_INNER(LANDMARKS.RIGHT_EYE_INNER.getId(), "LEFT_EYE_INNER"),
+        LEFT_EYE(LANDMARKS.RIGHT_EYE.getId(), "LEFT_EYE"),
+        LEFT_EYE_OUTER(LANDMARKS.RIGHT_EYE_OUTER.getId(), "LEFT_EYE_OUTER"),
+        RIGHT_EYE_INNER(LANDMARKS.LEFT_EYE_INNER.getId(), "RIGHT_EYE_INNER"),
+        RIGHT_EYE(LANDMARKS.LEFT_EYE.getId(), "RIGHT_EYE"),
+        RIGHT_EYE_OUTER(LANDMARKS.LEFT_EYE_OUTER.getId(), "RIGHT_EYE_OUTER"),
+        LEFT_EAR(LANDMARKS.RIGHT_EAR.getId(), "LEFT_EAR"),
+        RIGHT_EAR(LANDMARKS.LEFT_EAR.getId(), "RIGHT_EAR"),
+        MOUTH_LEFT(LANDMARKS.MOUTH_RIGHT.getId(), "MOUTH_LEFT"),
+        MOUTH_RIGHT(LANDMARKS.MOUTH_LEFT.getId(), "MOUTH_RIGHT"),
+        LEFT_SHOULDER(LANDMARKS.RIGHT_SHOULDER.getId(), "LEFT_SHOULDER"),
+        RIGHT_SHOULDER(LANDMARKS.LEFT_SHOULDER.getId(), "RIGHT_SHOULDER"),
+        LEFT_ELBOW(LANDMARKS.RIGHT_ELBOW.getId(), "LEFT_ELBOW"),
+        RIGHT_ELBOW(LANDMARKS.LEFT_ELBOW.getId(), "RIGHT_ELBOW"),
+        LEFT_WRIST(LANDMARKS.RIGHT_WRIST.getId(), "LEFT_WRIST"),
+        RIGHT_WRIST(LANDMARKS.LEFT_WRIST.getId(), "RIGHT_WRIST"),
+        LEFT_PINKY(LANDMARKS.RIGHT_PINKY.getId(), "LEFT_PINKY"),
+        RIGHT_PINKY(LANDMARKS.LEFT_PINKY.getId(), "RIGHT_PINKY"),
+        LEFT_INDEX(LANDMARKS.RIGHT_INDEX.getId(), "LEFT_INDEX"),
+        RIGHT_INDEX(LANDMARKS.LEFT_INDEX.getId(), "RIGHT_INDEX"),
+        LEFT_THUMB(LANDMARKS.RIGHT_THUMB.getId(), "LEFT_THUMB"),
+        RIGHT_THUMB(LANDMARKS.LEFT_THUMB.getId(), "RIGHT_THUMB"),
+        LEFT_HIP(LANDMARKS.RIGHT_HIP.getId(), "LEFT_HIP"),
+        RIGHT_HIP(LANDMARKS.LEFT_HIP.getId(), "RIGHT_HIP"),
+        LEFT_KNEE(LANDMARKS.RIGHT_KNEE.getId(), "LEFT_KNEE"),
+        RIGHT_KNEE(LANDMARKS.LEFT_KNEE.getId(), "RIGHT_KNEE"),
+        LEFT_ANKLE(LANDMARKS.RIGHT_ANKLE.getId(), "LEFT_ANKLE"),
+        RIGHT_ANKLE(LANDMARKS.LEFT_ANKLE.getId(), "RIGHT_ANKLE"),
+        LEFT_HEEL(LANDMARKS.RIGHT_HEEL.getId(), "LEFT_HEEL"),
+        RIGHT_HEEL(LANDMARKS.LEFT_HEEL.getId(), "RIGHT_HEEL"),
+        LEFT_FOOT_INDEX(LANDMARKS.RIGHT_FOOT_INDEX.getId(), "LEFT_FOOT_INDEX"),
+        RIGHT_FOOT_INDEX(LANDMARKS.LEFT_FOOT_INDEX.getId(), "RIGHT_FOOT_INDEX");
 
-        private int id;
-        LANDMARKS_FLIPPED(int id) {
+        private static final Map<String, LANDMARKS_FLIPPED> NAME_MAP = new HashMap<>();
+
+        static {
+            for (LANDMARKS_FLIPPED landmark : values()) {
+                NAME_MAP.put(landmark.name, landmark);
+            }
+        }
+
+        private final int id;
+        private final String name;
+
+        LANDMARKS_FLIPPED(int id, String name) {
             this.id = id;
+            this.name = name;
         }
 
         public int getId() {
             return id;
         }
+
+        public String getStr() {
+            return name;
+        }
+
+
+        public static LANDMARKS_FLIPPED fromString(String name) {
+            return NAME_MAP.getOrDefault(name, null);
+        }
     }
+
 
     // landmark status
     public enum STATUS {

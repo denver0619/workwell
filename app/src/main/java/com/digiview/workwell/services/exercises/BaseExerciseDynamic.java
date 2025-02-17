@@ -57,11 +57,11 @@ public class BaseExerciseDynamic extends AbstractExercise {
 
         if(keyPoint.isMidpoint()) {
             result = calculateMidpoint3D(
-                    landmarkToArray(landmarks.get(LANDMARKS.fromString(keyPoint.getKeypoint()).getId())),
-                    landmarkToArray(landmarks.get(LANDMARKS.fromString(keyPoint.getSecondaryKeypoint()).getId()))
+                    landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.fromString(keyPoint.getKeypoint()).getId())),
+                    landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.fromString(keyPoint.getSecondaryKeypoint()).getId()))
             );
         } else {
-            result = landmarkToArray(landmarks.get(LANDMARKS.fromString(keyPoint.getKeypoint()).getId()));
+            result = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.fromString(keyPoint.getKeypoint()).getId()));
         }
         return result;
     }

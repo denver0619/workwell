@@ -1,5 +1,6 @@
 package com.digiview.workwell.data.models;
 
+
 import com.google.firebase.firestore.PropertyName;
 
 import java.io.Serializable;
