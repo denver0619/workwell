@@ -56,6 +56,7 @@ public class FitnessLogDetailFragment extends Fragment {
     private PlayerView playerView;
     private ExoPlayer exoPlayer;
     private ProgressBar loadingIndicator;
+    private TextView tvDoctorComment, tvDoctorCommentTitle;
 
     private static final String TAG = "FitnessLogDetailFragment";
 
@@ -86,6 +87,8 @@ public class FitnessLogDetailFragment extends Fragment {
         tvAwarenessLogValue = view.findViewById(R.id.tvAwarenessLogValue);
         playerView = view.findViewById(R.id.playerView);
         loadingIndicator = view.findViewById(R.id.loadingIndicator);
+        tvDoctorComment = view.findViewById(R.id.tvDoctorComment);
+        tvDoctorCommentTitle = view.findViewById(R.id.tvDoctorCommentTitle);
 
         // Initialize RecyclerView
         rvExerciseList = view.findViewById(R.id.rvExerciseList);
@@ -162,6 +165,17 @@ public class FitnessLogDetailFragment extends Fragment {
             btnSubmit.setVisibility(View.VISIBLE); // Show Submit button
         }
 
+        // ✅ Display doctor's comment if available
+        if (routineLog.getComment() != null && !routineLog.getComment().isEmpty()) {
+            tvDoctorComment.setText(routineLog.getComment());
+            tvDoctorComment.setVisibility(View.VISIBLE);
+            tvDoctorCommentTitle.setVisibility(View.VISIBLE);
+        } else {
+            Log.w(TAG, "No doctor comment available.");
+            tvDoctorComment.setVisibility(View.GONE);
+            tvDoctorCommentTitle.setVisibility(View.GONE);
+        }
+
         // Initialize ExoPlayer and load video
         if (routineLog.getVideo() != null && routineLog.getVideo().getVideoUrl() != null) {
             initializePlayer(routineLog.getVideo().getVideoUrl());
@@ -169,6 +183,8 @@ public class FitnessLogDetailFragment extends Fragment {
             Log.w(TAG, "No video URL found in RoutineLog.");
         }
     }
+
+
 
     private void populateSelfAssessmentValues(SelfAssessment selfAssessment) {
         // Populate the values from the SelfAssessment object into TextViews

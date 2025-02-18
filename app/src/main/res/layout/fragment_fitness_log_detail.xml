@@ -194,8 +194,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rvExerciseList"
                 app:layout_constraintWidth_max="600dp"
-                android:layout_marginTop="24dp"
                 android:text="@string/reflection_title"
+                android:layout_marginTop="24dp"
                 android:paddingHorizontal="8dp" />
 
             <!-- Reflection Content -->
@@ -203,9 +203,11 @@
                 android:id="@+id/tvReflectionContent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
                 android:paddingHorizontal="16dp"
                 android:text="@string/reflection_content"
                 android:visibility="gone"
+                android:textColor="@color/neutral_white_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvReflectionTitle"
@@ -227,7 +229,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvReflectionTitle"
                 app:layout_constraintWidth_max="600dp" />
-
             <!-- Submit Button -->
             <Button
                 android:id="@+id/btnSubmit"
@@ -242,6 +243,38 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/etReflectionContentInput" />
+
+            <!-- Doctor's Comment Title -->
+            <TextView
+                android:id="@+id/tvDoctorCommentTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="24dp"
+                android:paddingHorizontal="8dp"
+                android:text="@string/doctor_comment_title"
+                android:textColor="@color/neutral_white_color"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/btnSubmit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintWidth_max="600dp"
+                android:visibility="gone" />
+
+            <!-- Doctor's Comment Content -->
+            <TextView
+                android:id="@+id/tvDoctorComment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:text="@string/no_doctor_comment"
+                android:textColor="@color/neutral_white_color"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/tvDoctorCommentTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintWidth_max="600dp" />
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

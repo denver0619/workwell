@@ -33,6 +33,9 @@ public class RoutineLogs implements Serializable {
     @PropertyName("OrganizationId")
     private String organizationId; // New field for organization ID
 
+    @PropertyName("Comment")
+    private String comment;
+
     @ServerTimestamp
     @PropertyName("CreatedAt")
     private Date createdAt;
@@ -48,6 +51,17 @@ public class RoutineLogs implements Serializable {
     private Video video;
     @Exclude
     private Journal journal;
+
+    // Constructor with all fields
+    public RoutineLogs(String routineLogId, String routineId, String routineLogName, String uid, String organizationId, Date createdAt, String comment) {
+        this.routineLogId = routineLogId;
+        this.routineId = routineId;
+        this.routineLogName = routineLogName;
+        this.uid = uid;
+        this.organizationId = organizationId;
+        this.comment = comment;
+        this.createdAt = createdAt;
+    }
 
     // Constructor with all fields
     public RoutineLogs(String routineLogId, String routineId, String routineLogName, String uid, String organizationId, Date createdAt) {
@@ -138,6 +152,16 @@ public class RoutineLogs implements Serializable {
     @PropertyName("OrganizationId")
     public void setOrganizationId(String organizationId) {
         this.organizationId = organizationId;
+    }
+
+    @PropertyName("Comment")
+    public String getComment() {
+        return comment;
+    }
+
+    @PropertyName("Comment")
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     @PropertyName("CreatedAt")

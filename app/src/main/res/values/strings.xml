@@ -25,6 +25,9 @@
     <string name="professional_label">Assigned Professional</string>
     <string name="professional_placeholder">%s</string>
 
+    <string name="doctor_comment_title">Doctor\'s Comment</string>
+    <string name="no_doctor_comment">No Doctor Comment</string>
+
     <string name="menu_home">Home</string>
     <string name="menu_routine">Routine</string>
     <string name="menu_activity_log">Fitness Log</string>
