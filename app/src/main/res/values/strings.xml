@@ -30,13 +30,13 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_routine">Routine</string>
-    <string name="menu_activity_log">Fitness Log</string>
+    <string name="menu_activity_log">Progress Log</string>
     <string name="menu_profile">Profile</string>
 
     <string name="avatar_desc">User Avatar</string>
     <string name="user_name">Hello, %s</string>
     <string name="hero_text">Start Your Ergonomic\nJourney</string>
-    <string name="hero_button_text">Start Routine</string>
+    <string name="hero_button_text">Start Routine ❯</string>
     <string name="hero_img_desc">Hero Image - Lady Stretching</string>
     <string name="routine_add_fab">Add Routine Floating Action Button</string>
     <string name="placeholder_routine_name">Target Area Routine 1</string>
@@ -45,7 +45,7 @@
     <string name="placeholder_exercise_name">Exercise Name</string>
     <string name="exercise_label">Exercises</string>
     <string name="placeholder_exercise_detail">Loading exercise detail....</string>
-    <string name="start_exercise">View Instructions</string>
+    <string name="start_exercise">View Instructions ❯</string>
 
     <!--    Self Assessment -->
     <string name="asmt_title">Self-Assessment</string>

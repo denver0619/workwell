@@ -12,6 +12,7 @@
     <color name="neutral_white_color">#ECEFF1</color>
     <color name="gray">#A9A9A9</color>
     <color name="purple">#342361</color>
+    <color name="baby_blue">#B3E5FC</color>
 
     <!--    MediaPipe Colors-->
     <color name="mp_color_primary">#007F8B</color>
