@@ -1,63 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.routine.RoutineDetailFragment">
+    tools:context=".ui.routine.ExerciseFragment">
 
-    <!-- Back Button on the Left Side of TextView -->
+    <!-- Back Button -->
     <ImageButton
         android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_arrow_left"
         android:contentDescription="@string/back_button"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp" />
-    <!-- Sticky TextView at the Top -->
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <!-- Exercise Title -->
     <TextView
-        android:layout_marginTop="16dp"
         android:id="@+id/tvExerciseTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder_exercise_name"
-        android:textFontWeight="600"
+        android:layout_marginTop="16dp"
         android:paddingHorizontal="64dp"
         android:paddingVertical="8dp"
+        android:text="@string/placeholder_exercise_name"
         android:textSize="18sp"
         android:gravity="center"
         android:textColor="@color/neutral_white_color"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textFontWeight="600"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- Video Container (PlayerView) -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cvVideoContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvExerciseTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_max="600dp"
         app:layout_constraintDimensionRatio="16:9"
         android:padding="4dp"
         android:backgroundTint="@color/accent_color">
+
+        <!-- ExoPlayer's PlayerView -->
+        <androidx.media3.ui.PlayerView
+            android:id="@+id/playerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </androidx.cardview.widget.CardView>
 
+    <!-- Loading Indicator -->
+    <ProgressBar
+        android:id="@+id/loadingIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Exercise Description -->
     <TextView
         android:id="@+id/tvExerciseDetail"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder_exercise_detail"
         android:layout_marginTop="10dp"
+        android:text="@string/placeholder_exercise_detail"
         android:textColor="@color/neutral_white_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cvVideoContainer"
-        app:layout_constraintWidth_max="600dp"/>
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

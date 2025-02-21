@@ -12,6 +12,9 @@ public class Exercise {
     private String TargetArea; // Changed to string to align with Firestore
     private String OrganizationId; // ID of the organization the exercise belongs to
     private List<String> Constraints;
+    private String VideoId;  // New field
+
+
     // Default constructor (required for Firestore)
     public Exercise() {
     }
@@ -60,6 +63,15 @@ public class Exercise {
     public void setOrganizationId(String organizationId) {
         this.OrganizationId = organizationId; // Set the organization ID
     }
+
+    public String getVideoId() {
+        return VideoId;
+    }
+
+    public void setVideoId(String videoId) {
+        VideoId = videoId;
+    }
+
 
     public List<String> getConstraints() {
         return Constraints;

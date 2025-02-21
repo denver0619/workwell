@@ -8,7 +8,7 @@ public class RoutineExercise implements Serializable{
     private int Duration;
     private String ExerciseName;        // New field
     private String ExerciseDescription; // New field
-
+    private String VideoId;
     // Getters and Setters
     public String getExerciseId() {
         return ExerciseId;
@@ -50,12 +50,21 @@ public class RoutineExercise implements Serializable{
         ExerciseDescription = exerciseDescription;
     }
 
+    public String getVideoId() {
+        return VideoId;
+    }
+
+    public void setVideoId(String videoId) {
+        VideoId = videoId;
+    }
+
     @Override
     public String toString() {
         return "RoutineExercise{" +
                 "ExerciseId='" + ExerciseId + '\'' +
                 ", Reps=" + Reps +
                 ", Sets=" + Duration +
+                ", Video=" + VideoId +
                 ", ExerciseName='" + ExerciseName + '\'' +
                 ", ExerciseDescription='" + ExerciseDescription + '\'' +
                 '}';

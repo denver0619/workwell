@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,7 +14,8 @@
         app:cardCornerRadius="12dp"
         app:cardBackgroundColor="@color/secondary_color"
         android:layout_marginTop="16dp"
-        android:paddingEnd="32dp">
+        android:paddingEnd="32dp"
+        android:paddingStart="184dp"> <!-- Padding to avoid overlap with image -->
 
         <!-- Background Image Overlay -->
         <FrameLayout
@@ -29,9 +29,9 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/bg_texture"
-                android:alpha="0.5"/> <!-- Adjust transparency for overlay effect -->
+                android:alpha="0.5"/>
 
-            <!-- Content Container (Above Background) -->
+            <!-- Content Container -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
@@ -41,6 +41,12 @@
                     android:id="@+id/tvItemTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:maxWidth="200dp"
+                    android:lineSpacingExtra="4dp"
+                    android:breakStrategy="high_quality"
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="16dp"
                     android:text="@string/placeholder_routine_name"
@@ -52,6 +58,7 @@
                     android:id="@+id/tvRoutineDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="end"
                     android:layout_below="@id/tvItemTitle"
                     android:layout_alignEnd="@id/tvItemTitle"
                     android:layout_marginTop="8dp"
@@ -62,7 +69,7 @@
 
                 <Button
                     android:id="@+id/btnStartRoutine"
-                    android:layout_width="160dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvRoutineDate"
                     android:layout_alignEnd="@id/tvRoutineDate"
@@ -76,12 +83,15 @@
         </FrameLayout>
     </androidx.cardview.widget.CardView>
 
+    <!-- Hero Image Positioned to the Left -->
     <ImageView
         android:id="@+id/ivHero"
         android:layout_width="176dp"
         android:layout_height="184dp"
         android:elevation="8dp"
         android:translationY="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_gravity="start|center_vertical"
         android:scaleType="centerCrop"
         android:src="@drawable/img_neck"
         android:contentDescription="@string/hero_img_desc"/>
