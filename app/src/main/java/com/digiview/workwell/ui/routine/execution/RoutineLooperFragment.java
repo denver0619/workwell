@@ -36,6 +36,7 @@ public class RoutineLooperFragment extends Fragment {
     private RoutineLooperViewModel routineViewModel;
     private RoutineExecutionViewModel routineExecutionViewModel;
     private ExerciseTransitionViewModel exerciseTransitionViewModel;
+    private ReminderViewModel reminderViewModel;
     private CameraViewModel cameraViewModel;
     private FragmentRoutineLooperBinding fragmentRoutineBinding;
 
@@ -132,6 +133,7 @@ public class RoutineLooperFragment extends Fragment {
         routineViewModel = new ViewModelProvider(requireActivity()).get(RoutineLooperViewModel.class);
         routineExecutionViewModel = new ViewModelProvider(requireActivity()).get(RoutineExecutionViewModel.class);
         exerciseTransitionViewModel = new ViewModelProvider(requireActivity()).get(ExerciseTransitionViewModel.class);
+        reminderViewModel = new ViewModelProvider(requireActivity()).get(ReminderViewModel.class);
         cameraViewModel = new ViewModelProvider(requireActivity()).get(CameraViewModel.class);
 
         // Generate a unique temporary ID
@@ -176,6 +178,9 @@ public class RoutineLooperFragment extends Fragment {
 
         // Observe transition state
         exerciseTransitionViewModel.getTransitionState().observe(getViewLifecycleOwner(), routineViewModel::setTransitionState);
+
+        // Observe Reminder State
+        reminderViewModel.getReminderState().observe(getViewLifecycleOwner(), routineViewModel::setReminderState);
 
         // Debugging: Show Toast messages
         routineViewModel.getToastMsg().observe(getViewLifecycleOwner(), s -> Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show());

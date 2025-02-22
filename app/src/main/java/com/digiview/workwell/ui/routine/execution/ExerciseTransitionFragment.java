@@ -27,6 +27,31 @@ public class ExerciseTransitionFragment extends Fragment {
     private ExerciseTransitionViewModel exerciseTransitionViewModel;
     private FragmentExerciseTransitionBinding fragmentExerciseTransitionBinding;
 
+    /**
+     * Sample Exercise class
+     * TODO: Implement in models then replace this
+     * @return
+     */
+    private class ExerciseModelObject {
+        private String exerciseName;
+        private String deviceSetup;
+
+        public ExerciseModelObject() {}
+
+        public ExerciseModelObject(String exerciseName, String deviceSetup) {
+            this.exerciseName = exerciseName;
+            this.deviceSetup = deviceSetup;
+        }
+
+        public String getExerciseName() {
+            return exerciseName;
+        }
+
+        public String getHowToPosition() {
+            return deviceSetup;
+        }
+    }
+
     public static ExerciseTransitionFragment newInstance() {
         return new ExerciseTransitionFragment();
     }
@@ -48,6 +73,9 @@ public class ExerciseTransitionFragment extends Fragment {
         if (getArguments() != null) {
             exerciseTransitionViewModel.setExerciseName(getArguments().getString("exerciseName"));
         }
+
+        fragmentExerciseTransitionBinding.transitionText.setText("Prepare for " + exerciseTransitionViewModel.getExerciseName().getValue());
+
         exerciseTransitionViewModel.setContext(requireContext());
         exerciseTransitionViewModel.setMediaPlayer(new MediaPlayer());
         exerciseTransitionViewModel.getTimeLeft().observe(getViewLifecycleOwner(), new Observer<Long>() {

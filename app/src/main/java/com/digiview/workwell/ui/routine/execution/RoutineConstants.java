@@ -15,4 +15,10 @@ public class RoutineConstants {
         PENDING,
         NONE;
     }
+    public enum REMINDER_STATE{
+        IGNORED,
+        ONGOING,
+        ACCEPTED,
+        NONE;
+    }
 }

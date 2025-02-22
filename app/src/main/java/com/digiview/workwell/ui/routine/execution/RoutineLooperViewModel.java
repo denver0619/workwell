@@ -68,6 +68,16 @@ public class RoutineLooperViewModel extends ViewModel {
         this.executionState.setValue(RoutineConstants.EXECUTION_STATE.NONE);
     }
 
+    private final MutableLiveData<RoutineConstants.REMINDER_STATE> reminderState = new MutableLiveData<>();
+    private LiveData<RoutineConstants.REMINDER_STATE> getReminderState() {
+        return  reminderState;
+    }
+
+    public void setReminderState(RoutineConstants.REMINDER_STATE reminderState) {
+        this.reminderState.setValue(reminderState);
+        this.reminderState.setValue(RoutineConstants.REMINDER_STATE.NONE);
+    }
+
 //    public void executeRoutine() {
 //        ExerciseFactory exerciseFactory = new ExerciseFactory();
 //        Thread thread = new Thread(() -> {
@@ -124,6 +134,13 @@ public class RoutineLooperViewModel extends ViewModel {
         ExerciseFactory exerciseFactory = new ExerciseFactory();
         Thread thread = new Thread(() -> {
             int counter = 0;
+
+            postFragmentTransition(ReminderFragment.class);
+
+            CountDownLatch reminderLatch = new CountDownLatch(1);
+            observeReminderState(reminderLatch);
+            awaitLatch(reminderLatch, "Wating for user to confirm reminders....");
+
             for (RoutineExerciseDetailDTO exerciseEntity : routine) {
                 // Update the UI with the current counter
                 counter++;
@@ -222,6 +239,20 @@ public class RoutineLooperViewModel extends ViewModel {
                 public void onChanged(RoutineConstants.EXECUTION_STATE executionState) {
                     if (executionState.equals(RoutineConstants.EXECUTION_STATE.FINISHED)) {
                         getExecutionState().removeObserver(this);
+                        latch.countDown();
+                    }
+                }
+            });
+        });
+    }
+
+    private void observeReminderState(CountDownLatch latch) {
+        new Handler(Looper.getMainLooper()).post(() -> {
+            getReminderState().observeForever(new Observer<RoutineConstants.REMINDER_STATE>() {
+                @Override
+                public void onChanged(RoutineConstants.REMINDER_STATE reminderState) {
+                    if (reminderState.equals(RoutineConstants.REMINDER_STATE.ACCEPTED)) {
+                        getReminderState().removeObserver(this);
                         latch.countDown();
                     }
                 }
