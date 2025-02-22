@@ -192,7 +192,11 @@
                 android:layout_marginVertical="8dp"
                 android:text="@string/profile_assignedDoctor"
                 android:textColor="@android:color/white"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:singleLine="false"
+                android:maxLines="3"
+                android:ellipsize="end"/>
+
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
