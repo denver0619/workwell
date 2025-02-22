@@ -78,9 +78,12 @@
 
     <string name="video_player">Exercise Video</string>
 
+    <string name="profile">Profile</string>
     <string name="profile_account">Account</string>
+    <string name="profile_about_us">About Us</string>
+    <string name="profile_help">Help</string>
 
-<!--    <string name="profile_username">Username:</string>-->
+    <!--    <string name="profile_username">Username:</string>-->
     <string name="profile_personalInfo">Personal Information</string>
 
 
@@ -92,15 +95,6 @@
     <string name="profile_weight"><b>Weight:</b> %.1f kg</string>
     <string name="profile_address"><b>Address:</b> %s</string>
     <string name="profile_assignedDoctor"><b>Assigned Professional:</b> %s</string>
-
-
-
-
-
-
-
-
-
 
 
     <!--    MediaPipe-->
