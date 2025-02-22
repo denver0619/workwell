@@ -22,16 +22,10 @@
             android:name=".ui.routine.execution.RoutineActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.auth.AuthSignupActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.main.MainActivity"
             android:exported="false" />
         <activity
             android:name=".ui.auth.AuthLoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.main.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

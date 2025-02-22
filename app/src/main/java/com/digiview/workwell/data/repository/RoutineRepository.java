@@ -139,6 +139,8 @@ public class RoutineRepository {
                             // Update the exercise with its fetched details
                             exercise.setExerciseName(details.getName());
                             exercise.setExerciseDescription(details.getDescription());
+                            exercise.setExerciseDeviceSetup(details.getDeviceSetup());
+                            exercise.setVideoId(details.getVideoId());
                         }
                     }));
         }

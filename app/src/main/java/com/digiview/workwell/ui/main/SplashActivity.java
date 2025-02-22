@@ -18,13 +18,13 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-        setContentView(R.layout.activity_splash);
-
-        
-        // Button to continue immediately
-        Button continueButton = findViewById(R.id.btnContinue);
-        continueButton.setOnClickListener(view -> transitionToMainActivity());
+//        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+//        setContentView(R.layout.activity_splash);
+//
+//
+//        // Button to continue immediately
+//        Button continueButton = findViewById(R.id.btnContinue);
+//        continueButton.setOnClickListener(view -> transitionToMainActivity());
 
         // Auto-transition after SPLASH_DELAY
 //        new Handler().postDelayed(this::transitionToMainActivity, SPLASH_DELAY);
