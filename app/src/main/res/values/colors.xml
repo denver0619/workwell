@@ -3,7 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#E35959</color>
-    <color name="transparent">#80000000</color>
+    <color name="transparent">#00000000</color>
     <color name="primary_color">#5C59EB</color>
     <color name="secondary_color">#CDBBF8</color>
     <color name="accent_color">#5C59EB</color>
@@ -13,6 +13,7 @@
     <color name="gray">#A9A9A9</color>
     <color name="purple">#342361</color>
     <color name="baby_blue">#B3E5FC</color>
+    <color name="blue_gray">#404A53</color>
 
     <!--    MediaPipe Colors-->
     <color name="mp_color_primary">#007F8B</color>

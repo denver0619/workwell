@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -48,10 +49,10 @@ public class FitnessLogDetailFragment extends Fragment {
     private Button btnSubmit;
     private RecyclerView rvExerciseList;
 
-    private TextView tvStiffnessLogValue;
-    private TextView tvPainLogValue;
-    private TextView tvDifficultyLogValue;
-    private TextView tvAwarenessLogValue;
+//    private TextView tvStiffnessLogValue;
+//    private TextView tvPainLogValue;
+//    private TextView tvDifficultyLogValue;
+//    private TextView tvAwarenessLogValue;
 
     private PlayerView playerView;
     private ExoPlayer exoPlayer;
@@ -81,10 +82,10 @@ public class FitnessLogDetailFragment extends Fragment {
         etReflectionContentInput = view.findViewById(R.id.etReflectionContentInput);
         btnBack = view.findViewById(R.id.btnBack);
         btnSubmit = view.findViewById(R.id.btnSubmit);
-        tvStiffnessLogValue = view.findViewById(R.id.tvStiffnessLogValue);
-        tvPainLogValue = view.findViewById(R.id.tvPainLogValue);
-        tvDifficultyLogValue = view.findViewById(R.id.tvDifficultyLogValue);
-        tvAwarenessLogValue = view.findViewById(R.id.tvAwarenessLogValue);
+//        tvStiffnessLogValue = view.findViewById(R.id.tvStiffnessLogValue);
+//        tvPainLogValue = view.findViewById(R.id.tvPainLogValue);
+//        tvDifficultyLogValue = view.findViewById(R.id.tvDifficultyLogValue);
+//        tvAwarenessLogValue = view.findViewById(R.id.tvAwarenessLogValue);
         playerView = view.findViewById(R.id.playerView);
         loadingIndicator = view.findViewById(R.id.loadingIndicator);
         tvDoctorComment = view.findViewById(R.id.tvDoctorComment);
@@ -112,15 +113,22 @@ public class FitnessLogDetailFragment extends Fragment {
             Log.e(TAG, "No arguments provided!");
         }
 
-        // Observe ViewModel
-            viewModel.getExercises().observe(getViewLifecycleOwner(), exercises -> {
+        viewModel.getExercises().observe(getViewLifecycleOwner(), exercises -> {
+            Log.d("FitnessLogDetailFragment", "Exercises observed: " + exercises.size());
+            if (exercises.isEmpty()) {
+                Log.w("FitnessLogDetailFragment", "No exercises to display.");
+                rvExerciseList.setVisibility(View.GONE);  // Optional
+            } else {
+                rvExerciseList.setVisibility(View.VISIBLE);
                 if (adapter == null) {
                     adapter = new FitnessLogDetailAdapter(exercises);
                     rvExerciseList.setAdapter(adapter);
                 } else {
                     adapter.updateExercises(exercises);
                 }
-            });
+            }
+        });
+
 
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
             loadingIndicator.setVisibility(isLoading ? View.VISIBLE : View.GONE);
@@ -187,14 +195,42 @@ public class FitnessLogDetailFragment extends Fragment {
 
 
     private void populateSelfAssessmentValues(SelfAssessment selfAssessment) {
-        // Populate the values from the SelfAssessment object into TextViews
-        tvStiffnessLogValue.setText(String.valueOf(selfAssessment.getStiffness()));
-        tvPainLogValue.setText(String.valueOf(selfAssessment.getPain()));
-        tvDifficultyLogValue.setText(String.valueOf(selfAssessment.getDifficulty()));
-        tvAwarenessLogValue.setText(String.valueOf(selfAssessment.getAwareness()));
+        // Example for Stiffness
+        setRatingIcons(R.id.mcvStiffness, selfAssessment.getStiffness());
 
-        Log.d(TAG, "Populated SelfAssessment values: " + selfAssessment);
+        // Similarly, for Pain, Difficulty, and Awareness
+        setRatingIcons(R.id.mcvPain, selfAssessment.getPain());
+        setRatingIcons(R.id.mcvDifficulty, selfAssessment.getDifficulty());
+        setRatingIcons(R.id.mcvAwareness, selfAssessment.getAwareness());
     }
+
+    private void setRatingIcons(int cardViewId, int value) {
+        View cardView = getView().findViewById(cardViewId);
+        if (cardView != null) {
+            // Find the LinearLayout inside the MaterialCardView
+            ViewGroup linearLayout = (ViewGroup) ((ViewGroup) cardView).getChildAt(0);
+
+            if (linearLayout != null) {
+                for (int i = 0; i < linearLayout.getChildCount(); i++) {
+                    View child = linearLayout.getChildAt(i);
+                    if (child instanceof ImageView) {
+                        ImageView imageView = (ImageView) child;
+                        if (i < value) {
+                            imageView.setImageResource(R.drawable.ic_ribs_green);  // Filled icon
+                        } else {
+                            imageView.setImageResource(R.drawable.ic_ribs_white);  // Empty icon
+                        }
+                    }
+                }
+            } else {
+                Log.e(TAG, "LinearLayout not found inside the card view with ID: " + cardViewId);
+            }
+        } else {
+            Log.e(TAG, "CardView not found with ID: " + cardViewId);
+        }
+    }
+
+
 
     private void initializePlayer(String videoUrl) {
         exoPlayer = new ExoPlayer.Builder(requireContext()).build();
