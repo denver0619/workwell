@@ -34,6 +34,7 @@ public class RoutineExerciseService {
                     dto.setExerciseId(routineExercise.getExerciseId());
                     dto.setReps(routineExercise.getReps());
                     dto.setDuration(routineExercise.getDuration());
+                    dto.setExerciseDeviceSetup(routineExercise.getExerciseDeviceSetup());
                     dto.setExerciseName(routineExercise.getExerciseName());
                     dto.setExerciseDescription(routineExercise.getExerciseDescription());
                     dto.setExercise(exercise);

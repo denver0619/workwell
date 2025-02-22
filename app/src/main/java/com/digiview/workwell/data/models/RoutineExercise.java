@@ -8,6 +8,7 @@ public class RoutineExercise implements Serializable{
     private int Duration;
     private String ExerciseName;        // New field
     private String ExerciseDescription; // New field
+    private String ExerciseDeviceSetup; // New field
     private String VideoId;
     // Getters and Setters
     public String getExerciseId() {
@@ -49,6 +50,15 @@ public class RoutineExercise implements Serializable{
     public void setExerciseDescription(String exerciseDescription) {
         ExerciseDescription = exerciseDescription;
     }
+
+    public String getExerciseDeviceSetup() {
+        return ExerciseDeviceSetup;
+    }
+
+    public void setExerciseDeviceSetup(String exerciseDeviceSetup) {
+        ExerciseDeviceSetup = exerciseDeviceSetup;
+    }
+
 
     public String getVideoId() {
         return VideoId;

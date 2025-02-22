@@ -9,6 +9,7 @@ public class Exercise {
     private String ExerciseId; // Firestore ID
     private String Name;       // Exercise name
     private String Description; // Exercise description
+    private String DeviceSetup;
     private String TargetArea; // Changed to string to align with Firestore
     private String OrganizationId; // ID of the organization the exercise belongs to
     private List<String> Constraints;
@@ -42,6 +43,14 @@ public class Exercise {
 
     public void setDescription(String description) {
         Description = description;
+    }
+
+    public String getDeviceSetup() {
+        return DeviceSetup;
+    }
+
+    public void setDeviceSetup(String deviceSetup) {
+        DeviceSetup = deviceSetup;
     }
 
     @PropertyName("TargetArea")
@@ -87,6 +96,7 @@ public class Exercise {
                 "ExerciseId='" + ExerciseId + '\'' +
                 ", Name='" + Name + '\'' +
                 ", Description='" + Description + '\'' +
+                ", Device Setup='" + DeviceSetup + '\'' +
                 ", TargetArea='" + TargetArea + '\'' +
                 ", OrganizationId='" + OrganizationId + '\'' +
                 '}';

@@ -13,6 +13,7 @@ public class RoutineExerciseDetailDTO implements Serializable {
     private long duration;
     private String exerciseName;
     private String exerciseDescription;
+    private String exerciseDeviceSetup;
 
     // Detailed exercise info
     private Exercise exercise;
@@ -25,12 +26,13 @@ public class RoutineExerciseDetailDTO implements Serializable {
     }
 
     public RoutineExerciseDetailDTO(String exerciseId, int reps, int duration, String exerciseName,
-                                    String exerciseDescription, Exercise exercise, List<ConstraintDetailDTO> constraints) {
+                                    String exerciseDescription, String exerciseDeviceSetup, Exercise exercise, List<ConstraintDetailDTO> constraints) {
         this.exerciseId = exerciseId;
         this.reps = reps;
         this.duration = duration;
         this.exerciseName = exerciseName;
         this.exerciseDescription = exerciseDescription;
+        this.exerciseDeviceSetup = exerciseDeviceSetup;
         this.exercise = exercise;
         this.constraints = constraints;
     }
@@ -74,6 +76,14 @@ public class RoutineExerciseDetailDTO implements Serializable {
 
     public void setExerciseDescription(String exerciseDescription) {
         this.exerciseDescription = exerciseDescription;
+    }
+
+    public String getExerciseDeviceSetup() {
+        return exerciseDeviceSetup;
+    }
+
+    public void setExerciseDeviceSetup(String exerciseDeviceSetup) {
+        this.exerciseDeviceSetup = exerciseDeviceSetup;
     }
 
     public Exercise getExercise() {

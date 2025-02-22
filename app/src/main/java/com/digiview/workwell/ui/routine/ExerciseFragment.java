@@ -51,6 +51,7 @@ public class ExerciseFragment extends Fragment {
         ImageButton btnBack = view.findViewById(R.id.btnBack);
         TextView tvExerciseTitle = view.findViewById(R.id.tvExerciseTitle);
         TextView tvExerciseDetail = view.findViewById(R.id.tvExerciseDetail);
+        TextView tvExerciseDeviceSetup = view.findViewById(R.id.tvExerciseDeviceSetup);
 
         // Retrieve RoutineExercise from arguments
         RoutineExercise exercise = null;
@@ -61,6 +62,7 @@ public class ExerciseFragment extends Fragment {
         if (exercise != null) {
             tvExerciseTitle.setText(exercise.getExerciseName());
             tvExerciseDetail.setText(exercise.getExerciseDescription());
+            tvExerciseDeviceSetup.setText(exercise.getExerciseDeviceSetup());
 
             // Load video if VideoId exists
             if (exercise.getVideoId() != null && !exercise.getVideoId().isEmpty()) {
