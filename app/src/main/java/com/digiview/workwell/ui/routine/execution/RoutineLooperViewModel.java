@@ -129,10 +129,10 @@ public class RoutineLooperViewModel extends ViewModel {
 
     //
 
-
+    private Thread thread;
     public void executeRoutine() {
         ExerciseFactory exerciseFactory = new ExerciseFactory();
-        Thread thread = new Thread(() -> {
+        thread = new Thread(() -> {
             int counter = 0;
 
             postFragmentTransition(ReminderFragment.class);
@@ -289,4 +289,11 @@ public class RoutineLooperViewModel extends ViewModel {
         this.destination.setValue(destination);
     }
 
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        if(thread != null) {
+            thread.interrupt();
+        }
+    }
 }
