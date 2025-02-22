@@ -211,8 +211,9 @@ public class RoutineDetailFragment extends Fragment implements RoutineDetailAdap
 
     @Override
     public void onExerciseClicked(RoutineExercise exercise) {
-// Create the ExerciseFragment and pass the RoutineExercise object
+        // Create the ExerciseFragment and pass the RoutineExercise object
         ExerciseFragment exerciseFragment = ExerciseFragment.newInstance();
+        Log.d("Exercise", exercise.toString());
         Bundle bundle = new Bundle();
         bundle.putSerializable("EXERCISE", exercise); // Pass the RoutineExercise object
         exerciseFragment.setArguments(bundle);

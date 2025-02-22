@@ -25,15 +25,18 @@
     <string name="professional_label">Assigned Professional</string>
     <string name="professional_placeholder">%s</string>
 
+    <string name="doctor_comment_title">Doctor\'s Comment</string>
+    <string name="no_doctor_comment">No Doctor Comment</string>
+
     <string name="menu_home">Home</string>
     <string name="menu_routine">Routine</string>
-    <string name="menu_activity_log">Fitness Log</string>
+    <string name="menu_activity_log">Progress Log</string>
     <string name="menu_profile">Profile</string>
 
     <string name="avatar_desc">User Avatar</string>
     <string name="user_name">Hello, %s</string>
     <string name="hero_text">Start Your Ergonomic\nJourney</string>
-    <string name="hero_button_text">Start Routine</string>
+    <string name="hero_button_text">Start Routine ❯</string>
     <string name="hero_img_desc">Hero Image - Lady Stretching</string>
     <string name="routine_add_fab">Add Routine Floating Action Button</string>
     <string name="placeholder_routine_name">Target Area Routine 1</string>
@@ -42,7 +45,7 @@
     <string name="placeholder_exercise_name">Exercise Name</string>
     <string name="exercise_label">Exercises</string>
     <string name="placeholder_exercise_detail">Loading exercise detail....</string>
-    <string name="start_exercise">View Instructions</string>
+    <string name="start_exercise">View Instructions ❯</string>
 
     <!--    Self Assessment -->
     <string name="asmt_title">Self-Assessment</string>
@@ -75,9 +78,12 @@
 
     <string name="video_player">Exercise Video</string>
 
+    <string name="profile">Profile</string>
     <string name="profile_account">Account</string>
+    <string name="profile_about_us">About Us</string>
+    <string name="profile_help">Help</string>
 
-<!--    <string name="profile_username">Username:</string>-->
+    <!--    <string name="profile_username">Username:</string>-->
     <string name="profile_personalInfo">Personal Information</string>
 
 
@@ -88,15 +94,29 @@
     <string name="profile_height"><b>Height:</b> %.1f cm</string>
     <string name="profile_weight"><b>Weight:</b> %.1f kg</string>
     <string name="profile_address"><b>Address:</b> %s</string>
-    <string name="profile_assignedDoctor"><b>Assigned Professional:</b> %s</string>
+    <string name="profile_assignedDoctor"><b>Assigned Doctor:</b> %s</string>
 
 
+    <string name="purpose_content">WorkWell is built to transform the way you care for your posture and well-being in a world that keeps you seated for hours. Whether you\'re working, gaming, or creating, our app is your companion in staying aligned, reducing discomfort, and fostering a healthier, more energized you. </string>
+    <string name="vision_content">WorkWell envisions a world where posture care is seamlessly integrated into daily life, empowering individuals to maintain optimal alignment, reduce discomfort, and enhance overall well-being. We strive to create a future where technology and wellness converge.</string>
+    <string name="statement_quote">“Better Posture Less Strain.\nLive Healthier with WorkWell.”</string>
+    <string name="statement_content">WorkWell is dedicated to fostering a culture of movement, mindfulness, and proactive well-being in an increasingly sedentary world. We believe that small, consistent changes in posture and daily habits can lead to significant improvements in comfort, productivity, and overall health. </string>
+    <string name="developers_content">We are a team of dedicated and passionate individuals who came together to build WorkWell. Driven by curiosity and a desire to create meaningful solutions, we collaborated to develop an intuitive and user-friendly application. Through continuous learning and teamwork, we strive to make technology more accessible and helpful for everyone.</string>
+    <string name="gratitude">“Thank you for choosing WorkWell. Here’s to smarter posture, better movement, and a more exciting work experience!”</string>
+    <string name="contact_content">Feel free to reach out to us with any questions or feedback. Work comfortably!</string>
+    <string name="contact_email">workwell@gmail.com</string>
 
-
-
-
-
-
+    <string name="login_content">Log in to WorkWell app to access your personalized routines.</string>
+    <string name="home_content">It provides users with essential details about their daily exercise routine and personal information.</string>
+    <string name="routine_content">The Routine Tab displays your assigned exercise. You can start current routine by tapping Start Routine, while past routines serve as a reference for progress tracking.</string>
+    <string name="start_routine_content">You will see exercises included in your selected routine, each with a View Instructions button to check detailed steps before performing them.</string>
+    <string name="view_instruction_content">It provides a video guide, a reference link, and step-by-step instructions for performing the exercise and setting up your device. A disclaimer clarifies that WorkWell is a guidance tool, not a medical treatment.</string>
+    <string name="activity_log_content">Tracks your completed routines, showing the routine name, date, and time of completion. You can tap See Details to review each session.</string>
+    <string name="see_details_content">This page includes you recorded video after the exercise, along with ratings for stiffness, pain, difficulty, and awareness. It also features a reflection section for personal notes and doctor’s comments with feedback on performance.</string>
+    <string name="profile_content">It provides access to account details, information about the app, and a user guide. A log-out button is available at the bottom for easy sign-out.</string>
+    <string name="account_content">It provides a quick overview of the user\'s profile information.</string>
+    <string name="about_us_content">This page introduces WorkWell, explaining its purpose, vision, and brand statement. It also highlights the developers behind the app and provides contact information for inquiries.</string>
+    <string name="help_content">This section of the WorkWell app provides users with essential guidance on navigating the app and utilizing its features effectively.</string>
 
 
 

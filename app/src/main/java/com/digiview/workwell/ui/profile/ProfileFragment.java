@@ -15,7 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.digiview.workwell.R;
 import com.digiview.workwell.data.service.UserService;
 import com.digiview.workwell.ui.auth.AuthLoginActivity;
@@ -24,9 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class ProfileFragment extends Fragment {
 
-    private UserService userService;
-    private TextView tvEmail, tvName, tvAge, tvContact, tvHeight, tvWeight, tvAddress, tvAssignedProfessional;
-    private boolean isDataLoaded = false; // Flag to prevent redundant fetching
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,22 +37,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        userService = new UserService();
 
-        // Initialize UI elements
-        tvEmail = view.findViewById(R.id.tvEmail);
-        tvName = view.findViewById(R.id.tvName);
-        tvAge = view.findViewById(R.id.tvAge);
-        tvContact = view.findViewById(R.id.tvContact);
-        tvHeight = view.findViewById(R.id.tvHeight);
-        tvWeight = view.findViewById(R.id.tvWeight);
-        tvAddress = view.findViewById(R.id.tvAddress);
-        tvAssignedProfessional = view.findViewById(R.id.tvAssignedProfessional);
-
-        // Load user data only if not already fetched
-        if (!isDataLoaded) {
-            loadUserData();
-        }
 
         Button btnLogout = view.findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(v -> {
@@ -62,41 +48,24 @@ public class ProfileFragment extends Fragment {
             getActivity().finish(); // Close current activity
         });
 
+        // Account CardView Click - Launch ProfileAccountFragment
+        CardView cardAccount = view.findViewById(R.id.cardAccount);
+        CardView cardHelp = view.findViewById(R.id.cardHelp);
+        CardView cardAboutUs = view.findViewById(R.id.cardAboutUs);
+        cardAccount.setOnClickListener(v -> openFragment(new ProfileAccountFragment()));
+        cardHelp.setOnClickListener(v -> openFragment(new ProfileHelpFragment()));
+        cardAboutUs.setOnClickListener(v -> openFragment(new ProfileAboutUsFragment()));
     }
 
-    private void loadUserData() {
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser == null) {
-            Toast.makeText(getContext(), "User not logged in", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        userService.getCompleteUserData().thenAccept(user -> {
-            if (user != null) {
-                Log.d("ProfileFragment", "User fetched: " + user.getEmail());
-
-                // Apply dynamic bold styling for labels
-                tvEmail.setText(getBoldFormattedText("Email:", user.getEmail()));
-                tvName.setText(getBoldFormattedText("Name:", user.getName()));
-                tvAge.setText(getBoldFormattedText("Age:", String.valueOf(user.getAge())));
-                tvContact.setText(getBoldFormattedText("Contact:", user.getContact()));
-                tvHeight.setText(getBoldFormattedText("Height:", user.getHeight() + " cm"));
-                tvWeight.setText(getBoldFormattedText("Weight:", user.getWeight() + " kg"));
-                tvAddress.setText(getBoldFormattedText("Address:", user.getAddress()));
-                tvAssignedProfessional.setText(getBoldFormattedText("Assigned Professional:", user.getAssignedProfessionalName()));
-
-                isDataLoaded = true; // Set flag to prevent redundant fetching
-            }
-        }).exceptionally(ex -> {
-            Log.e("ProfileFragment", "Error fetching user data", ex);
-            Toast.makeText(getContext(), "Failed to fetch user data", Toast.LENGTH_SHORT).show();
-            return null;
-        });
+    // Function to navigate to the desired fragment
+    private void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.flFragmentContainer, fragment); // Ensure fragment_container is the host layout in your activity
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
-    private SpannableStringBuilder getBoldFormattedText(String label, String value) {
-        SpannableStringBuilder builder = new SpannableStringBuilder(label + " " + value);
-        builder.setSpan(new StyleSpan(Typeface.BOLD), 0, label.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return builder;
-    }
+
+
+
 }

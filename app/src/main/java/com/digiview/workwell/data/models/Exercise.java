@@ -10,9 +10,13 @@ public class Exercise implements Serializable {
     private String ExerciseId; // Firestore ID
     private String Name;       // Exercise name
     private String Description; // Exercise description
+    private String DeviceSetup;
     private String TargetArea; // Changed to string to align with Firestore
     private String OrganizationId; // ID of the organization the exercise belongs to
     private List<String> Constraints;
+    private String VideoId;  // New field
+
+
     // Default constructor (required for Firestore)
     public Exercise() {
     }
@@ -42,6 +46,14 @@ public class Exercise implements Serializable {
         Description = description;
     }
 
+    public String getDeviceSetup() {
+        return DeviceSetup;
+    }
+
+    public void setDeviceSetup(String deviceSetup) {
+        DeviceSetup = deviceSetup;
+    }
+
     @PropertyName("TargetArea")
     public String getTargetArea() {
         return TargetArea;
@@ -62,6 +74,15 @@ public class Exercise implements Serializable {
         this.OrganizationId = organizationId; // Set the organization ID
     }
 
+    public String getVideoId() {
+        return VideoId;
+    }
+
+    public void setVideoId(String videoId) {
+        VideoId = videoId;
+    }
+
+
     public List<String> getConstraints() {
         return Constraints;
     }
@@ -76,6 +97,7 @@ public class Exercise implements Serializable {
                 "ExerciseId='" + ExerciseId + '\'' +
                 ", Name='" + Name + '\'' +
                 ", Description='" + Description + '\'' +
+                ", Device Setup='" + DeviceSetup + '\'' +
                 ", TargetArea='" + TargetArea + '\'' +
                 ", OrganizationId='" + OrganizationId + '\'' +
                 '}';
