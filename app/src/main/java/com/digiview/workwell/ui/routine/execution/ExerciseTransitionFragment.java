@@ -13,15 +13,44 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.digiview.workwell.R;
 import com.digiview.workwell.databinding.FragmentExerciseTransitionBinding;
+import com.digiview.workwell.services.mediapipe.TTSInitializationListener;
+
+import java.util.Objects;
 
 
 public class ExerciseTransitionFragment extends Fragment {
 
     private ExerciseTransitionViewModel exerciseTransitionViewModel;
     private FragmentExerciseTransitionBinding fragmentExerciseTransitionBinding;
+
+    /**
+     * Sample Exercise class
+     * TODO: Implement in models then replace this
+     * @return
+     */
+    private class ExerciseModelObject {
+        private String exerciseName;
+        private String deviceSetup;
+
+        public ExerciseModelObject() {}
+
+        public ExerciseModelObject(String exerciseName, String deviceSetup) {
+            this.exerciseName = exerciseName;
+            this.deviceSetup = deviceSetup;
+        }
+
+        public String getExerciseName() {
+            return exerciseName;
+        }
+
+        public String getHowToPosition() {
+            return deviceSetup;
+        }
+    }
 
     public static ExerciseTransitionFragment newInstance() {
         return new ExerciseTransitionFragment();
@@ -37,7 +66,16 @@ public class ExerciseTransitionFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+
         exerciseTransitionViewModel = new ViewModelProvider(requireActivity()).get(ExerciseTransitionViewModel.class);
+
+        if (getArguments() != null) {
+            exerciseTransitionViewModel.setExerciseName(getArguments().getString("exerciseName"));
+        }
+
+        fragmentExerciseTransitionBinding.transitionText.setText("Prepare for " + exerciseTransitionViewModel.getExerciseName().getValue());
+
         exerciseTransitionViewModel.setContext(requireContext());
         exerciseTransitionViewModel.setMediaPlayer(new MediaPlayer());
         exerciseTransitionViewModel.getTimeLeft().observe(getViewLifecycleOwner(), new Observer<Long>() {
@@ -52,7 +90,15 @@ public class ExerciseTransitionFragment extends Fragment {
                         );
             }
         });
-        exerciseTransitionViewModel.startTransition();
+
+        exerciseTransitionViewModel.setTtsHelper(requireContext(),
+                new TTSInitializationListener() {
+                    @Override
+                    public void onTTSInitialized() {
+                        exerciseTransitionViewModel.startTransition();
+                    }
+                }
+        );
     }
 
 }

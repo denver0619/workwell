@@ -1,5 +1,6 @@
 package com.digiview.workwell.ui.routine.execution;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -11,7 +12,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.digiview.workwell.data.models.RoutineExercise;
-import com.digiview.workwell.services.exercises.Exercise;
+import com.digiview.workwell.data.models.RoutineExerciseDetailDTO;
+import com.digiview.workwell.services.exercises.AbstractExercise;
+import com.digiview.workwell.services.exercises.BaseExerciseDynamic;
 import com.digiview.workwell.services.exercises.ExerciseFactory;
 
 import java.util.List;
@@ -32,14 +35,14 @@ public class RoutineLooperViewModel extends ViewModel {
 
 
     // FOR ROUTINE EXECUTION====================================
-    private List<RoutineExercise> routine;
-    private final MutableLiveData<Exercise> currentExercise = new MutableLiveData<>();
+    private List<RoutineExerciseDetailDTO> routine;
+    private final MutableLiveData<BaseExerciseDynamic> currentExercise = new MutableLiveData<>();
 
-    public void setRoutine(List<RoutineExercise> routine) {
+    public void setRoutine(List<RoutineExerciseDetailDTO> routine) {
         this.routine = routine;
     }
 
-    public LiveData<Exercise> getCurrentExercise() {
+    public LiveData<BaseExerciseDynamic> getCurrentExercise() {
         return currentExercise;
     }
 
@@ -65,26 +68,97 @@ public class RoutineLooperViewModel extends ViewModel {
         this.executionState.setValue(RoutineConstants.EXECUTION_STATE.NONE);
     }
 
+    private final MutableLiveData<RoutineConstants.REMINDER_STATE> reminderState = new MutableLiveData<>();
+    private LiveData<RoutineConstants.REMINDER_STATE> getReminderState() {
+        return  reminderState;
+    }
 
+    public void setReminderState(RoutineConstants.REMINDER_STATE reminderState) {
+        this.reminderState.setValue(reminderState);
+        this.reminderState.setValue(RoutineConstants.REMINDER_STATE.NONE);
+    }
 
+//    public void executeRoutine() {
+//        ExerciseFactory exerciseFactory = new ExerciseFactory();
+//        Thread thread = new Thread(() -> {
+//            int counter = 0;
+//            for (RoutineExercise exerciseEntity : routine) {
+//                // Update the UI with the current counter
+//                counter++;
+//                toastMsg.postValue(String.valueOf(counter));
+//
+//                // Create and post the current exercise
+//                currentExercise.postValue(exerciseFactory.createExercise(
+//                        exerciseEntity.getExerciseName(),
+//                        exerciseEntity.getReps(),
+//                        exerciseEntity.getDuration()
+//                ));
+//
+//                // Transition to ExerciseTransitionFragment
+//                postFragmentTransition(ExerciseTransitionFragment.class, exerciseEntity.getExerciseName());
+//
+//                // Use CountDownLatch to wait for the transition and exercise to finish
+//                CountDownLatch transitionLatch = new CountDownLatch(1);
+//                CountDownLatch executionLatch = new CountDownLatch(1);
+//
+//                // Observer for transition state
+//                observeTransitionState(transitionLatch);
+//
+//                // Wait for the transition to finish
+//                awaitLatch(transitionLatch, "Waiting for transition to finish..."+counter);
+//
+//                // Post to change the fragment to RoutineExecutionFragment
+//                postFragmentTransition(RoutineExecutionFragment.class);
+//
+//                // Observer for execution state
+//                observeExecutionState(executionLatch);
+//                // Wait for the exercise to finish
+//                awaitLatch(executionLatch, "Waiting for exercise to finish..."+counter);
+//                try {
+//                    Thread.sleep(3000);
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//
+//            postFragmentTransition(VideoConvertFragment.class);
+//        });
+//
+//        thread.start();
+//    }
+
+    //
+
+    private Thread thread;
     public void executeRoutine() {
         ExerciseFactory exerciseFactory = new ExerciseFactory();
-        Thread thread = new Thread(() -> {
+        thread = new Thread(() -> {
             int counter = 0;
-            for (RoutineExercise exerciseEntity : routine) {
+
+            postFragmentTransition(ReminderFragment.class);
+
+            CountDownLatch reminderLatch = new CountDownLatch(1);
+            observeReminderState(reminderLatch);
+            awaitLatch(reminderLatch, "Wating for user to confirm reminders....");
+
+            for (RoutineExerciseDetailDTO exerciseEntity : routine) {
                 // Update the UI with the current counter
                 counter++;
                 toastMsg.postValue(String.valueOf(counter));
 
                 // Create and post the current exercise
-                currentExercise.postValue(exerciseFactory.createExercise(
-                        exerciseEntity.getExerciseName(),
-                        exerciseEntity.getReps(),
-                        exerciseEntity.getDuration()
-                ));
+//                currentExercise.postValue(exerciseFactory.createExercise(
+//                        exerciseEntity.getExerciseName(),
+//                        exerciseEntity.getReps(),
+//                        exerciseEntity.getDuration()
+//                ));
+
+                currentExercise.postValue(
+                        new BaseExerciseDynamic(exerciseEntity)
+                );
 
                 // Transition to ExerciseTransitionFragment
-                postFragmentTransition(ExerciseTransitionFragment.class);
+                postFragmentTransition(ExerciseTransitionFragment.class, exerciseEntity.getExerciseName());
 
                 // Use CountDownLatch to wait for the transition and exercise to finish
                 CountDownLatch transitionLatch = new CountDownLatch(1);
@@ -117,7 +191,31 @@ public class RoutineLooperViewModel extends ViewModel {
     }
 
     private void postFragmentTransition(Class<? extends  Fragment> fragmentClass) {
-        new Handler(Looper.getMainLooper()).post(() -> destination.setValue(fragmentClass));
+        new Handler(Looper.getMainLooper()).post(() -> {
+            try {
+                destination.setValue(fragmentClass.newInstance());
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            } catch (InstantiationException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    private void postFragmentTransition(Class<? extends  Fragment> fragmentClass, String exerciseName) {
+        new Handler(Looper.getMainLooper()).post(() -> {
+            try {
+                Fragment fragment = fragmentClass.newInstance();
+                Bundle args = new Bundle();
+                args.putString("exerciseName", exerciseName);
+                fragment.setArguments(args);
+                destination.setValue(fragment);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            } catch (InstantiationException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     private void observeTransitionState(CountDownLatch latch) {
@@ -148,6 +246,20 @@ public class RoutineLooperViewModel extends ViewModel {
         });
     }
 
+    private void observeReminderState(CountDownLatch latch) {
+        new Handler(Looper.getMainLooper()).post(() -> {
+            getReminderState().observeForever(new Observer<RoutineConstants.REMINDER_STATE>() {
+                @Override
+                public void onChanged(RoutineConstants.REMINDER_STATE reminderState) {
+                    if (reminderState.equals(RoutineConstants.REMINDER_STATE.ACCEPTED)) {
+                        getReminderState().removeObserver(this);
+                        latch.countDown();
+                    }
+                }
+            });
+        });
+    }
+
     private void awaitLatch(CountDownLatch latch, String logMessage) {
         try {
             Log.d("Latch", logMessage);
@@ -168,13 +280,20 @@ public class RoutineLooperViewModel extends ViewModel {
 
     // FOR NAVIGATING FRAGMENTS
 
-    private MutableLiveData<Class<? extends Fragment>> destination = new MutableLiveData<>();
-    public LiveData<Class<? extends  Fragment>> getDestination() {
+    private MutableLiveData<Fragment> destination = new MutableLiveData<>();
+    public LiveData<Fragment> getDestination() {
         return destination;
     }
 
-    public void setDestination(Class<? extends Fragment> destination) {
+    public void setDestination( Fragment destination) {
         this.destination.setValue(destination);
     }
 
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        if(thread != null) {
+            thread.interrupt();
+        }
+    }
 }

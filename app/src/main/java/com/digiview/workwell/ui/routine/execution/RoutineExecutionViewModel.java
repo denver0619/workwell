@@ -5,16 +5,19 @@ import android.content.res.AssetFileDescriptor;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.digiview.workwell.services.TTSHelper;
-import com.digiview.workwell.services.exercises.Exercise;
+import com.digiview.workwell.services.exercises.AbstractExercise;
+import com.digiview.workwell.services.exercises.BaseExerciseDynamic;
 import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarkerResult;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Objects;
 
 public class RoutineExecutionViewModel extends ViewModel {// TODO: Implement the ViewModel
@@ -31,13 +34,13 @@ public class RoutineExecutionViewModel extends ViewModel {// TODO: Implement the
         this.context = context;
     }
 
-    private final MutableLiveData<Exercise> exercise = new MutableLiveData<>();
-    public void setExercise(Exercise exercise) {
+    private final MutableLiveData<BaseExerciseDynamic> exercise = new MutableLiveData<>();
+    public void setExercise(BaseExerciseDynamic exercise) {
         this.exercise.setValue(exercise);
     }
 
-    private final MutableLiveData<Exercise.ExerciseResult> exerciseResult = new MutableLiveData<>();
-    public void setExerciseResult(Exercise.ExerciseResult exerciseResult) {
+    private final MutableLiveData<BaseExerciseDynamic.ExerciseResult> exerciseResult = new MutableLiveData<>();
+    public void setExerciseResult(BaseExerciseDynamic.ExerciseResult exerciseResult) {
         this.exerciseResult.setValue(exerciseResult);
     }
 
@@ -84,7 +87,7 @@ public class RoutineExecutionViewModel extends ViewModel {// TODO: Implement the
     private int relaxedCount = 0;
     private int stretchedCount = 0;
     private int stateThreshold = 3; // Example threshold, define as needed
-    private Exercise.STATUS lastStatus;
+    private AbstractExercise.STATUS lastStatus;
     private boolean isFromRelaxed = false;
     public LiveData<String> getStatusText() { return statusText; }
     public LiveData<Integer> getStatusColor() { return statusColor; }
@@ -102,6 +105,7 @@ public class RoutineExecutionViewModel extends ViewModel {// TODO: Implement the
     public PoseSmoother poseSmoother = new PoseSmoother(25);
 
     public void processLandmarkerResult(PoseLandmarkerResult landmarkerResults) {
+
         setExecutionState(RoutineConstants.EXECUTION_STATE.PREPARING);
         if (exercise.getValue() == null) {
             return;
@@ -116,21 +120,23 @@ public class RoutineExecutionViewModel extends ViewModel {// TODO: Implement the
             );
 
             //get the result from calculation
-            Exercise.ExerciseResult result = exercise.getValue().excerciseResult();
-            Exercise.STATUS position = result.getPosition();
+            AbstractExercise.ExerciseResult result = exercise.getValue().excerciseResult();
+            AbstractExercise.STATUS position = result.getPosition();
             lastStatus = result.getLastPosition();
             angles.setValue(result.getAngles());
 
             angle2d.setValue(result.getAngles()[0]);
             angle3d.setValue(result.getAngles()[1]);
             timeLeft.setValue(result.getTimeLeft());
-            Log.d("=====Exercise.STATUS=====", result.getPosition().name() );
+//            Toast.makeText(context, "resting: " + exercise.getValue().restingState + ", aligned: " + exercise.getValue().alignedState, Toast.LENGTH_LONG).show();
+//            Log.d("=====Exercise.STATUS=====", result.getPosition().name() );
+            Log.d("Position status", "resting: " + exercise.getValue().restingState + ", aligned: " + exercise.getValue().alignedState);
 
             switch (position) {
                 case RESTING:
                     statusText.setValue("Status: RESTING");
                     statusColor.setValue(Color.GREEN);
-                    if (lastStatus != Exercise.STATUS.RESTING) {
+                    if (lastStatus != AbstractExercise.STATUS.RESTING) {
                         Objects.requireNonNull(ttsHelper.getValue()).speak("RESTING");
                     }
                     break;
@@ -138,7 +144,7 @@ public class RoutineExecutionViewModel extends ViewModel {// TODO: Implement the
                 case ALIGNED:
                     statusText.setValue("Status: ALIGNED");
                     statusColor.setValue(Color.BLUE);
-                    if (lastStatus != Exercise.STATUS.ALIGNED) {
+                    if (lastStatus != AbstractExercise.STATUS.ALIGNED) {
                         Objects.requireNonNull(ttsHelper.getValue()).speak("ALIGNED");
                     }
                     break;

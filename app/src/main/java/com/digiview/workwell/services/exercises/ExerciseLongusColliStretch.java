@@ -1,28 +1,26 @@
 package com.digiview.workwell.services.exercises;
 
-import android.os.CountDownTimer;
-
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-public class ExerciseLongusColliStretch extends  Exercise {
+public class ExerciseLongusColliStretch extends AbstractExercise {
 
     public ExerciseLongusColliStretch(Integer repetition, Long duration) {
         super(repetition, duration);
     }
     @Override
     public ExerciseResult excerciseResult() {
-        double[] a = landmarkToArray(landmarks.get(LANDMARKS.RIGHT_SHOULDER.getId()));
-        double[] b = landmarkToArray(landmarks.get(LANDMARKS.LEFT_SHOULDER.getId()));
-        double[] c = landmarkToArray(landmarks.get(LANDMARKS.NOSE.getId()));
-        double[] d = landmarkToArray(landmarks.get(LANDMARKS.RIGHT_EAR.getId()));
-        double[] e = landmarkToArray(landmarks.get(LANDMARKS.LEFT_EAR.getId()));
-//        double[] d = landmarkToArray(landmarks.get(LANDMARKS.RIGHT_EYE.getId()));
-//        double[] e = landmarkToArray(landmarks.get(LANDMARKS.LEFT_EYE.getId()));
-//        double[] f = landmarkToArray(landmarks.get(LANDMARKS.MOUTH_RIGHT.getId()));
-//        double[] g = landmarkToArray(landmarks.get(LANDMARKS.MOUTH_LEFT.getId()));
-        double[] f = landmarkToArray(landmarks.get(LANDMARKS.RIGHT_EYE.getId()));
-        double[] g = landmarkToArray(landmarks.get(LANDMARKS.LEFT_EYE.getId()));
+        double[] a = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.RIGHT_SHOULDER.getId()));
+        double[] b = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.LEFT_SHOULDER.getId()));
+        double[] c = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.NOSE.getId()));
+        double[] d = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.RIGHT_EAR.getId()));
+        double[] e = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.LEFT_EAR.getId()));
+//        double[] d = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.RIGHT_EYE.getId()));
+//        double[] e = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.LEFT_EYE.getId()));
+//        double[] f = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.MOUTH_RIGHT.getId()));
+//        double[] g = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.MOUTH_LEFT.getId()));
+        double[] f = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.RIGHT_EYE.getId()));
+        double[] g = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.LEFT_EYE.getId()));
 
 
 
@@ -62,9 +60,12 @@ public class ExerciseLongusColliStretch extends  Exercise {
         switch (position) {
             case RESTING:
                 // mark new timer as current
+                if (isRepFinished){
+                    isRepFinished = false;
+                    restartTimer();
+                }
                 isTimerReset = false;
                 relaxedCount++;
-                isRepFinished = false;
                 stretchedCount = 0;
                 pauseTimer(); // Pause the timer
                 if (relaxedCount >= stateThreshold && lastStatus != STATUS.RESTING) {

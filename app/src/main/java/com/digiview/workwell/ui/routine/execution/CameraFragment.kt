@@ -34,7 +34,6 @@ import androidx.camera.camera2.interop.Camera2Interop
 import androidx.camera.core.Preview
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.ImageProxy
 import androidx.camera.core.Camera
 import androidx.camera.core.AspectRatio
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -43,10 +42,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.digiview.workwell.R
-import com.digiview.workwell.services.exercises.Exercise.STATUS
+import com.digiview.workwell.services.exercises.AbstractExercise.STATUS
 import com.digiview.workwell.services.mediapipe.PoseLandmarkerHelper
 import com.digiview.workwell.databinding.FragmentCameraBinding
-import com.digiview.workwell.ui.routine.execution.CameraViewModel
 import com.google.mediapipe.tasks.vision.core.RunningMode
 import java.io.File
 import java.io.FileOutputStream

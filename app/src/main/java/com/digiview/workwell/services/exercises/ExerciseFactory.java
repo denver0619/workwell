@@ -1,8 +1,8 @@
 package com.digiview.workwell.services.exercises;
 
 public class ExerciseFactory {
-    public Exercise createExercise(String name, Integer repetition, Long duration) {
-        Exercise exercise;
+    public AbstractExercise createExercise(String name, Integer repetition, Long duration) {
+        AbstractExercise exercise;
         switch (name) {
             case "Longus Colli Stretch":
                 exercise = new ExerciseLongusColliStretch(repetition, duration);

@@ -1,8 +1,9 @@
 package com.digiview.workwell.data.models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Constraint {
+public class Constraint implements Serializable {
     private String ConstraintId;
     private int AlignedThreshold;
     private int RestingThreshold;

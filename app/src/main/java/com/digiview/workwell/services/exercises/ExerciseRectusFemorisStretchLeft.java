@@ -2,14 +2,14 @@ package com.digiview.workwell.services.exercises;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-
-public class ExerciseRectusFemorisStretchLeft extends Exercise{
+//NOT UPDATED DO NOT USE
+public class ExerciseRectusFemorisStretchLeft extends AbstractExercise {
     public ExerciseRectusFemorisStretchLeft(Integer repetition, Long duration) {
         super(repetition, duration);
     }
 
     @Override
-    public Exercise.ExerciseResult excerciseResult() {
+    public AbstractExercise.ExerciseResult excerciseResult() {
         double[] a = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.LEFT_ANKLE.getId()));
         double[] b = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.LEFT_KNEE.getId()));
         double[] c = landmarkToArray(landmarks.get(LANDMARKS_FLIPPED.LEFT_HIP.getId()));
@@ -44,14 +44,14 @@ public class ExerciseRectusFemorisStretchLeft extends Exercise{
 
         double[] angles = {leftKnee, rightKnee};// nonrelevant
 
-        Exercise.STATUS position;
+        AbstractExercise.STATUS position;
 
         if (leftHip >= 150 && 65 <= rightKnee && rightKnee <= 120 && leftKnee>=60 ) {
-            position = Exercise.STATUS.RESTING;
+            position = AbstractExercise.STATUS.RESTING;
         } else if (leftHip >= 160 && 65 <= rightKnee && rightKnee <= 120 && leftKnee<=50 ) {
-            position = Exercise.STATUS.ALIGNED;
+            position = AbstractExercise.STATUS.ALIGNED;
         } else {
-            position = Exercise.STATUS.TRANSITIONING;
+            position = AbstractExercise.STATUS.TRANSITIONING;
         }
         // Handle state transitions
         switch (position) {

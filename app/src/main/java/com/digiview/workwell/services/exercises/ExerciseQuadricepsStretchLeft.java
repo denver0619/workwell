@@ -3,18 +3,18 @@ package com.digiview.workwell.services.exercises;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-public class ExerciseQuadricepsStretchLeft extends Exercise {
+public class ExerciseQuadricepsStretchLeft extends AbstractExercise {
 
     public ExerciseQuadricepsStretchLeft(Integer repetition, Long duration) {
         super(repetition, duration);
     }
 
     @Override
-    public Exercise.ExerciseResult excerciseResult() {
-        double[] a = landmarkToArray(landmarks.get(Exercise.LANDMARKS_FLIPPED.LEFT_ANKLE.getId()));
-        double[] b = landmarkToArray(landmarks.get(Exercise.LANDMARKS_FLIPPED.LEFT_KNEE.getId()));
-        double[] c = landmarkToArray(landmarks.get(Exercise.LANDMARKS_FLIPPED.LEFT_HIP.getId()));
-        double[] d = landmarkToArray(landmarks.get(Exercise.LANDMARKS_FLIPPED.LEFT_SHOULDER.getId()));
+    public AbstractExercise.ExerciseResult excerciseResult() {
+        double[] a = landmarkToArray(landmarks.get(AbstractExercise.LANDMARKS_FLIPPED.LEFT_ANKLE.getId()));
+        double[] b = landmarkToArray(landmarks.get(AbstractExercise.LANDMARKS_FLIPPED.LEFT_KNEE.getId()));
+        double[] c = landmarkToArray(landmarks.get(AbstractExercise.LANDMARKS_FLIPPED.LEFT_HIP.getId()));
+        double[] d = landmarkToArray(landmarks.get(AbstractExercise.LANDMARKS_FLIPPED.LEFT_SHOULDER.getId()));
 
         Future<Double> angle3D1Future = calculateAngle3DAsync(a, b, c);
 
@@ -38,22 +38,25 @@ public class ExerciseQuadricepsStretchLeft extends Exercise {
         double[] angles = {angle3D1, angle3D2};// nonrelevant
 
 
-        Exercise.STATUS position;
+        AbstractExercise.STATUS position;
 
         if (angle3D1 >=140 && angle3D2 >= 100) {
-            position = Exercise.STATUS.RESTING;
+            position = AbstractExercise.STATUS.RESTING;
         } else if (angle3D1 <= 130 && angle3D2 >= 100) {
-            position = Exercise.STATUS.ALIGNED;
+            position = AbstractExercise.STATUS.ALIGNED;
         } else {
-            position = Exercise.STATUS.TRANSITIONING;
+            position = AbstractExercise.STATUS.TRANSITIONING;
         }
         // Handle state transitions
         switch (position) {
             case RESTING:
                 // mark new timer as current
+                if (isRepFinished){
+                    isRepFinished = false;
+                    restartTimer();
+                }
                 isTimerReset = false;
                 relaxedCount++;
-                isRepFinished = false;
                 stretchedCount = 0;
                 pauseTimer(); // Pause the timer
                 if (relaxedCount >= stateThreshold && lastStatus != STATUS.RESTING) {

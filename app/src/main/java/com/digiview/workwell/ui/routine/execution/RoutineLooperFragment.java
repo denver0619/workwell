@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.digiview.workwell.R;
 
 import com.digiview.workwell.data.models.RoutineExercise;
+import com.digiview.workwell.data.models.RoutineExerciseDetailDTO;
 import com.digiview.workwell.databinding.FragmentRoutineLooperBinding;
 
 import java.util.ArrayList;
@@ -35,13 +36,14 @@ public class RoutineLooperFragment extends Fragment {
     private RoutineLooperViewModel routineViewModel;
     private RoutineExecutionViewModel routineExecutionViewModel;
     private ExerciseTransitionViewModel exerciseTransitionViewModel;
+    private ReminderViewModel reminderViewModel;
     private CameraViewModel cameraViewModel;
     private FragmentRoutineLooperBinding fragmentRoutineBinding;
 
     private ProcessCameraProvider cameraProvider;
 
     private String routineLogId;
-    private List<RoutineExercise> exercises;
+    private List<RoutineExerciseDetailDTO> exercises;
     private OnRoutineFinishedListener onRoutineFinishedListener;
 
     // SAMPLE DATABASE MOCK DATA
@@ -96,11 +98,11 @@ public class RoutineLooperFragment extends Fragment {
         Bundle arguments = getArguments();
         if (arguments != null) {
             routineLogId = arguments.getString("ROUTINE_LOG_ID");
-            exercises = (ArrayList<RoutineExercise>) arguments.getSerializable("EXERCISES");
+            exercises = (ArrayList<RoutineExerciseDetailDTO>) arguments.getSerializable("EXERCISES");
             Log.d("RoutineLooperFragment", "RoutineLogId: " + routineLogId);
 
             if (exercises != null) {
-                for (RoutineExercise exercise : exercises) {
+                for (RoutineExerciseDetailDTO exercise : exercises) {
                     Log.d("RoutineLooperFragment", "Exercise: " + exercise.getExerciseName());
                 }
             }
@@ -131,6 +133,7 @@ public class RoutineLooperFragment extends Fragment {
         routineViewModel = new ViewModelProvider(requireActivity()).get(RoutineLooperViewModel.class);
         routineExecutionViewModel = new ViewModelProvider(requireActivity()).get(RoutineExecutionViewModel.class);
         exerciseTransitionViewModel = new ViewModelProvider(requireActivity()).get(ExerciseTransitionViewModel.class);
+        reminderViewModel = new ViewModelProvider(requireActivity()).get(ReminderViewModel.class);
         cameraViewModel = new ViewModelProvider(requireActivity()).get(CameraViewModel.class);
 
         // Generate a unique temporary ID
@@ -146,7 +149,7 @@ public class RoutineLooperFragment extends Fragment {
         // Observe destination changes
         routineViewModel.getDestination().observe(getViewLifecycleOwner(), destinationFragment -> {
             try {
-                Fragment destination = destinationFragment.newInstance();
+                Fragment destination = destinationFragment;
                 FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(
                         android.R.anim.slide_in_left,
@@ -176,6 +179,9 @@ public class RoutineLooperFragment extends Fragment {
         // Observe transition state
         exerciseTransitionViewModel.getTransitionState().observe(getViewLifecycleOwner(), routineViewModel::setTransitionState);
 
+        // Observe Reminder State
+        reminderViewModel.getReminderState().observe(getViewLifecycleOwner(), routineViewModel::setReminderState);
+
         // Debugging: Show Toast messages
         routineViewModel.getToastMsg().observe(getViewLifecycleOwner(), s -> Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show());
 
@@ -195,9 +201,8 @@ public class RoutineLooperFragment extends Fragment {
     }
 
     public interface OnRoutineFinishedListener {
-        void onRoutineFinished(List<RoutineExercise> exercises);
+        void onRoutineFinished(List<RoutineExerciseDetailDTO> exercises);
     }
-
 
 
 }
