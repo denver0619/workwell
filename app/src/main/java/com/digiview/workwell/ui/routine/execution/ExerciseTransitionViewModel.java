@@ -12,6 +12,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.digiview.workwell.data.models.RoutineExerciseDetailDTO;
 import com.digiview.workwell.services.TTSHelper;
 import com.digiview.workwell.services.mediapipe.TTSInitializationListener;
 
@@ -44,11 +45,11 @@ public class ExerciseTransitionViewModel extends ViewModel {
         this.transitionState.setValue(transitionState);
     }
 
-    private final  MutableLiveData<String> exerciseName = new MutableLiveData<>();
-    public void setExerciseName(String exerciseName) {
-        this.exerciseName.setValue(exerciseName);
+    private final  MutableLiveData<RoutineExerciseDetailDTO> exerciseDetailDTO = new MutableLiveData<>();
+    public void setExerciseDetailDTO(RoutineExerciseDetailDTO exerciseName) {
+        this.exerciseDetailDTO.setValue(exerciseName);
     }
-    public LiveData<String> getExerciseName() {return  exerciseName;}
+    public LiveData<RoutineExerciseDetailDTO> getExerciseDetailDTO() {return  exerciseDetailDTO;}
 
 
     private final MutableLiveData<TTSHelper> ttsHelper = new MutableLiveData<>();
@@ -66,7 +67,7 @@ public class ExerciseTransitionViewModel extends ViewModel {
 
     public void startTransition() {
 
-        Objects.requireNonNull(ttsHelper.getValue()).speak("Prepare for" + exerciseName.getValue());
+        Objects.requireNonNull(ttsHelper.getValue()).speak("Prepare for" + Objects.requireNonNull(getExerciseDetailDTO().getValue()).getExerciseName());
 
         // Initialize the CountDownTimer and play the exercise name
         try (AssetFileDescriptor afd = context.getAssets().openFd("sounds/timer.wav")) {

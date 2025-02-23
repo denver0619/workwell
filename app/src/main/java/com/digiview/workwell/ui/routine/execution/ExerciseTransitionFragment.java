@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.digiview.workwell.R;
+import com.digiview.workwell.data.models.RoutineExerciseDetailDTO;
 import com.digiview.workwell.databinding.FragmentExerciseTransitionBinding;
 import com.digiview.workwell.services.mediapipe.TTSInitializationListener;
 
@@ -71,10 +72,22 @@ public class ExerciseTransitionFragment extends Fragment {
         exerciseTransitionViewModel = new ViewModelProvider(requireActivity()).get(ExerciseTransitionViewModel.class);
 
         if (getArguments() != null) {
-            exerciseTransitionViewModel.setExerciseName(getArguments().getString("exerciseName"));
+            RoutineExerciseDetailDTO routineExerciseDetailDTO = (RoutineExerciseDetailDTO) getArguments().getSerializable("exerciseDTO");
+            if (routineExerciseDetailDTO!= null) {
+                exerciseTransitionViewModel.setExerciseDetailDTO(routineExerciseDetailDTO);
+            }
         }
 
-        fragmentExerciseTransitionBinding.transitionText.setText("Prepare for " + exerciseTransitionViewModel.getExerciseName().getValue());
+        fragmentExerciseTransitionBinding
+                .transitionSetupContent
+                        .setText(
+                                Objects.requireNonNull(exerciseTransitionViewModel
+                                                .getExerciseDetailDTO()
+                                                .getValue())
+                                        .getExerciseDeviceSetup()
+                        );
+
+        fragmentExerciseTransitionBinding.transitionText.setText("Prepare for " + exerciseTransitionViewModel.getExerciseDetailDTO().getValue().getExerciseName());
 
         exerciseTransitionViewModel.setContext(requireContext());
         exerciseTransitionViewModel.setMediaPlayer(new MediaPlayer());

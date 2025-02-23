@@ -158,7 +158,7 @@ public class RoutineLooperViewModel extends ViewModel {
                 );
 
                 // Transition to ExerciseTransitionFragment
-                postFragmentTransition(ExerciseTransitionFragment.class, exerciseEntity.getExerciseName());
+                postFragmentTransition(ExerciseTransitionFragment.class, exerciseEntity);
 
                 // Use CountDownLatch to wait for the transition and exercise to finish
                 CountDownLatch transitionLatch = new CountDownLatch(1);
@@ -194,25 +194,21 @@ public class RoutineLooperViewModel extends ViewModel {
         new Handler(Looper.getMainLooper()).post(() -> {
             try {
                 destination.setValue(fragmentClass.newInstance());
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException(e);
-            } catch (InstantiationException e) {
+            } catch (IllegalAccessException | InstantiationException e) {
                 throw new RuntimeException(e);
             }
         });
     }
 
-    private void postFragmentTransition(Class<? extends  Fragment> fragmentClass, String exerciseName) {
+    private void postFragmentTransition(Class<? extends  Fragment> fragmentClass, RoutineExerciseDetailDTO exerciseDetailDTO) {
         new Handler(Looper.getMainLooper()).post(() -> {
             try {
                 Fragment fragment = fragmentClass.newInstance();
                 Bundle args = new Bundle();
-                args.putString("exerciseName", exerciseName);
+                args.putSerializable("exerciseDTO", exerciseDetailDTO);
                 fragment.setArguments(args);
                 destination.setValue(fragment);
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException(e);
-            } catch (InstantiationException e) {
+            } catch (IllegalAccessException | InstantiationException e) {
                 throw new RuntimeException(e);
             }
         });
