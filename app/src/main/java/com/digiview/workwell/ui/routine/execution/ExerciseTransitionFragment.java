@@ -89,26 +89,37 @@ public class ExerciseTransitionFragment extends Fragment {
 
         fragmentExerciseTransitionBinding.transitionText.setText("Prepare for " + exerciseTransitionViewModel.getExerciseDetailDTO().getValue().getExerciseName());
 
-        exerciseTransitionViewModel.setContext(requireContext());
-        exerciseTransitionViewModel.setMediaPlayer(new MediaPlayer());
-        exerciseTransitionViewModel.getTimeLeft().observe(getViewLifecycleOwner(), new Observer<Long>() {
-            @Override
-            public void onChanged(Long timeLeft) {
-                fragmentExerciseTransitionBinding
-                        .transitionCountdown
-                        .setText(
-                                String.valueOf(
-                                        (int) (timeLeft/1000)
-                                )
-                        );
-            }
-        });
+//        exerciseTransitionViewModel.setContext(requireContext());
+//        exerciseTransitionViewModel.setMediaPlayer(new MediaPlayer());
+//        exerciseTransitionViewModel.getTimeLeft().observe(getViewLifecycleOwner(), new Observer<Long>() {
+//            @Override
+//            public void onChanged(Long timeLeft) {
+//                fragmentExerciseTransitionBinding
+//                        .transitionCountdown
+//                        .setText(
+//                                String.valueOf(
+//                                        (int) (timeLeft/1000)
+//                                )
+//                        );
+//            }
+//        });
 
         exerciseTransitionViewModel.setTtsHelper(requireContext(),
                 new TTSInitializationListener() {
                     @Override
                     public void onTTSInitialized() {
-                        exerciseTransitionViewModel.startTransition();
+                        exerciseTransitionViewModel.startSpeaking();
+                    }
+                }
+        );
+        fragmentExerciseTransitionBinding.proceedTransitionButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        exerciseTransitionViewModel
+                                .setTransitionState(
+                                        RoutineConstants.TRANSITION_STATE.FINISHED
+                                );
                     }
                 }
         );

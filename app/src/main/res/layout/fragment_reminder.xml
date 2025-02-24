@@ -30,6 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
+                android:justificationMode="inter_word"
                 android:textColor="@color/white"
                 android:text="• Drink water before and after your session. \n• Stop if you feel pain or discomfort. \n• Ensure you have enough room to move freely. \n• Use a non-slip mat or exercise-friendly flooring for  safety.\n" />
             <TextView
@@ -43,6 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
+                android:justificationMode="inter_word"
                 android:textColor="@color/white"
                 android:text="• Comfortable, breathable clothing that allows free movement. \n• Flat, supportive footwear or exercise barefoot if safe. \n" />
             <TextView
@@ -56,8 +58,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
+                android:justificationMode="inter_word"
                 android:textColor="@color/white"
                 android:text="• Avoid dull or overly bright light for accurate pose detection. \n• Use a high-resolution camera positioned at a clear angle. \n• Ensure minimal distractions for optimal recognition.\n"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/reminderHeading"
+                android:textSize="20sp"
+                android:text="Detection Issue Notice" />
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/white"
+            android:text="If the camera fails to detect your position, please restart the routine and try again."/>
         </LinearLayout>
 
         <Button

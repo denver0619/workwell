@@ -7,40 +7,50 @@
     android:background="@color/reminderBackground"
     tools:context=".ui.routine.execution.ExerciseTransitionFragment">
 
-    <LinearLayout
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/reminderHeading"
-            android:textSize="20sp"
-            android:text="How to setup device"/>
-        <TextView
-            android:id="@+id/transition_setup_content"
-            android:layout_width="wrap_content"
-            android:textColor="@color/white"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/transition_text"
-            android:gravity="center"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="@color/white"
-            android:text="TRANSITIONING TO NEXT EXERCISE IN" />
-        <TextView
-            android:id="@+id/transition_countdown"
+            android:orientation="vertical"
             android:gravity="center"
-            android:textSize="100sp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="0" />
-    </LinearLayout>
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:justificationMode="inter_word"
+                android:textColor="@color/reminderHeading"
+                android:textSize="20sp"
+                android:text="How to setup device"/>
+            <TextView
+                android:id="@+id/transition_setup_content"
+                android:layout_width="wrap_content"
+                android:justificationMode="inter_word"
+                android:textColor="@color/white"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp"/>
+            <TextView
+                android:id="@+id/transition_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:justificationMode="inter_word"
+                android:textColor="@color/white"
+                android:text="TRANSITIONING TO NEXT EXERCISE IN" />
+            <!--        <TextView-->
+            <!--            android:id="@+id/transition_countdown"-->
+            <!--            android:gravity="center"-->
+            <!--            android:textSize="100sp"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="match_parent"-->
+            <!--            android:text="0" />-->
+            <Button
+                android:id="@+id/proceed_transition_button"
+                android:layout_width="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Proceed  ❯"/>
+        </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

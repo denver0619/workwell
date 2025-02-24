@@ -65,6 +65,10 @@ public class ExerciseTransitionViewModel extends ViewModel {
         return  timeLeft;
     }
 
+    public void startSpeaking() {
+        Objects.requireNonNull(ttsHelper.getValue()).speak("Prepare for" + Objects.requireNonNull(getExerciseDetailDTO().getValue()).getExerciseName());
+    }
+
     public void startTransition() {
 
         Objects.requireNonNull(ttsHelper.getValue()).speak("Prepare for" + Objects.requireNonNull(getExerciseDetailDTO().getValue()).getExerciseName());
