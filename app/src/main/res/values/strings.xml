@@ -22,7 +22,7 @@
     <string name="height_placeholder">%s cm</string>
     <string name="weight_label">Weight</string>
     <string name="weight_placeholder">%s kg</string>
-    <string name="professional_label">Assigned Professional</string>
+    <string name="professional_label">Assigned Doctor</string>
     <string name="professional_placeholder">%s</string>
 
     <string name="doctor_comment_title">Doctor\'s Comment</string>
@@ -84,7 +84,7 @@
     <string name="profile_account">Account</string>
     <string name="profile_about_us">About Us</string>
     <string name="profile_help">Help</string>
-    <string name="profile_term">Terms and Condition</string>
+    <string name="profile_term">Terms and Conditions</string>
 
     <!--    <string name="profile_username">Username:</string>-->
     <string name="profile_personalInfo">Personal Information</string>
@@ -127,10 +127,10 @@
     <string name="data_privacy_content">WorkWell is committed to protecting your privacy. The following outlines our data collection, usage, and security measures:</string>
     <string name="data_collection_content">
         WorkWell collects the following data to enhance user experience:\n
-            &#009;&#009;&#8226; Personal Information: Name, age, email address, and account details.\n
-            &#009;&#009;&#8226; Health-Related Data: Self-reported posture awareness, pain intensity, and exercise difficulty.\n
-            &#009;&#009;&#8226; Video and Image Data: Recorded exercise sessions for self-review and healthcare analysis.\n
-            &#009;&#009;&#8226; Usage Data: App interactions, frequency of use, and session history.
+            &#009;&#009;&#8226;Personal Information: Name, age, email address, and account details.\n
+            &#009;&#009;&#8226;Health-Related Data: Self-reported posture awareness, pain intensity, exercise difficulty, and doctor-provided diagnosis and prescriptions.\n
+            &#009;&#009;&#8226;Video and Image Data: Recorded exercise sessions for self-review and healthcare analysis.\n
+            &#009;&#009;&#8226;Usage Data: App interactions, frequency of use, and session history.
     </string>
     <string name="data_usage_content">
         Your data is used solely for the following purposes:\n
@@ -162,7 +162,7 @@
             &#009;&#009;&#8226;Misusing WorkWell’s features for unintended purposes.\n
             &#009;&#009;&#8226;Attempting to reverse-engineer, modify, or exploit the Application’s functionality.
     </string>
-    <string name="intellectual_content">WorkWell, including its software, trademarks, and content, is the intellectual property of [Company/Developers]. Unauthorized reproduction or distribution is strictly prohibited.</string>
+    <string name="intellectual_content">WorkWell, including its software, trademarks, and content, is the intellectual property of WorkWell. Unauthorized reproduction or distribution is strictly prohibited.</string>
     <string name="liability_content">
         WorkWell is provided "as is" without warranties of any kind. The developers are not liable for:\n
             &#009;&#009;&#8226;Any injury resulting from improper use of the Application.\n
