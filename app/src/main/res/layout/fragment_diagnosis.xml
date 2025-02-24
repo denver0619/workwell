@@ -13,7 +13,7 @@
         android:id="@+id/tvDiagnosis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/menu_diagnosis"
+        android:text="Care Plan"
         android:textFontWeight="600"
         android:paddingHorizontal="16dp"
         android:paddingVertical="8dp"

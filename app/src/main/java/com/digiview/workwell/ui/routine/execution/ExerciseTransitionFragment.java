@@ -87,7 +87,7 @@ public class ExerciseTransitionFragment extends Fragment {
                                         .getExerciseDeviceSetup()
                         );
 
-        fragmentExerciseTransitionBinding.transitionText.setText("Prepare for " + exerciseTransitionViewModel.getExerciseDetailDTO().getValue().getExerciseName());
+        fragmentExerciseTransitionBinding.transitionText.setText(exerciseTransitionViewModel.getExerciseDetailDTO().getValue().getExerciseName());
 
 //        exerciseTransitionViewModel.setContext(requireContext());
 //        exerciseTransitionViewModel.setMediaPlayer(new MediaPlayer());

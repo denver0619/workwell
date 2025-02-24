@@ -20,7 +20,7 @@
         android:id="@+id/menu_diagnosis"
         android:enabled="true"
         android:icon="@drawable/ic_menu_diagnosis"
-        android:title="@string/menu_diagnosis"/>
+        android:title="Care Plan"/>
     <item
         android:id="@+id/menu_profile"
         android:enabled="true"

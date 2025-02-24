@@ -65,15 +65,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
-                android:textColor="@color/reminderHeading"
+                android:textColor="@color/reminderWarning"
                 android:textSize="20sp"
                 android:text="Detection Issue Notice" />
             <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
+            android:justificationMode="inter_word"
             android:textColor="@color/white"
-            android:text="If the camera fails to detect your position, please restart the routine and try again."/>
+            android:text="• If the camera fails to detect your position, please restart the routine and try again."/>
         </LinearLayout>
 
         <Button
