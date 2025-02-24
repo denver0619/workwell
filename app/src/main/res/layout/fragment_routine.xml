@@ -67,8 +67,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:layout_gravity="center"
                 android:text="No active routines available."
-                android:textColor="@color/neutral_white_color"
+                android:textColor="@color/blue_gray"
                 android:textSize="14sp"
                 android:visibility="gone"/>
 
@@ -95,9 +96,10 @@
                 android:id="@+id/tvNoInactiveRoutines"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_marginTop="4dp"
                 android:text="No inactive routines available."
-                android:textColor="@color/neutral_white_color"
+                android:textColor="@color/blue_gray"
                 android:textSize="14sp"
                 android:visibility="gone"/>
 
