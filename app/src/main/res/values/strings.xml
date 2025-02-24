@@ -31,6 +31,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_routine">Routine</string>
     <string name="menu_activity_log">Progress Log</string>
+    <string name="menu_diagnosis">Diagnosis</string>
     <string name="menu_profile">Profile</string>
 
     <string name="avatar_desc">User Avatar</string>
@@ -46,6 +47,7 @@
     <string name="exercise_label">Exercises</string>
     <string name="placeholder_exercise_detail">Loading exercise detail....</string>
     <string name="start_exercise">View Instructions ❯</string>
+    <string name="view_diagnosis">View Diagnosis ❯</string>
 
     <!--    Self Assessment -->
     <string name="asmt_title">Self-Assessment</string>
@@ -82,6 +84,7 @@
     <string name="profile_account">Account</string>
     <string name="profile_about_us">About Us</string>
     <string name="profile_help">Help</string>
+    <string name="profile_term">Terms and Condition</string>
 
     <!--    <string name="profile_username">Username:</string>-->
     <string name="profile_personalInfo">Personal Information</string>
@@ -118,7 +121,60 @@
     <string name="about_us_content">This page introduces WorkWell, explaining its purpose, vision, and brand statement. It also highlights the developers behind the app and provides contact information for inquiries.</string>
     <string name="help_content">This section of the WorkWell app provides users with essential guidance on navigating the app and utilizing its features effectively.</string>
 
-
+    <string name="acceptance_content">By using WorkWell, you acknowledge that you have read, understood, and agreed to these Terms and Conditions. If you do not agree, you must discontinue using the Application.</string>
+    <string name="terms_purpose_content">WorkWell is designed for posture monitoring and ergonomic enhancement through guided exercises, posture detection, and self-assessment. It is not a medical device and does not provide medical diagnoses, treatments, or professional health consultations.</string>
+    <string name="eligibility_content">WorkWell is available to users aged 18 to 64. By using the Application, you confirm that you are within this age range and understand the limitations of the system.</string>
+    <string name="data_privacy_content">WorkWell is committed to protecting your privacy. The following outlines our data collection, usage, and security measures:</string>
+    <string name="data_collection_content">
+        WorkWell collects the following data to enhance user experience:\n
+            &#009;&#009;&#8226; Personal Information: Name, age, email address, and account details.\n
+            &#009;&#009;&#8226; Health-Related Data: Self-reported posture awareness, pain intensity, and exercise difficulty.\n
+            &#009;&#009;&#8226; Video and Image Data: Recorded exercise sessions for self-review and healthcare analysis.\n
+            &#009;&#009;&#8226; Usage Data: App interactions, frequency of use, and session history.
+    </string>
+    <string name="data_usage_content">
+        Your data is used solely for the following purposes:\n
+            &#009;&#009;&#8226;To track and improve posture and exercise progress.\n
+            &#009;&#009;&#8226;To provide personalized recommendations based on self-assessments.\n
+            &#009;&#009;&#8226;To facilitate analysis by healthcare professionals (if applicable).\n
+            &#009;&#009;&#8226;To improve WorkWell’s performance and user experience.
+    </string>
+    <string name="data_sharing">
+        Your personal data will not be sold or shared with third parties, except in the following cases:\n
+            &#009;&#009;&#8226;With healthcare professionals (if you opt to share progress logs and assessments).\n
+            &#009;&#009;&#8226;For legal compliance (if required by law or governmental authorities).\n
+            &#009;&#009;&#8226;With service providers (for secure storage and maintenance of the Application).
+    </string>
+    <string name="data_security_content">
+        We implement strong security measures to protect your data, including:\n
+            &#009;&#009;&#8226;Encrypted storage of personal and health-related data.\n
+            &#009;&#009;&#8226;Restricted access to authorized personnel only.\n
+            &#009;&#009;&#8226;Secure cloud storage using Firebase and Cloudinary with role-based authentication.
+    </string>
+    <string name="use_responsibility_content">
+        By using WorkWell, you agree to:\n
+            &#009;&#009;&#8226;Provide accurate information for personalized recommendations.\n
+            &#009;&#009;&#8226;Follow the usage guidelines, including correct posture positioning and recommended camera setup.\n
+            &#009;&#009;&#8226;Use the Application only for personal health tracking and improvement.\n
+            &#009;&#009;&#8226;Ensure a safe environment while performing exercises to prevent injury.\n
+        Users are prohibited from:\n
+            &#009;&#009;&#8226;Sharing login credentials with others.\n
+            &#009;&#009;&#8226;Misusing WorkWell’s features for unintended purposes.\n
+            &#009;&#009;&#8226;Attempting to reverse-engineer, modify, or exploit the Application’s functionality.
+    </string>
+    <string name="intellectual_content">WorkWell, including its software, trademarks, and content, is the intellectual property of [Company/Developers]. Unauthorized reproduction or distribution is strictly prohibited.</string>
+    <string name="liability_content">
+        WorkWell is provided "as is" without warranties of any kind. The developers are not liable for:\n
+            &#009;&#009;&#8226;Any injury resulting from improper use of the Application.\n
+            &#009;&#009;&#8226;Any inaccuracies in self-assessments or posture detection.\n
+            &#009;&#009;&#8226;Technical failures, data loss, or security breaches beyond reasonable control.
+    </string>>
+    <string name="modification_content">We reserve the right to update these Terms and Conditions. Users will be notified of significant changes through the Application or email.</string>
+    <string name="termination_content">
+        We may suspend or terminate your access to WorkWell if:\n
+            &#009;&#009;&#8226;You violate these Terms and Conditions.\n
+            &#009;&#009;&#8226;You misuse the Application or engage in fraudulent activities.
+    </string>
 
     <!--    MediaPipe-->
     <string name="hello_blank_fragment">Hello blank fragment</string>

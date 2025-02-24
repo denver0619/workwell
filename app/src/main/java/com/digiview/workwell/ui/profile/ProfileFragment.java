@@ -52,9 +52,13 @@ public class ProfileFragment extends Fragment {
         CardView cardAccount = view.findViewById(R.id.cardAccount);
         CardView cardHelp = view.findViewById(R.id.cardHelp);
         CardView cardAboutUs = view.findViewById(R.id.cardAboutUs);
+        CardView cardTerms = view.findViewById(R.id.cardTerms);
+
         cardAccount.setOnClickListener(v -> openFragment(new ProfileAccountFragment()));
         cardHelp.setOnClickListener(v -> openFragment(new ProfileHelpFragment()));
         cardAboutUs.setOnClickListener(v -> openFragment(new ProfileAboutUsFragment()));
+        cardTerms.setOnClickListener(v -> openFragment(new ProfileTermsConditionFragment()));
+
     }
 
     // Function to navigate to the desired fragment
