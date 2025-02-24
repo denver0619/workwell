@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -32,10 +33,10 @@
 
         <!-- Exercise Title -->
         <TextView
-            android:id="@+id/tvExerciseTitle"
+            android:id="@+id/tvDiagnosisDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/placeholder_exercise_name"
+            android:text="Diagnosis Date"
             android:textSize="18sp"
             android:gravity="center"
             android:singleLine="true"
