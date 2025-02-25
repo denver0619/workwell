@@ -78,7 +78,7 @@ public class ProfileAccountFragment extends Fragment {
                 // Apply dynamic bold styling for labels
                 tvEmail.setText(getBoldFormattedText("Email:", user.getEmail()));
                 tvName.setText(getBoldFormattedText("Name:", user.getName()));
-                tvAge.setText(getBoldFormattedText("Age:", String.valueOf(user.getAge() + " years old")));
+                tvAge.setText(getBoldFormattedText("Birth Date:", String.valueOf(user.getFormattedBirthDate())));
                 tvContact.setText(getBoldFormattedText("Contact:", user.getContact()));
                 tvHeight.setText(getBoldFormattedText("Height:", user.getHeight() + " cm"));
                 tvWeight.setText(getBoldFormattedText("Weight:", user.getWeight() + " kg"));

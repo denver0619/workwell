@@ -1,10 +1,13 @@
 package com.digiview.workwell.data.models;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class UserDTO {
     private String uid;
     private String email;
     private String name;
-    private int age;
+    private Date birthDate;
     private String contact;
     private double height;
     private double weight;
@@ -14,17 +17,44 @@ public class UserDTO {
 
     public UserDTO() {}
 
-    public UserDTO(String uid, String email, String name, int age, String contact, double height, double weight, String address, String assignedProfessional, String assignedProfessionalName) {
+    public UserDTO(String uid, String email, String name, Date birthDate, String contact, double height, double weight, String address, String assignedProfessional, String assignedProfessionalName) {
         this.uid = uid;
         this.email = email;
         this.name = name;
-        this.age = age;
+        this.birthDate = birthDate;
         this.contact = contact;
         this.height = height;
         this.weight = weight;
         this.address = address;
         this.assignedProfessional = assignedProfessional;
         this.assignedProfessionalName = assignedProfessionalName;
+    }
+
+    // Date formatting methods
+    public String getFormattedBirthDate() {
+        return formatDate(birthDate);
+    }
+
+    public void setFormattedBirthDate(String formattedDate) {
+        this.birthDate = parseDate(formattedDate);
+    }
+
+    private String formatDate(Date date) {
+        if (date != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            return dateFormat.format(date);
+        }
+        return null;
+    }
+
+    private Date parseDate(String formattedDate) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            return dateFormat.parse(formattedDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     // Getters and Setters
@@ -37,8 +67,8 @@ public class UserDTO {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public int getAge() { return age; }
-    public void setAge(int age) { this.age = age; }
+    public Date getBirthDate() { return birthDate; }
+    public void setBirthDate(Date birthDate) { this.birthDate = birthDate; }
 
     public String getContact() { return contact; }
     public void setContact(String contact) { this.contact = contact; }

@@ -53,11 +53,14 @@ public class ProfileFragment extends Fragment {
         CardView cardHelp = view.findViewById(R.id.cardHelp);
         CardView cardAboutUs = view.findViewById(R.id.cardAboutUs);
         CardView cardTerms = view.findViewById(R.id.cardTerms);
+        CardView cardChangePassword = view.findViewById(R.id.cardChangePassword);
 
         cardAccount.setOnClickListener(v -> openFragment(new ProfileAccountFragment()));
         cardHelp.setOnClickListener(v -> openFragment(new ProfileHelpFragment()));
         cardAboutUs.setOnClickListener(v -> openFragment(new ProfileAboutUsFragment()));
         cardTerms.setOnClickListener(v -> openFragment(new ProfileTermsConditionFragment()));
+        cardChangePassword.setOnClickListener(v -> openFragment(new ChangePasswordFragment()));
+
 
     }
 
