@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
-                android:text="Diagnosis"
+                android:text="Diagnosis Details"
                 android:textColor="@color/neutral_white_color"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
@@ -102,7 +102,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="8dp"
-                        android:text="Symptoms"
+                        android:text="Symptoms: "
                         android:textColor="@color/neutral_dark_color"
                         android:textSize="16sp"
                         android:textStyle="bold"/>
@@ -122,7 +122,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="8dp"
-                        android:text="Symptoms"
+                        android:text="Diagnosis Result: "
                         android:textColor="@color/neutral_dark_color"
                         android:textSize="16sp"
                         android:textStyle="bold"/>
@@ -144,7 +144,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="8dp"
-                        android:text="Symptoms"
+                        android:text="Severity Level: "
                         android:textColor="@color/neutral_dark_color"
                         android:textSize="16sp"
                         android:textStyle="bold"/>
@@ -172,7 +172,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
-                android:text="Treatment Plan"
+                android:text="Prescription &amp; Treatment Plan"
                 android:textColor="@color/neutral_white_color"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
@@ -196,7 +196,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="8dp"
-                        android:text="Recommended Ergonomic Adjustments: "
+                        android:text="Ergonomic Adjustments: "
                         android:textColor="@color/neutral_dark_color"
                         android:textSize="16sp"
                         android:textStyle="bold"/>
@@ -216,7 +216,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="8dp"
-                        android:text="Physical Therapy Recommendations:"
+                        android:text="Recommendations: "
                         android:textColor="@color/neutral_dark_color"
                         android:textSize="16sp"
                         android:textStyle="bold"/>
@@ -232,13 +232,13 @@
                         android:textSize="14sp"
                         />
 
-                    <!--Severity Level-->
+                    <!--Medication-->
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="8dp"
-                        android:text="Medication Prescriptions: "
+                        android:text="Medications: "
                         android:textColor="@color/neutral_dark_color"
                         android:textSize="16sp"
                         android:textStyle="bold"/>

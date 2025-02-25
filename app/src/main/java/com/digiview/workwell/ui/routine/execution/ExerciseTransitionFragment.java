@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.digiview.workwell.R;
+import com.digiview.workwell.data.models.RoutineExerciseDetailDTO;
 import com.digiview.workwell.databinding.FragmentExerciseTransitionBinding;
 import com.digiview.workwell.services.mediapipe.TTSInitializationListener;
 
@@ -71,31 +72,54 @@ public class ExerciseTransitionFragment extends Fragment {
         exerciseTransitionViewModel = new ViewModelProvider(requireActivity()).get(ExerciseTransitionViewModel.class);
 
         if (getArguments() != null) {
-            exerciseTransitionViewModel.setExerciseName(getArguments().getString("exerciseName"));
+            RoutineExerciseDetailDTO routineExerciseDetailDTO = (RoutineExerciseDetailDTO) getArguments().getSerializable("exerciseDTO");
+            if (routineExerciseDetailDTO!= null) {
+                exerciseTransitionViewModel.setExerciseDetailDTO(routineExerciseDetailDTO);
+            }
         }
 
-        fragmentExerciseTransitionBinding.transitionText.setText("Prepare for " + exerciseTransitionViewModel.getExerciseName().getValue());
-
-        exerciseTransitionViewModel.setContext(requireContext());
-        exerciseTransitionViewModel.setMediaPlayer(new MediaPlayer());
-        exerciseTransitionViewModel.getTimeLeft().observe(getViewLifecycleOwner(), new Observer<Long>() {
-            @Override
-            public void onChanged(Long timeLeft) {
-                fragmentExerciseTransitionBinding
-                        .transitionCountdown
+        fragmentExerciseTransitionBinding
+                .transitionSetupContent
                         .setText(
-                                String.valueOf(
-                                        (int) (timeLeft/1000)
-                                )
+                                Objects.requireNonNull(exerciseTransitionViewModel
+                                                .getExerciseDetailDTO()
+                                                .getValue())
+                                        .getExerciseDeviceSetup()
                         );
-            }
-        });
+
+        fragmentExerciseTransitionBinding.transitionText.setText(exerciseTransitionViewModel.getExerciseDetailDTO().getValue().getExerciseName());
+
+//        exerciseTransitionViewModel.setContext(requireContext());
+//        exerciseTransitionViewModel.setMediaPlayer(new MediaPlayer());
+//        exerciseTransitionViewModel.getTimeLeft().observe(getViewLifecycleOwner(), new Observer<Long>() {
+//            @Override
+//            public void onChanged(Long timeLeft) {
+//                fragmentExerciseTransitionBinding
+//                        .transitionCountdown
+//                        .setText(
+//                                String.valueOf(
+//                                        (int) (timeLeft/1000)
+//                                )
+//                        );
+//            }
+//        });
 
         exerciseTransitionViewModel.setTtsHelper(requireContext(),
                 new TTSInitializationListener() {
                     @Override
                     public void onTTSInitialized() {
-                        exerciseTransitionViewModel.startTransition();
+                        exerciseTransitionViewModel.startSpeaking();
+                    }
+                }
+        );
+        fragmentExerciseTransitionBinding.proceedTransitionButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        exerciseTransitionViewModel
+                                .setTransitionState(
+                                        RoutineConstants.TRANSITION_STATE.FINISHED
+                                );
                     }
                 }
         );

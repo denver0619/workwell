@@ -32,5 +32,10 @@
     <color name="icFocused">#DDFFFFFF</color>
     <color name="icPressed">#AAFFFFFF</color>
 
+<!--    Custom Color-->
+    <color name="reminderBackground">#4A1694</color>
+    <color name="reminderHeading">#00BCD4</color>
+    <color name="reminderWarning">#ff000d</color>
+
 </resources>
 
