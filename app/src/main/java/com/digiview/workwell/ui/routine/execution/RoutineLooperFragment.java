@@ -183,7 +183,7 @@ public class RoutineLooperFragment extends Fragment {
         reminderViewModel.getReminderState().observe(getViewLifecycleOwner(), routineViewModel::setReminderState);
 
         // Debugging: Show Toast messages
-        routineViewModel.getToastMsg().observe(getViewLifecycleOwner(), s -> Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show());
+        // routineViewModel.getToastMsg().observe(getViewLifecycleOwner(), s -> Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show());
 
         // Self-assessment entry point
         routineViewModel.getIsRoutineFinished().observe(getViewLifecycleOwner(), isRoutineFinished -> {
