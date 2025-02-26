@@ -47,7 +47,7 @@ public class UserService {
                             user.getUid(),
                             user.getEmail(),
                             user.getFirstName() + " " + user.getLastName(),
-                            user.getAge(),
+                            user.getBirthDate(),
                             user.getContact(),
                             user.getHeight(),
                             user.getWeight(),
