@@ -21,6 +21,7 @@ import com.digiview.workwell.ui.profile.ProfileTermsConditionActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.digiview.workwell.data.util.Constants;
+import com.google.firebase.auth.FirebaseUser;
 
 public class AuthLoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -92,13 +93,31 @@ public class AuthLoginActivity extends AppCompatActivity implements View.OnClick
         authService.login(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        Log.d("FirebaseAuthTest", "Login successful!");
-                        fetchAndCheckUserClaims();
+                        FirebaseUser user = authService.getCurrentUser();
+
+                        // ✅ Check if email is verified
+                        if (user != null && user.isEmailVerified()) {
+                            Log.d("FirebaseAuthTest", "Login successful and email verified!");
+                            fetchAndCheckUserClaims();
+                        } else {
+                            Log.e("FirebaseAuthTest", "Email not verified");
+                            Toast.makeText(AuthLoginActivity.this,
+                                    "Please verify your email before logging in.", Toast.LENGTH_LONG).show();
+
+                            // Optional: Send a new verification email
+                            if (user != null) {
+                                user.sendEmailVerification()
+                                        .addOnSuccessListener(aVoid -> Toast.makeText(AuthLoginActivity.this,
+                                                "A new verification email has been sent.", Toast.LENGTH_SHORT).show())
+                                        .addOnFailureListener(e -> Log.e("FirebaseAuthTest", "Failed to send email verification: " + e.getMessage()));
+                            }
+                        }
                     } else {
                         handleLoginError(task.getException());
                     }
                 });
     }
+
 
     private void fetchAndCheckUserClaims() {
         authService.getIdToken(true)
