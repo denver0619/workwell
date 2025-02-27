@@ -168,6 +168,7 @@ public class RoutineExecutionViewModel extends ViewModel {// TODO: Implement the
                     break;
             }
 
+
             counter.setValue(result.getTotalRepetition());
         } else {
             statusText.setValue("Status: NO PERSON DETECTED!!");
