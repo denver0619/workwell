@@ -1,6 +1,7 @@
 package com.digiview.workwell.ui.auth;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.digiview.workwell.R;
 import com.digiview.workwell.data.service.AuthService;
 import com.digiview.workwell.ui.main.MainActivity;
+import com.digiview.workwell.ui.profile.ProfileTermsConditionActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.digiview.workwell.data.util.Constants;
@@ -26,6 +28,9 @@ public class AuthLoginActivity extends AppCompatActivity implements View.OnClick
     private Button emailLogin;
 
     private AuthService authService; // Service for authentication workflows
+
+    private static final String PREFS_NAME = "AppPrefs";
+    private static final String KEY_ACCEPTED_TERMS = "AcceptedTerms";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,17 @@ public class AuthLoginActivity extends AppCompatActivity implements View.OnClick
         inputPassword = findViewById(R.id.etLoginPassword);
         emailLogin = findViewById(R.id.btnLoginEmail);
         emailLogin.setOnClickListener(this);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        boolean hasAcceptedTerms = sharedPreferences.getBoolean(KEY_ACCEPTED_TERMS, false);
+
+        if (!hasAcceptedTerms) {
+            // Redirect to Terms and Conditions Activity
+            Intent intent = new Intent(this, ProfileTermsConditionActivity.class);
+            startActivity(intent);
+            finish(); // Prevent returning to login until accepted
+        }
+
     }
 
     @Override
