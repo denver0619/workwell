@@ -102,7 +102,7 @@ public class RoutineExecutionViewModel extends ViewModel {// TODO: Implement the
     *  Pass the landmarks to it
     *  Pass the result to exercise
     */
-    public PoseSmoother poseSmoother = new PoseSmoother(25);
+    public PoseSmoother poseSmoother = new PoseSmoother(10);
 
     public void processLandmarkerResult(PoseLandmarkerResult landmarkerResults) {
 
