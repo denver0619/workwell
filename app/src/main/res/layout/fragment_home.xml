@@ -83,7 +83,7 @@
             android:backgroundTint="@color/accent_color"
             android:gravity="center"
             android:minHeight="48dp"
-            android:text="@string/hero_button_text"
+            android:text="Exercise Now ❯"
             android:textColor="@color/white"
             android:textSize="14sp" />
     </LinearLayout>

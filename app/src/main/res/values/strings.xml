@@ -67,7 +67,7 @@
     <string name="asmt_category4_score">10</string>
 
     <!-- Fitness Log Button Text -->
-    <string name="fitness_log_card_button_text">View Details</string>
+    <string name="fitness_log_card_button_text">View Details ❯</string>
 
     <string name="back_button">Back Button</string>
     <string name="submit_button">Submit</string>
