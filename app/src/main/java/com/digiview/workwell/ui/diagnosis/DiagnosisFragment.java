@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 import com.digiview.workwell.R;
 import com.digiview.workwell.data.models.Diagnosis;
 import com.digiview.workwell.data.service.DiagnosisService;
@@ -22,6 +25,7 @@ public class DiagnosisFragment extends Fragment {
     private RecyclerView recyclerView;
     private DiagnosisAdapter adapter;
     private DiagnosisService diagnosisService;
+    private ImageView progressBar;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -32,6 +36,12 @@ public class DiagnosisFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         diagnosisService = new DiagnosisService();
+        progressBar = view.findViewById(R.id.progressBar);
+        // Load GIF into ImageView using Glide
+        Glide.with(this)
+                .asGif()
+                .load(R.drawable.ic_loading) // Replace with your actual GIF in drawable
+                .into(progressBar);
 
         adapter = new DiagnosisAdapter(new ArrayList<>(), diagnosis -> {
             // Navigate to DiagnosisDetailFragment and pass the Diagnosis object
@@ -53,12 +63,21 @@ public class DiagnosisFragment extends Fragment {
     }
 
     private void loadDiagnoses() {
+        // Show loading GIF and hide RecyclerView initially
+        progressBar.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+
         diagnosisService.getAllDiagnosis().thenAccept(diagnosisList -> {
             if (diagnosisList != null) {
                 adapter.setDiagnosisList(diagnosisList);
             }
+
+            // Hide loading GIF and show RecyclerView
+            progressBar.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
         }).exceptionally(e -> {
             e.printStackTrace();
+            progressBar.setVisibility(View.GONE); // Hide GIF even if there's an error
             return null;
         });
     }

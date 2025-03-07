@@ -8,9 +8,12 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Button;
+
+import com.bumptech.glide.Glide;
 import com.digiview.workwell.R;
 
 import androidx.fragment.app.Fragment;
@@ -24,7 +27,7 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel mViewModel;
     private TextView tvUsername, tvHeight, tvWeight, tvProfessional;
-    private ProgressBar progressBar;
+    private ImageView progressBar;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -47,6 +50,12 @@ public class HomeFragment extends Fragment {
         tvWeight = view.findViewById(R.id.tvWeight);
         tvProfessional = view.findViewById(R.id.tvProfessional);
         Button btnStartRoutine = view.findViewById(R.id.btnStartRoutine);
+
+        // Load GIF into ImageView using Glide
+        Glide.with(this)
+                .asGif()
+                .load(R.drawable.ic_loading) // Replace with your actual GIF in drawable
+                .into(progressBar);
 
         btnStartRoutine.setOnClickListener(v -> {
             // Get the BottomNavigationView from the activity

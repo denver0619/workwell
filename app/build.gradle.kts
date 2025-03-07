@@ -109,4 +109,7 @@ dependencies {
     implementation("androidx.media3:media3-exoplayer:1.4.1")
     implementation("androidx.media3:media3-exoplayer-dash:1.4.1")
     implementation("androidx.media3:media3-ui:1.4.1")
+
+    // GIF
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
 }
