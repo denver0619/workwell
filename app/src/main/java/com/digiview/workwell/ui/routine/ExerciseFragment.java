@@ -16,9 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.digiview.workwell.R;
 import com.digiview.workwell.data.models.RoutineExercise;
 import com.digiview.workwell.data.models.Video;
@@ -28,7 +30,7 @@ public class ExerciseFragment extends Fragment {
 
     private ExoPlayer exoPlayer;
     private PlayerView playerView;
-    private ProgressBar loadingIndicator;
+    private ImageView progressBar;
     private static final String TAG = "ExerciseFragment";
 
     public static ExerciseFragment newInstance() {
@@ -47,11 +49,17 @@ public class ExerciseFragment extends Fragment {
 
         // Initialize Views
         playerView = view.findViewById(R.id.playerView);
-        loadingIndicator = view.findViewById(R.id.loadingIndicator);
+        progressBar = view.findViewById(R.id.progressBar);
         ImageButton btnBack = view.findViewById(R.id.btnBack);
         TextView tvExerciseTitle = view.findViewById(R.id.tvExerciseTitle);
         TextView tvExerciseDetail = view.findViewById(R.id.tvExerciseDetail);
         TextView tvExerciseDeviceSetup = view.findViewById(R.id.tvExerciseDeviceSetup);
+
+        // Load GIF into ImageView using Glide
+        Glide.with(this)
+                .asGif()
+                .load(R.drawable.ic_loading) // Replace with your actual GIF in drawable
+                .into(progressBar);
 
         // Retrieve RoutineExercise from arguments
         RoutineExercise exercise = null;
@@ -77,7 +85,7 @@ public class ExerciseFragment extends Fragment {
     }
 
     private void fetchVideoUrl(String videoId) {
-        loadingIndicator.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
 
         VideoService videoService = new VideoService();
         videoService.getVideo(videoId).thenAccept(video -> {
@@ -85,11 +93,11 @@ public class ExerciseFragment extends Fragment {
                 initializePlayer(video.getVideoUrl());
             } else {
                 Log.e(TAG, "Video not found for ID: " + videoId);
-                loadingIndicator.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
             }
         }).exceptionally(e -> {
             Log.e(TAG, "Failed to load video: " + e.getMessage(), e);
-            loadingIndicator.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
             return null;
         });
     }
@@ -108,9 +116,9 @@ public class ExerciseFragment extends Fragment {
             @Override
             public void onPlaybackStateChanged(int state) {
                 if (state == ExoPlayer.STATE_READY) {
-                    loadingIndicator.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
                 } else if (state == ExoPlayer.STATE_BUFFERING) {
-                    loadingIndicator.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.VISIBLE);
                 }
             }
         });

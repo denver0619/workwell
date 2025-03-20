@@ -51,4 +51,8 @@ public class AuthService {
         }
         return null; // Default to null if role is not present or invalid
     }
+
+    public Task<Void> requestPasswordReset(String email) {
+        return authRepository.sendPasswordResetEmail(email);
+    }
 }

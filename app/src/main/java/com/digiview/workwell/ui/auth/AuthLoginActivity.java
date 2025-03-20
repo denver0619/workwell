@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -27,7 +28,7 @@ public class AuthLoginActivity extends AppCompatActivity implements View.OnClick
 
     private TextInputEditText inputEmail, inputPassword;
     private Button emailLogin;
-
+    private TextView tvForgotPassword;
     private AuthService authService; // Service for authentication workflows
 
     private static final String PREFS_NAME = "AppPrefs";
@@ -48,12 +49,14 @@ public class AuthLoginActivity extends AppCompatActivity implements View.OnClick
 
         // Initialize AuthService
         authService = new AuthService();
-
         // Initialize UI components
         inputEmail = findViewById(R.id.etLoginEmail);
         inputPassword = findViewById(R.id.etLoginPassword);
         emailLogin = findViewById(R.id.btnLoginEmail);
         emailLogin.setOnClickListener(this);
+        tvForgotPassword = findViewById(R.id.tvForgotPassword);
+
+        tvForgotPassword.setOnClickListener(v -> handleForgotPassword());
 
         SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         boolean hasAcceptedTerms = sharedPreferences.getBoolean(KEY_ACCEPTED_TERMS, false);
@@ -118,6 +121,21 @@ public class AuthLoginActivity extends AppCompatActivity implements View.OnClick
                 });
     }
 
+    private void handleForgotPassword() {
+        String email = inputEmail.getText().toString().trim();
+
+        if (email.isEmpty()) {
+            inputEmail.setError("Please enter your email to reset password");
+            inputEmail.requestFocus();
+            return;
+        }
+        authService.requestPasswordReset(email)
+                .addOnSuccessListener(aVoid -> Toast.makeText(AuthLoginActivity.this,
+                        "Password reset email sent. Check your inbox.", Toast.LENGTH_LONG).show())
+                .addOnFailureListener(e -> Toast.makeText(AuthLoginActivity.this,
+                        "Failed to send reset email: " + e.getMessage(), Toast.LENGTH_LONG).show());
+
+    }
 
     private void fetchAndCheckUserClaims() {
         authService.getIdToken(true)
@@ -166,4 +184,7 @@ public class AuthLoginActivity extends AppCompatActivity implements View.OnClick
         Log.d("FirebaseAuthTest", "Access denied: " + message);
         Toast.makeText(AuthLoginActivity.this, message, Toast.LENGTH_SHORT).show();
     }
+
+
+
 }

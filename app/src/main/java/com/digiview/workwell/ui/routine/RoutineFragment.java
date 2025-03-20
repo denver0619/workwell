@@ -16,9 +16,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.digiview.workwell.R;
 import com.digiview.workwell.data.models.Routine;
 import com.digiview.workwell.ui.routine.adapter.RoutineAdapter;
@@ -31,7 +33,8 @@ public class RoutineFragment extends Fragment implements RoutineAdapter.OnRoutin
     private RecyclerView rvActiveRoutine, rvInactiveRoutine;
     private RoutineAdapter activeAdapter, inactiveAdapter;
     private RoutineViewModel routineViewModel;
-    private ProgressBar progressBar;
+//    private ProgressBar progressBar;
+    private ImageView progressBar;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -54,6 +57,12 @@ public class RoutineFragment extends Fragment implements RoutineAdapter.OnRoutin
 
         // Initialize ViewModel
         routineViewModel = new ViewModelProvider(this).get(RoutineViewModel.class);
+
+        // Load GIF into ImageView using Glide
+        Glide.with(this)
+                .asGif()
+                .load(R.drawable.ic_loading) // Replace with your actual GIF in drawable
+                .into(progressBar);
 
         // Initialize empty message TextViews
         TextView tvNoActiveRoutines = view.findViewById(R.id.tvNoActiveRoutines);

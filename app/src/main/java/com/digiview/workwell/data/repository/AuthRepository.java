@@ -39,4 +39,8 @@ public class AuthRepository {
             throw new IllegalStateException("No user is logged in.");
         }
     }
+
+    public Task<Void> sendPasswordResetEmail(String email) {
+        return firebaseAuth.sendPasswordResetEmail(email);
+    }
 }
