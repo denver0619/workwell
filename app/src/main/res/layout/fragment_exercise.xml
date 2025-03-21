@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.routine.ExerciseFragment">
+
+    <!-- Top Bar Container -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Back Button -->
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_left"
+            android:contentDescription="@string/back_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <!-- Exercise Title -->
+        <TextView
+            android:id="@+id/tvExerciseTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/placeholder_exercise_name"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textColor="@color/neutral_white_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.8"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/progressBar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        />
+
+    <!-- Video Container (PlayerView) -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvVideoContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/topBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_max="600dp"
+        app:layout_constraintDimensionRatio="16:9"
+        android:padding="4dp"
+        android:backgroundTint="@color/accent_color">
+
+        <!-- ExoPlayer's PlayerView -->
+        <androidx.media3.ui.PlayerView
+            android:id="@+id/playerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Scrollable Content with FrameLayout -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/cvVideoContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Instruction Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="8dp"
+                android:backgroundTint="@color/transparent"
+                android:layout_marginHorizontal="16dp"
+                app:strokeColor="@color/neutral_white_color">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Instruction Title -->
+                    <TextView
+                        android:id="@+id/tvInstructionTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Instructions"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/neutral_white_color"
+                        android:paddingBottom="8dp"/>
+
+                    <!-- How to Perform Exercise -->
+                    <TextView
+                        android:id="@+id/tvHowToPerform"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        android:text="How to perform exercise?"
+                        android:textColor="@color/neutral_white_color"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tvExerciseDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/placeholder_exercise_detail"
+                        android:textColor="@color/neutral_white_color"
+                        android:paddingTop="4dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="20dp"/>
+
+                    <!-- How to Setup Device -->
+                    <TextView
+                        android:id="@+id/tvHowToSetup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="How to setup device?"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/neutral_white_color"
+                        android:paddingTop="16dp"/>
+
+                    <TextView
+                        android:id="@+id/tvExerciseDeviceSetup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/placeholder_exercise_detail"
+                        android:textColor="@color/neutral_white_color"
+                        android:paddingTop="4dp"
+                        android:layout_marginStart="16dp"/>
+
+                    <!-- Disclaimer -->
+                    <TextView
+                        android:id="@+id/tvDisclaimerTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:lineSpacingExtra="4dp"
+                        android:textStyle="italic"
+                        android:text="Disclaimer"
+                        android:textColor="@color/baby_pink"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/tvDisclaimer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="WorkWell is a guidance tool designed to enhance users' posture and movement through routines assigned by the admin (Doctor) but does not diagnose, treat, or cure any diseases or medical conditions."
+                        android:textSize="12sp"
+                        android:textStyle="italic"
+                        android:textColor="@color/neutral_white_color"
+                        android:lineSpacingExtra="4dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Invisible Spacer TextView to prevent cutoff -->
+            <TextView
+                android:id="@+id/invisibleSpacer"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:text=""
+                android:textColor="@android:color/transparent"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

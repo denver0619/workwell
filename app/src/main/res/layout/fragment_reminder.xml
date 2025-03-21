@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.routine.execution.ReminderFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@color/reminderBackground">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/reminderHeading"
+                android:textSize="20sp"
+                android:text="Reminders" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:justificationMode="inter_word"
+                android:textColor="@color/white"
+                android:text="• Drink water before and after your session. \n• Stop if you feel pain or discomfort. \n• Ensure you have enough room to move freely. \n• Use a non-slip mat or exercise-friendly flooring for  safety.\n" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/reminderHeading"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="20sp"
+                android:text="What to Wear" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:justificationMode="inter_word"
+                android:textColor="@color/white"
+                android:text="• Comfortable, breathable clothing that allows free movement. \n• Flat, supportive footwear or exercise barefoot if safe. \n" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/reminderHeading"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="20sp"
+                android:text="Proper Environment " />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:justificationMode="inter_word"
+                android:textColor="@color/white"
+                android:text="• Avoid dull or overly bright light for accurate pose detection. \n• Use a high-resolution camera positioned at a clear angle. \n• Ensure minimal distractions for optimal recognition.\n"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/reminderWarning"
+                android:textSize="20sp"
+                android:text="Detection Issue Notice" />
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:justificationMode="inter_word"
+            android:textColor="@color/white"
+            android:text="• If the camera fails to detect your position, please restart the routine and try again."/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/proceed_button"
+            android:layout_width="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Proceed  ❯"/>
+    </LinearLayout>
+
+
+</FrameLayout>

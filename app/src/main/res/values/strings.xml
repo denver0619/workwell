@@ -1,3 +1,220 @@
 <resources>
     <string name="app_name">WorkWell</string>
+
+    <string name="disclaimer_text">The WorkWell application is designed to support and enhance ergonomic wellness through guided exercises and posture correction tools. However, it is not a substitute for professional medical advice, diagnosis, or treatment to existing medical conditions.</string>
+    <string name="welcome_msg1">Login</string>
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="welcome_msg2">Welcome Aboard!</string>
+    <string name="login_img_description">Login Image</string>
+    <string name="sign_up_img_description">Signup Image</string>
+    <string name="login_header">Login</string>
+    <string name="sign_up_header">Sign up</string>
+    <string name="login_sub_header">Please login to continue</string>
+    <string name="sign_up_sub_header">Please signup to login</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="re_enter_password_hint">Re-enter password</string>
+    <string name="login_alternative">Don\'t have an account?</string>
+    <string name="sign_up_alternative">Already have an account?</string>
+    <string name="google_alternative">OR</string>
+    <string name="login_google">Continue with Google</string>
+    <string name="height_label">Height</string>
+    <string name="height_placeholder">%s cm</string>
+    <string name="weight_label">Weight</string>
+    <string name="weight_placeholder">%s kg</string>
+    <string name="professional_label">Assigned Doctor</string>
+    <string name="professional_placeholder">%s</string>
+
+    <string name="doctor_comment_title">Doctor\'s Comment</string>
+    <string name="no_doctor_comment">No Doctor Comment</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_routine">Routine</string>
+    <string name="menu_activity_log">Progress Log</string>
+    <string name="menu_diagnosis">Diagnosis</string>
+    <string name="menu_profile">Profile</string>
+
+    <string name="avatar_desc">User Avatar</string>
+    <string name="user_name">Hello, %s</string>
+    <string name="hero_text">Start Your Ergonomic\nJourney</string>
+    <string name="hero_button_text">Start Routine ❯</string>
+    <string name="hero_img_desc">Hero Image - Lady Stretching</string>
+    <string name="routine_add_fab">Add Routine Floating Action Button</string>
+    <string name="placeholder_routine_name">Target Area Routine 1</string>
+    <string name="placeholder_routine_date">YYYY-MM-DD hh:mm tt</string>
+    <string name="placeholder_routine_detail">Routine Name 1</string>
+    <string name="placeholder_exercise_name">Exercise Name</string>
+    <string name="exercise_label">Exercises</string>
+    <string name="placeholder_exercise_detail">Loading exercise detail....</string>
+    <string name="start_exercise">View Instructions ❯</string>
+    <string name="view_diagnosis">View Diagnosis ❯</string>
+
+    <!--    Self Assessment -->
+    <string name="asmt_title">Self-Assessment</string>
+    <string name="asmt_category1">Stiffness</string>
+    <string name="asmt_category2">Pain</string>
+    <string name="asmt_category3">Difficulty</string>
+    <string name="asmt_category4">Posture Awareness</string>
+    <string name="asmt_category4_2">Awareness</string>
+    <string name="asmt_question1">How stiff or restricted did your body feel?</string>
+    <string name="asmt_question2">How much discomfort or pain did you feel during the session?</string>
+    <string name="asmt_question3">How difficult did you find completing the exercises?</string>
+    <string name="asmt_question4">How aware were you of your posture during the session?</string>
+    <string name="asmt_initial_value">Value: 0</string>
+    <string name="asmt_category1_score">10</string>
+    <string name="asmt_category2_score">10</string>
+    <string name="asmt_category3_score">10</string>
+    <string name="asmt_category4_score">10</string>
+
+    <!-- Fitness Log Button Text -->
+    <string name="fitness_log_card_button_text">View Details ❯</string>
+
+    <string name="back_button">Back Button</string>
+    <string name="submit_button">Submit</string>
+    <string name="logout_btn">Logout</string>
+    <string name="image_desc">Image</string>
+
+    <string name="reflection_title">Reflection:</string>
+    <string name="reflection_hint">Input Reflection Here</string>
+    <string name="reflection_content">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."</string>
+
+    <string name="video_player">Exercise Video</string>
+
+    <string name="profile">Profile</string>
+    <string name="profile_account">Account</string>
+    <string name="profile_about_us">About Us</string>
+    <string name="profile_help">Help</string>
+    <string name="profile_term">Terms and Conditions</string>
+
+    <!--    <string name="profile_username">Username:</string>-->
+    <string name="profile_personalInfo">Personal Information</string>
+
+
+    <string name="profile_email"><b>Email:</b> %s</string>
+    <string name="profile_name"><b>Name:</b> %s</string>
+    <string name="profile_age"><b>Age:</b> %d</string>
+    <string name="profile_contact"><b>Contact:</b> %s</string>
+    <string name="profile_height"><b>Height:</b> %.1f cm</string>
+    <string name="profile_weight"><b>Weight:</b> %.1f kg</string>
+    <string name="profile_address"><b>Address:</b> %s</string>
+    <string name="profile_assignedDoctor"><b>Assigned Doctor:</b> %s</string>
+
+
+    <string name="purpose_content">WorkWell is built to transform the way you care for your posture and well-being in a world that keeps you seated for hours. Whether you\'re working, gaming, or creating, our app is your companion in staying aligned, reducing discomfort, and fostering a healthier, more energized you. </string>
+    <string name="vision_content">WorkWell envisions a world where posture care is seamlessly integrated into daily life, empowering individuals to maintain optimal alignment, reduce discomfort, and enhance overall well-being. We strive to create a future where technology and wellness converge.</string>
+    <string name="statement_quote">“Better Posture Less Strain.\nLive Healthier with WorkWell.”</string>
+    <string name="statement_content">WorkWell is dedicated to fostering a culture of movement, mindfulness, and proactive well-being in an increasingly sedentary world. We believe that small, consistent changes in posture and daily habits can lead to significant improvements in comfort, productivity, and overall health. </string>
+    <string name="developers_content">We are a team of dedicated and passionate individuals who came together to build WorkWell. Driven by curiosity and a desire to create meaningful solutions, we collaborated to develop an intuitive and user-friendly application. Through continuous learning and teamwork, we strive to make technology more accessible and helpful for everyone.</string>
+    <string name="gratitude">“Thank you for choosing WorkWell. Here’s to smarter posture, better movement, and a more exciting work experience!”</string>
+    <string name="contact_content">Feel free to reach out to us with any questions or feedback. Work comfortably!</string>
+    <string name="contact_email">workwell@gmail.com</string>
+
+    <string name="login_content">Log in to WorkWell app to access your personalized routines.</string>
+    <string name="home_content">It provides users with essential details about their daily exercise routine and personal information.</string>
+    <string name="routine_content">The Routine Tab displays your assigned exercise. You can start current routine by tapping Start Routine, while past routines serve as a reference for progress tracking.</string>
+    <string name="start_routine_content">You will see exercises included in your selected routine, each with a View Instructions button to check detailed steps before performing them.</string>
+    <string name="view_instruction_content">It provides a video guide, a reference link, and step-by-step instructions for performing the exercise and setting up your device. A disclaimer clarifies that WorkWell is a guidance tool, not a medical treatment.</string>
+    <string name="activity_log_content">Tracks your completed routines, showing the routine name, date, and time of completion. You can tap See Details to review each session.</string>
+    <string name="see_details_content">This page includes you recorded video after the exercise, along with ratings for stiffness, pain, difficulty, and awareness. It also features a reflection section for personal notes and doctor’s comments with feedback on performance.</string>
+    <string name="profile_content">It provides access to account details, information about the app, and a user guide. A log-out button is available at the bottom for easy sign-out.</string>
+    <string name="account_content">It provides a quick overview of the user\'s profile information.</string>
+    <string name="about_us_content">This page introduces WorkWell, explaining its purpose, vision, and brand statement. It also highlights the developers behind the app and provides contact information for inquiries.</string>
+    <string name="help_content">This section of the WorkWell app provides users with essential guidance on navigating the app and utilizing its features effectively.</string>
+
+    <string name="acceptance_content">By using WorkWell, you acknowledge that you have read, understood, and agreed to these Terms and Conditions. If you do not agree, you must discontinue using the Application.</string>
+    <string name="terms_purpose_content">WorkWell is designed for posture monitoring and ergonomic enhancement through guided exercises, posture detection, and self-assessment. It is not a medical device and does not provide medical diagnoses, treatments, or professional health consultations.</string>
+    <string name="eligibility_content">WorkWell is available to users aged 18 to 64. By using the Application, you confirm that you are within this age range and understand the limitations of the system.</string>
+    <string name="data_privacy_content">WorkWell is committed to protecting your privacy. The following outlines our data collection, usage, and security measures:</string>
+    <string name="data_collection_content">
+        WorkWell collects the following data to enhance user experience:\n
+            &#009;&#009;&#8226;Personal Information: Name, age, email address, and account details.\n
+            &#009;&#009;&#8226;Health-Related Data: Self-reported posture awareness, pain intensity, exercise difficulty, and doctor-provided diagnosis and prescriptions.\n
+            &#009;&#009;&#8226;Video and Image Data: Recorded exercise sessions for self-review and healthcare analysis.\n
+            &#009;&#009;&#8226;Usage Data: App interactions, frequency of use, and session history.
+    </string>
+    <string name="data_usage_content">
+        Your data is used solely for the following purposes:\n
+            &#009;&#009;&#8226;To track and improve posture and exercise progress.\n
+            &#009;&#009;&#8226;To provide personalized recommendations based on self-assessments.\n
+            &#009;&#009;&#8226;To facilitate analysis by healthcare professionals (if applicable).\n
+            &#009;&#009;&#8226;To improve WorkWell’s performance and user experience.
+    </string>
+    <string name="data_sharing">
+        Your personal data will not be sold or shared with third parties, except in the following cases:\n
+            &#009;&#009;&#8226;With healthcare professionals (if you opt to share progress logs and assessments).\n
+            &#009;&#009;&#8226;For legal compliance (if required by law or governmental authorities).\n
+            &#009;&#009;&#8226;With service providers (for secure storage and maintenance of the Application).
+    </string>
+    <string name="data_security_content">
+        We implement strong security measures to protect your data, including:\n
+            &#009;&#009;&#8226;Encrypted storage of personal and health-related data.\n
+            &#009;&#009;&#8226;Restricted access to authorized personnel only.\n
+            &#009;&#009;&#8226;Secure cloud storage using Firebase and Cloudinary with role-based authentication.
+    </string>
+    <string name="use_responsibility_content">
+        By using WorkWell, you agree to:\n
+            &#009;&#009;&#8226;Provide accurate information for personalized recommendations.\n
+            &#009;&#009;&#8226;Follow the usage guidelines, including correct posture positioning and recommended camera setup.\n
+            &#009;&#009;&#8226;Use the Application only for personal health tracking and improvement.\n
+            &#009;&#009;&#8226;Ensure a safe environment while performing exercises to prevent injury.\n
+        Users are prohibited from:\n
+            &#009;&#009;&#8226;Sharing login credentials with others.\n
+            &#009;&#009;&#8226;Misusing WorkWell’s features for unintended purposes.\n
+            &#009;&#009;&#8226;Attempting to reverse-engineer, modify, or exploit the Application’s functionality.
+    </string>
+    <string name="intellectual_content">WorkWell, including its software, trademarks, and content, is the intellectual property of WorkWell. Unauthorized reproduction or distribution is strictly prohibited.</string>
+    <string name="liability_content">
+        WorkWell is provided "as is" without warranties of any kind. The developers are not liable for:\n
+            &#009;&#009;&#8226;Any injury resulting from improper use of the Application.\n
+            &#009;&#009;&#8226;Any inaccuracies in self-assessments or posture detection.\n
+            &#009;&#009;&#8226;Technical failures, data loss, or security breaches beyond reasonable control.
+    </string>>
+    <string name="modification_content">We reserve the right to update these Terms and Conditions. Users will be notified of significant changes through the Application or email.</string>
+    <string name="termination_content">
+        We may suspend or terminate your access to WorkWell if:\n
+            &#009;&#009;&#8226;You violate these Terms and Conditions.\n
+            &#009;&#009;&#8226;You misuse the Application or engage in fraudulent activities.
+    </string>
+
+    <!--    MediaPipe-->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="media_pipe">MediaPipe</string>
+
+    <string name="alt_bottom_sheet_chevron">Bottom sheet expandable indicator</string>
+
+    <string name="alt_bottom_sheet_max_results_button_minus">Decreasing
+        maximum pose results button</string>
+    <string name="alt_bottom_sheet_max_results_button_plus">Increasing
+        maximum pose results button</string>
+    <string name="alt_bottom_sheet_threshold_button_minus">Decreasing
+        threshold of pose detect results button</string>
+    <string name="alt_bottom_sheet_threshold_button_plus">Increasing
+        threshold of pose detect results button</string>
+    <string name="menu_camera">Camera</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="tv_gallery_placeholder">Click + to add an image or a video
+        to begin running the pose landmarker.</string>
+
+    <string name="label_inference_time">Inference Time</string>
+    <string name="label_fps">Frames per Second</string>
+    <string name="label_pose_detection_confidence_threshold">Detection
+        Threshold</string>
+    <string name="label_pose_tracking_confidence_threshold">Tracking
+        Threshold</string>
+    <string name="label_pose_presence_confidence_threshold">Presence
+        Threshold</string>
+    <string name="label_num_poses">Number of Poses</string>
+    <string name="label_delegate">Delegate</string>
+    <string name="label_models">Model</string>
+
+    <string-array name="delegate_spinner_titles">
+        <item>CPU</item>
+        <item>GPU</item>
+    </string-array>
+
+    <string-array name="models_spinner_titles">
+        <item>Pose Landmarker Full</item>
+        <item>Pose Landmarker Lite</item>
+        <item>Pose Landmarker Heavy</item>
+    </string-array>
 </resources>
