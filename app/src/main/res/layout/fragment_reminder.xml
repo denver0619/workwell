@@ -60,7 +60,7 @@
                 android:fontFamily="@font/poppins_regular"
                 android:justificationMode="inter_word"
                 android:textColor="@color/white"
-                android:text="During exercises, the app provides audio cues: “aligned” when you achieve the correct posture, “resting” when in a resting state, and a ringing sound to signal the end of a repetition, prompting you to move to the next position. \n" />
+                android:text="• During exercises, the app provides audio cues: “aligned” when you achieve the correct posture, “resting” when in a resting state, and a ringing sound to signal the end of a repetition, prompting you to move to the next position. \n" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
