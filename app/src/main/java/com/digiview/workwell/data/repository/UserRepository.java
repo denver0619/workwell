@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class UserRepository {
@@ -30,6 +31,19 @@ public class UserRepository {
             return db.collection("users")
                     .document(currentUser.getUid())
                     .get();
+        } else {
+            throw new IllegalStateException("User not logged in");
+        }
+    }
+
+    /**
+     * Update user data in Firestore.
+     */
+    public Task<Void> updateUserData(Map<String, Object> updates) {
+        if (currentUser != null) {
+            return db.collection("users")
+                    .document(currentUser.getUid())
+                    .update(updates);
         } else {
             throw new IllegalStateException("User not logged in");
         }

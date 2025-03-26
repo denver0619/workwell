@@ -48,6 +48,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_account"
+                app:tint="@color/neutral_dark_color"
                 android:contentDescription="Account Icon"
                 android:layout_marginEnd="8dp"/>
 
@@ -86,6 +87,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_about"
+                app:tint="@color/neutral_dark_color"
                 android:contentDescription="About Us Icon"
                 android:layout_marginEnd="8dp"/>
 
@@ -124,6 +126,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_help"
+                app:tint="@color/neutral_dark_color"
                 android:contentDescription="Help Icon"
                 android:layout_marginEnd="8dp"/>
 
@@ -162,6 +165,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_terms"
+                app:tint="@color/neutral_dark_color"
                 android:contentDescription="Terms Icon"
                 android:layout_marginEnd="8dp"/>
 
@@ -200,6 +204,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_password"
+                app:tint="@color/neutral_dark_color"
                 android:contentDescription="Change Password Icon"
                 android:layout_marginEnd="8dp"/>
 
