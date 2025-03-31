@@ -8,6 +8,7 @@ import com.digiview.workwell.data.repository.UserRepository;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class UserService {
@@ -28,6 +29,13 @@ public class UserService {
      */
     public Task<DocumentSnapshot> getUserData() {
         return userRepository.getUserData();
+    }
+
+    /**
+     * Update the user data.
+     */
+    public Task<Void> updateUserData(Map<String, Object> updates) {
+        return userRepository.updateUserData(updates);
     }
 
     @SuppressLint("NewApi")
