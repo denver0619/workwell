@@ -124,7 +124,7 @@
 
     <string name="acceptance_content">By using WorkWell, you acknowledge that you have read, understood, and agreed to these Terms and Conditions. If you do not agree, you must discontinue using the Application.</string>
     <string name="terms_purpose_content">WorkWell is designed for posture monitoring and ergonomic enhancement through guided exercises, posture detection, and self-assessment. It is not a medical device and does not provide medical diagnoses, treatments, or professional health consultations.</string>
-    <string name="eligibility_content">WorkWell is available to users aged 18 to 64. By using the Application, you confirm that you are within this age range and understand the limitations of the system.</string>
+    <string name="eligibility_content">WorkWell users should be aged 18–64 years old. By using the Application, you confirm that you are within this age range and understand the limitations of the system.</string>
     <string name="data_privacy_content">WorkWell is committed to protecting your privacy. The following outlines our data collection, usage, and security measures:</string>
     <string name="data_collection_content">
         WorkWell collects the following data to enhance user experience:\n
