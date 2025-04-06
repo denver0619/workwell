@@ -8,6 +8,7 @@ import com.digiview.workwell.data.util.AuthHelper;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -57,7 +58,7 @@ public class RoutineLogService {
                     routineLog.setSelfAssessmentId(selfAssessmentId);
                     routineLog.setVideoId(videoId);
                     routineLog.setJournalId(null);
-
+                    routineLog.setCreatedAt(new Date());
                     return repository.createRoutineLog(routineLog);
                 });
     }

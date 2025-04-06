@@ -483,7 +483,7 @@ class CameraFragment : Fragment(), PoseLandmarkerHelper.LandmarkerListener {
 
     override fun onError(error: String, errorCode: Int) {
         activity?.runOnUiThread {
-            Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+//            Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
             if (errorCode == PoseLandmarkerHelper.GPU_ERROR) {
                 fragmentCameraBinding.bottomSheetLayout.spinnerDelegate.setSelection(
                     PoseLandmarkerHelper.DELEGATE_CPU, false

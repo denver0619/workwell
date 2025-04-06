@@ -176,12 +176,12 @@ public class FitnessLogDetailFragment extends Fragment {
         // ✅ Display doctor's comment if available
         if (routineLog.getComment() != null && !routineLog.getComment().isEmpty()) {
             tvDoctorComment.setText(routineLog.getComment());
-            tvDoctorComment.setVisibility(View.VISIBLE);
-            tvDoctorCommentTitle.setVisibility(View.VISIBLE);
+//            tvDoctorComment.setVisibility(View.VISIBLE);
+//            tvDoctorCommentTitle.setVisibility(View.VISIBLE);
         } else {
-            Log.w(TAG, "No doctor comment available.");
-            tvDoctorComment.setVisibility(View.GONE);
-            tvDoctorCommentTitle.setVisibility(View.GONE);
+//            Log.w(TAG, "No doctor comment available.");
+//            tvDoctorComment.setVisibility(View.GONE);
+//            tvDoctorCommentTitle.setVisibility(View.GONE);
         }
 
         // Initialize ExoPlayer and load video

@@ -8,6 +8,7 @@ import com.digiview.workwell.data.repository.UserRepository;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class UserService {
@@ -30,6 +31,13 @@ public class UserService {
         return userRepository.getUserData();
     }
 
+    /**
+     * Update the user data.
+     */
+    public Task<Void> updateUserData(Map<String, Object> updates) {
+        return userRepository.updateUserData(updates);
+    }
+
     @SuppressLint("NewApi")
     public CompletableFuture<UserDTO> getCompleteUserData() {
         return userRepository.getCompleteUserData()
@@ -43,18 +51,26 @@ public class UserService {
                         return CompletableFuture.failedFuture(new Exception("Invalid user data"));
                     }
 
+                    String fullName = user.getFirstName();
+                    if (user.getMiddleName() != null && !user.getMiddleName().isEmpty()) {
+                        fullName += " " + user.getMiddleName();
+                    }
+                    fullName += " " + user.getLastName();
+
                     UserDTO userDTO = new UserDTO(
                             user.getUid(),
                             user.getEmail(),
-                            user.getFirstName() + " " + user.getLastName(),
-                            user.getAge(),
+                            fullName,
+                            user.getBirthDate(),
                             user.getContact(),
                             user.getHeight(),
                             user.getWeight(),
+                            user.getSex(),
                             user.getAddress(),
                             user.getAssignedProfessional(),
                             null // Assigned professional name will be set later
                     );
+
 
                     if (user.getAssignedProfessional() == null || user.getAssignedProfessional().isEmpty()) {
                         return CompletableFuture.completedFuture(userDTO);

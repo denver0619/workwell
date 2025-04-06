@@ -1,10 +1,12 @@
 package com.digiview.workwell.ui.auth;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -16,16 +18,21 @@ import androidx.core.view.WindowInsetsCompat;
 import com.digiview.workwell.R;
 import com.digiview.workwell.data.service.AuthService;
 import com.digiview.workwell.ui.main.MainActivity;
+import com.digiview.workwell.ui.profile.ProfileTermsConditionActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.digiview.workwell.data.util.Constants;
+import com.google.firebase.auth.FirebaseUser;
 
 public class AuthLoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextInputEditText inputEmail, inputPassword;
     private Button emailLogin;
-
+    private TextView tvForgotPassword;
     private AuthService authService; // Service for authentication workflows
+
+    private static final String PREFS_NAME = "AppPrefs";
+    private static final String KEY_ACCEPTED_TERMS = "AcceptedTerms";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +49,25 @@ public class AuthLoginActivity extends AppCompatActivity implements View.OnClick
 
         // Initialize AuthService
         authService = new AuthService();
-
         // Initialize UI components
         inputEmail = findViewById(R.id.etLoginEmail);
         inputPassword = findViewById(R.id.etLoginPassword);
         emailLogin = findViewById(R.id.btnLoginEmail);
         emailLogin.setOnClickListener(this);
+        tvForgotPassword = findViewById(R.id.tvForgotPassword);
+
+        tvForgotPassword.setOnClickListener(v -> handleForgotPassword());
+
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        boolean hasAcceptedTerms = sharedPreferences.getBoolean(KEY_ACCEPTED_TERMS, false);
+
+        if (!hasAcceptedTerms) {
+            // Redirect to Terms and Conditions Activity
+            Intent intent = new Intent(this, ProfileTermsConditionActivity.class);
+            startActivity(intent);
+            finish(); // Prevent returning to login until accepted
+        }
+
     }
 
     @Override
@@ -76,12 +96,45 @@ public class AuthLoginActivity extends AppCompatActivity implements View.OnClick
         authService.login(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        Log.d("FirebaseAuthTest", "Login successful!");
-                        fetchAndCheckUserClaims();
+                        FirebaseUser user = authService.getCurrentUser();
+
+                        // ✅ Check if email is verified
+                        if (user != null && user.isEmailVerified()) {
+                            Log.d("FirebaseAuthTest", "Login successful and email verified!");
+                            fetchAndCheckUserClaims();
+                        } else {
+                            Log.e("FirebaseAuthTest", "Email not verified");
+                            Toast.makeText(AuthLoginActivity.this,
+                                    "Please verify your email before logging in.", Toast.LENGTH_LONG).show();
+
+                            // Optional: Send a new verification email
+                            if (user != null) {
+                                user.sendEmailVerification()
+                                        .addOnSuccessListener(aVoid -> Toast.makeText(AuthLoginActivity.this,
+                                                "A new verification email has been sent.", Toast.LENGTH_SHORT).show())
+                                        .addOnFailureListener(e -> Log.e("FirebaseAuthTest", "Failed to send email verification: " + e.getMessage()));
+                            }
+                        }
                     } else {
                         handleLoginError(task.getException());
                     }
                 });
+    }
+
+    private void handleForgotPassword() {
+        String email = inputEmail.getText().toString().trim();
+
+        if (email.isEmpty()) {
+            inputEmail.setError("Please enter your email to reset password");
+            inputEmail.requestFocus();
+            return;
+        }
+        authService.requestPasswordReset(email)
+                .addOnSuccessListener(aVoid -> Toast.makeText(AuthLoginActivity.this,
+                        "Password reset email sent. Check your inbox.", Toast.LENGTH_LONG).show())
+                .addOnFailureListener(e -> Toast.makeText(AuthLoginActivity.this,
+                        "Failed to send reset email: " + e.getMessage(), Toast.LENGTH_LONG).show());
+
     }
 
     private void fetchAndCheckUserClaims() {
@@ -131,4 +184,7 @@ public class AuthLoginActivity extends AppCompatActivity implements View.OnClick
         Log.d("FirebaseAuthTest", "Access denied: " + message);
         Toast.makeText(AuthLoginActivity.this, message, Toast.LENGTH_SHORT).show();
     }
+
+
+
 }

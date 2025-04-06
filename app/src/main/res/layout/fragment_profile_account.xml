@@ -49,13 +49,14 @@
             app:layout_constraintWidth_percent="0.8"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
     <!-- Account Details Card -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cvAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="48dp"
         app:cardCornerRadius="16dp"
         app:strokeColor="@android:color/white"
         app:strokeWidth="1dp"
@@ -65,12 +66,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:paddingVertical="32dp">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp"
             android:paddingVertical="16dp">
+
+
 
             <!-- Field: Name -->
             <TextView
@@ -106,7 +110,23 @@
 
             <!-- Field: Age -->
             <TextView
-                android:id="@+id/tvAge"
+                android:id="@+id/tvBirthdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:text="@string/profile_age"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="4dp"
+                android:layout_marginBottom="16dp"
+                android:background="@android:color/white"/>
+
+            <!-- Field: Sex -->
+            <TextView
+                android:id="@+id/tvSex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="8dp"
@@ -199,6 +219,20 @@
 
 
         </LinearLayout>
+
+
     </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnEditProfile"
+        android:layout_width="124dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/primary_color"
+        android:text="Edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cvAccount" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

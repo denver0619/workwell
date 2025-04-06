@@ -49,16 +49,18 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.ViewHold
         Log.d("AdapterDebug", "Binding Routine: " + routine.getName() + " at position " + position);
         holder.itemTitle.setText(routine.getName());
         holder.routineDate.setText(String.format("%s - %s", routine.getFormattedStartDate(), routine.getFormattedEndDate()));
-
+        // Format frequency using the string resource
+        String formattedFrequency = String.format(holder.itemView.getContext().getString(R.string.placeholder_frequency), routine.getFrequency());
+        holder.frequency.setText(formattedFrequency);
         // Show button only if it's an active routine
         holder.button.setVisibility(isActive ? View.VISIBLE : View.GONE);
         holder.button.setOnClickListener(v -> onRoutineClickListener.onRoutineClicked(routine));
 
         int imageResId;
         switch (routine.getTargetArea()) {
-            case "Neck":
-                imageResId = R.drawable.img_neck;
-                break;
+//            case "Neck":
+//                imageResId = R.drawable.img_neck;
+//                break;
             case "Shoulder":
                 imageResId = R.drawable.img_shoulder;
                 break;
@@ -69,7 +71,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.ViewHold
                 imageResId = R.drawable.img_lower_back;
                 break;
             default:
-                imageResId = R.drawable.img_neck;
+                imageResId = R.drawable.img_lower_back;
         }
         holder.heroImage.setImageResource(imageResId);
     }
@@ -80,13 +82,14 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView itemTitle, routineDate;
+        public TextView itemTitle, routineDate, frequency;
         public Button button;
         public ImageView heroImage;
 
         public ViewHolder(View view) {
             super(view);
             itemTitle = view.findViewById(R.id.tvItemTitle);
+            frequency = view.findViewById(R.id.tvFrequency);
             routineDate = view.findViewById(R.id.tvRoutineDate);
             button = view.findViewById(R.id.btnStartRoutine);
             heroImage = view.findViewById(R.id.ivHero);

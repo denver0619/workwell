@@ -39,18 +39,18 @@ class PermissionsFragment : Fragment() {
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
-                Toast.makeText(
-                    context,
-                    "Permission request granted",
-                    Toast.LENGTH_LONG
-                ).show()
+//                Toast.makeText(
+//                    context,
+//                    "Permission request granted",
+//                    Toast.LENGTH_LONG
+//                ).show()
                 navigateToCamera()
             } else {
-                Toast.makeText(
-                    context,
-                    "Permission request denied",
-                    Toast.LENGTH_LONG
-                ).show()
+//                Toast.makeText(
+//                    context,
+//                    "Permission request denied",
+//                    Toast.LENGTH_LONG
+//                ).show()
             }
         }
 

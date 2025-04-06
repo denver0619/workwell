@@ -256,7 +256,8 @@ public class BaseExerciseDynamic extends AbstractExercise {
         STATUS repCheck = (isRepFinished) ? STATUS.REP_FINISHED : position;
 
         // Check if the counter has reached the target value
-        STATUS finalStatus = (counter >= repetition) ? STATUS.FINISHED : repCheck;
+        // This check to keep ringing on last rep when still aligned
+        STATUS finalStatus = (counter >= repetition) && (!position.equals(STATUS.ALIGNED)) ? STATUS.FINISHED : repCheck;
 
         return new ExerciseResult(angles, finalStatus, lastStatus, counter, timeLeft);
     }

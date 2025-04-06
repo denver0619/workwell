@@ -3,6 +3,8 @@ package com.digiview.workwell.data.service;
 import com.digiview.workwell.data.repository.AuthRepository;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 
 import java.util.Map;
@@ -10,9 +12,10 @@ import java.util.Map;
 public class AuthService {
 
     private final AuthRepository authRepository;
-
+    private final FirebaseAuth firebaseAuth;
     public AuthService() {
         this.authRepository = new AuthRepository();
+        this.firebaseAuth = FirebaseAuth.getInstance();
     }
 
     /**
@@ -20,6 +23,13 @@ public class AuthService {
      */
     public Task<AuthResult> login(String email, String password) {
         return authRepository.login(email, password);
+    }
+
+    /**
+     * Get the current logged-in user.
+     */
+    public FirebaseUser getCurrentUser() {
+        return firebaseAuth.getCurrentUser(); // Return the currently authenticated user
     }
 
     /**
@@ -40,5 +50,9 @@ public class AuthService {
             }
         }
         return null; // Default to null if role is not present or invalid
+    }
+
+    public Task<Void> requestPasswordReset(String email) {
+        return authRepository.sendPasswordResetEmail(email);
     }
 }

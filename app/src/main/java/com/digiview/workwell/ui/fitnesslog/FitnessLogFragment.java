@@ -13,7 +13,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.digiview.workwell.R;
 import com.digiview.workwell.data.models.RoutineLogs;
 import com.digiview.workwell.ui.fitnesslog.adapter.FitnessLogAdapter;
@@ -24,6 +26,7 @@ public class FitnessLogFragment extends Fragment {
     private FitnessLogViewModel fitnessLogViewModel;
     private FitnessLogAdapter fitnessLogAdapter;
     private RecyclerView rvFitnessLog;
+    private ImageView progressBar;
 
     public static FitnessLogFragment newInstance() {
         return new FitnessLogFragment();
@@ -32,12 +35,19 @@ public class FitnessLogFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_fitness_log, container, false);
+        View view = inflater.inflate(R.layout.fragment_fitness_log, container, false);
 
-        rvFitnessLog = root.findViewById(R.id.rvFitnessLog);
+        rvFitnessLog = view.findViewById(R.id.rvFitnessLog);
+        progressBar = view.findViewById(R.id.progressBar);
+        // Load GIF into ImageView using Glide
+        Glide.with(this)
+                .asGif()
+                .load(R.drawable.ic_loading) // Replace with your actual GIF in drawable
+                .into(progressBar);
+
         rvFitnessLog.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        return root;
+        return view;
     }
 
     @Override
@@ -46,7 +56,15 @@ public class FitnessLogFragment extends Fragment {
 
         fitnessLogViewModel = new ViewModelProvider(this).get(FitnessLogViewModel.class);
 
+        // Show progress bar before loading data
+        progressBar.setVisibility(View.VISIBLE);
+        rvFitnessLog.setVisibility(View.GONE);
+
         fitnessLogViewModel.getRoutineLogsLiveData().observe(getViewLifecycleOwner(), routineLogs -> {
+            // Hide progress bar when data is loaded
+            progressBar.setVisibility(View.GONE);
+            rvFitnessLog.setVisibility(View.VISIBLE);
+
             // Handle "View Details" click (e.g., navigate to next fragment)
             fitnessLogAdapter = new FitnessLogAdapter(requireContext(), routineLogs, this::navigateToRoutineLogDetails);
             rvFitnessLog.setAdapter(fitnessLogAdapter);
