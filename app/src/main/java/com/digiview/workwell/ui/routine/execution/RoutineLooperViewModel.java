@@ -78,6 +78,16 @@ public class RoutineLooperViewModel extends ViewModel {
         this.reminderState.setValue(RoutineConstants.REMINDER_STATE.NONE);
     }
 
+    private final MutableLiveData<RoutineConstants.CONFIRMATION_STATE> confirmationState = new MutableLiveData<>();
+    private LiveData<RoutineConstants.CONFIRMATION_STATE> getConfirmationState() {
+        return confirmationState;
+    }
+
+    public void setConfirmationState(RoutineConstants.CONFIRMATION_STATE confirmationState) {
+        this.confirmationState.setValue(confirmationState);
+        this.confirmationState.setValue(RoutineConstants.CONFIRMATION_STATE.NONE);
+    }
+
 //    public void executeRoutine() {
 //        ExerciseFactory exerciseFactory = new ExerciseFactory();
 //        Thread thread = new Thread(() -> {
@@ -140,6 +150,13 @@ public class RoutineLooperViewModel extends ViewModel {
             CountDownLatch reminderLatch = new CountDownLatch(1);
             observeReminderState(reminderLatch);
             awaitLatch(reminderLatch, "Wating for user to confirm reminders....");
+
+
+            postFragmentTransition(ConfirmationStartRoutineFragment.class);
+
+            CountDownLatch confirmationLatch = new CountDownLatch(1);
+            observeConfirmationState(confirmationLatch);
+            awaitLatch(confirmationLatch,"Wating for user to confirm confirmation....");
 
             for (RoutineExerciseDetailDTO exerciseEntity : routine) {
                 // Update the UI with the current counter
@@ -253,6 +270,21 @@ public class RoutineLooperViewModel extends ViewModel {
                     }
                 }
             });
+        });
+    }
+    private void observeConfirmationState(CountDownLatch latch) {
+        new Handler(Looper.getMainLooper()).post(() -> {
+            getConfirmationState().observeForever(
+                    new Observer<RoutineConstants.CONFIRMATION_STATE>() {
+                        @Override
+                        public void onChanged(RoutineConstants.CONFIRMATION_STATE confirmationState) {
+                            if (confirmationState.equals(RoutineConstants.CONFIRMATION_STATE.ACCEPTED)) {
+                                getConfirmationState().removeObserver(this);
+                                latch.countDown();
+                            }
+                        }
+                    }
+            );
         });
     }
 

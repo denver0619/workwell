@@ -2,6 +2,7 @@ package com.digiview.workwell.ui.routine.execution;
 
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
@@ -38,6 +39,7 @@ public class RoutineLooperFragment extends Fragment {
     private ExerciseTransitionViewModel exerciseTransitionViewModel;
     private ReminderViewModel reminderViewModel;
     private CameraViewModel cameraViewModel;
+    private ConfirmationStartRoutineViewModel confirmationViewModel;
     private FragmentRoutineLooperBinding fragmentRoutineBinding;
 
     private ProcessCameraProvider cameraProvider;
@@ -135,6 +137,7 @@ public class RoutineLooperFragment extends Fragment {
         exerciseTransitionViewModel = new ViewModelProvider(requireActivity()).get(ExerciseTransitionViewModel.class);
         reminderViewModel = new ViewModelProvider(requireActivity()).get(ReminderViewModel.class);
         cameraViewModel = new ViewModelProvider(requireActivity()).get(CameraViewModel.class);
+        confirmationViewModel = new ViewModelProvider(requireActivity()).get(ConfirmationStartRoutineViewModel.class);
 
         // Generate a unique temporary ID
         String tempRoutineLogId = UUID.randomUUID().toString();
@@ -181,6 +184,21 @@ public class RoutineLooperFragment extends Fragment {
 
         // Observe Reminder State
         reminderViewModel.getReminderState().observe(getViewLifecycleOwner(), routineViewModel::setReminderState);
+
+        // Observe Confirmation State
+        confirmationViewModel.getConfirmationState().observe(getViewLifecycleOwner(),
+                new Observer<RoutineConstants.CONFIRMATION_STATE>() {
+                    @Override
+                    public void onChanged(RoutineConstants.CONFIRMATION_STATE confirmationState) {
+                        if (confirmationState.equals(RoutineConstants.CONFIRMATION_STATE.REJECTED)) {
+                            requireActivity().finish();
+                        } else {
+                            routineViewModel
+                                    .setConfirmationState(confirmationState);
+                        }
+                    }
+                }
+        );
 
         // Debugging: Show Toast messages
         // routineViewModel.getToastMsg().observe(getViewLifecycleOwner(), s -> Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show());
