@@ -15,6 +15,9 @@ public class User {
     @PropertyName("FirstName")
     private String firstName;
 
+    @PropertyName("MiddleName")
+    private String middleName;
+
     @PropertyName("LastName")
     private String lastName;
 
@@ -30,6 +33,9 @@ public class User {
     @PropertyName("Weight")
     private double weight;
 
+    @PropertyName("Sex")
+    private String sex;
+
     @PropertyName("Address")
     private String address;
 
@@ -39,15 +45,17 @@ public class User {
     // Empty constructor required by Firestore
     public User() {}
 
-    public User(String uid, String email, String firstName, String lastName, Date birthDate, String contact, double height, double weight, String address, String assignedProfessional) {
+    public User(String uid, String email, String firstName, String middleName, String lastName, Date birthDate, String contact, double height, double weight, String sex, String address, String assignedProfessional) {
         this.uid = uid;
         this.email = email;
         this.firstName = firstName;
+        this.middleName = middleName;
         this.lastName = lastName;
         this.birthDate = birthDate;
         this.contact = contact;
         this.height = height;
         this.weight = weight;
+        this.sex = sex;
         this.address = address;
         this.assignedProfessional = assignedProfessional;
     }
@@ -93,6 +101,9 @@ public class User {
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }
 
+    public String getMiddleName() { return middleName; }
+    public void setMiddleName(String middleName) { this.middleName = middleName; }
+
     public String getLastName() { return lastName; }
     public void setLastName(String lastName) { this.lastName = lastName; }
 
@@ -106,6 +117,9 @@ public class User {
 
     public double getWeight() { return weight; }
     public void setWeight(double weight) { this.weight = weight; }
+
+    public String getSex() { return sex; }
+    public void setSex(String sex) { this.sex = sex; }
 
     public String getAddress() { return address; }
     public void setAddress(String address) { this.address = address; }

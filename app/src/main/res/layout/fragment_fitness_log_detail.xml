@@ -415,7 +415,7 @@
                         android:id="@+id/tvDoctorCommentTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Doctor's Comment"
+                        android:text="Doctor's Note"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="@color/neutral_white_color"
@@ -426,10 +426,20 @@
                         android:id="@+id/tvDoctorComment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="No comments available."
+                        android:text="No doctor's note available."
                         android:textColor="@color/neutral_white_color"
                         android:paddingBottom="8dp"
-                        android:visibility="gone" />
+                    />
+
+                    <!-- Doctor's Comment Content -->
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvDoctorWithoutComment"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="No comments available."-->
+<!--                        android:textColor="@color/neutral_white_color"-->
+<!--                        android:paddingBottom="8dp"-->
+<!--                        android:visibility="gone" />-->
 
                 </LinearLayout>
 

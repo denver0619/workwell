@@ -25,7 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class ProfileAccountFragment extends Fragment {
 
     private UserService userService;
-    private TextView tvEmail, tvName, tvBirthdate, tvContact, tvHeight, tvWeight, tvAddress, tvAssignedProfessional;
+    private TextView tvEmail, tvName, tvBirthdate, tvContact, tvHeight, tvWeight, tvSex, tvAddress, tvAssignedProfessional;
     private Button btnEditProfile;
     // Hold the fetched user data for reuse when passing to the edit fragment.
     private UserDTO currentUserData;
@@ -48,6 +48,7 @@ public class ProfileAccountFragment extends Fragment {
         tvContact = view.findViewById(R.id.tvContact);
         tvHeight = view.findViewById(R.id.tvHeight);
         tvWeight = view.findViewById(R.id.tvWeight);
+        tvSex = view.findViewById(R.id.tvSex);
         tvAddress = view.findViewById(R.id.tvAddress);
         tvAssignedProfessional = view.findViewById(R.id.tvAssignedDoctor);
         ImageButton btnBack = view.findViewById(R.id.btnBack);
@@ -64,6 +65,7 @@ public class ProfileAccountFragment extends Fragment {
                 bundle.putString("contact", currentUserData.getContact());
                 bundle.putString("height", String.valueOf(currentUserData.getHeight()));
                 bundle.putString("weight", String.valueOf(currentUserData.getWeight()));
+                bundle.putString("sex", String.valueOf(currentUserData.getSex()));
                 bundle.putString("birthDate", currentUserData.getFormattedBirthDate());
                 bundle.putString("address", currentUserData.getAddress());
 
@@ -110,6 +112,7 @@ public class ProfileAccountFragment extends Fragment {
                 tvContact.setText(getBoldFormattedText("Contact:", user.getContact()));
                 tvHeight.setText(getBoldFormattedText("Height:", user.getHeight() + " cm"));
                 tvWeight.setText(getBoldFormattedText("Weight:", user.getWeight() + " kg"));
+                tvSex.setText(getBoldFormattedText("Sex:", user.getSex()));
                 tvAddress.setText(getBoldFormattedText("Address:", user.getAddress()));
                 tvAssignedProfessional.setText(getBoldFormattedText("Assigned Professional:", user.getAssignedProfessionalName()));
             }

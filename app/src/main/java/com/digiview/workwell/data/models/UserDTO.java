@@ -9,6 +9,7 @@ public class UserDTO {
     private String name;
     private Date birthDate;
     private String contact;
+    private String sex;
     private double height;
     private double weight;
     private String address;
@@ -17,7 +18,7 @@ public class UserDTO {
 
     public UserDTO() {}
 
-    public UserDTO(String uid, String email, String name, Date birthDate, String contact, double height, double weight, String address, String assignedProfessional, String assignedProfessionalName) {
+    public UserDTO(String uid, String email, String name, Date birthDate, String contact, double height, double weight, String sex, String address, String assignedProfessional, String assignedProfessionalName) {
         this.uid = uid;
         this.email = email;
         this.name = name;
@@ -25,6 +26,7 @@ public class UserDTO {
         this.contact = contact;
         this.height = height;
         this.weight = weight;
+        this.sex = sex;
         this.address = address;
         this.assignedProfessional = assignedProfessional;
         this.assignedProfessionalName = assignedProfessionalName;
@@ -78,6 +80,9 @@ public class UserDTO {
 
     public double getWeight() { return weight; }
     public void setWeight(double weight) { this.weight = weight; }
+
+    public String getSex() { return sex; }
+    public void setSex(String sex) { this.sex = sex; }
 
     public String getAddress() { return address; }
     public void setAddress(String address) { this.address = address; }
