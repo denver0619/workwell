@@ -59,22 +59,38 @@
                     android:id="@+id/tvRoutineDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="end"
                     android:layout_below="@id/tvItemTitle"
                     android:layout_alignEnd="@id/tvItemTitle"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginEnd="-3dp"
+                    android:gravity="end"
                     android:text="@string/placeholder_routine_date"
                     android:textColor="@color/neutral_dark_color"
                     android:textFontWeight="600"
                     android:textSize="14sp" />
 
-                <Button
-                    android:id="@+id/btnStartRoutine"
+                <TextView
+                    android:id="@+id/tvFrequency"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvRoutineDate"
                     android:layout_alignEnd="@id/tvRoutineDate"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="-1dp"
+                    android:gravity="end"
+                    android:text="@string/placeholder_frequency"
+                    android:textColor="@color/neutral_dark_color"
+                    android:textFontWeight="600"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/btnStartRoutine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvFrequency"
+                    android:layout_alignEnd="@id/tvFrequency"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="0dp"
                     android:backgroundTint="@color/accent_color"
                     android:minHeight="48dp"
                     android:text="@string/hero_button_text"
@@ -87,14 +103,14 @@
     <!-- Hero Image Positioned to the Left -->
     <ImageView
         android:id="@+id/ivHero"
-        android:layout_width="176dp"
+        android:layout_width="161dp"
         android:layout_height="184dp"
-        android:elevation="8dp"
-        android:translationY="-6dp"
-        android:layout_marginStart="8dp"
         android:layout_gravity="start|center_vertical"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@string/hero_img_desc"
+        android:elevation="8dp"
         android:scaleType="centerCrop"
         android:src="@drawable/img_neck"
-        android:contentDescription="@string/hero_img_desc"/>
+        android:translationY="-6dp" />
 
 </FrameLayout>

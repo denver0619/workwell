@@ -10,7 +10,8 @@ import java.util.List;
 public class Routine implements Serializable {
     private String RoutineId;
     private String Name;
-    private String TargetArea; // Changed from enum to string
+    private String TargetArea;
+    private int Frequency;
     private List<String> Users;
     private List<RoutineExercise> Exercises;
     private String AssignedName;
@@ -68,8 +69,17 @@ public class Routine implements Serializable {
         return Name;
     }
 
+
+
     public void setName(String name) {
         this.Name = name;
+    }
+
+    public int getFrequency() {
+        return Frequency;
+    }
+    public void setFrequency(int Frequency) {
+        this.Frequency = Frequency;
     }
 
     public Date getStartDate() {

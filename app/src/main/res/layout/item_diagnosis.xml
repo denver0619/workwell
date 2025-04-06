@@ -42,7 +42,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="8dp"
                     android:gravity="start"
-                    android:text="Diagnosis"
+                    android:text="Diagnosis &amp; Prescription"
                     android:textColor="@color/neutral_dark_color"
                     android:textFontWeight="600"
                     android:textSize="24sp" />

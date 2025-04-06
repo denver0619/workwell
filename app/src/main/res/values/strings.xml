@@ -42,6 +42,7 @@
     <string name="routine_add_fab">Add Routine Floating Action Button</string>
     <string name="placeholder_routine_name">Target Area Routine 1</string>
     <string name="placeholder_routine_date">YYYY-MM-DD hh:mm tt</string>
+    <string name="placeholder_frequency">Frequency: %d per day</string>
     <string name="placeholder_routine_detail">Routine Name 1</string>
     <string name="placeholder_exercise_name">Exercise Name</string>
     <string name="exercise_label">Exercises</string>
