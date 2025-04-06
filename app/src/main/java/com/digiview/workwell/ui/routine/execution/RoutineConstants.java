@@ -21,4 +21,11 @@ public class RoutineConstants {
         ACCEPTED,
         NONE;
     }
+    public enum CONFIRMATION_STATE{
+        IGNORED,
+        ONGOING,
+        ACCEPTED,
+        REJECTED,
+        NONE;
+    }
 }

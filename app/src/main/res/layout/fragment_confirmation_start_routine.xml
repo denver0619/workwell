@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.routine.execution.ReminderFragment">
+    tools:context=".ui.routine.execution.ConfirmationStartRoutineFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,69 +24,72 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/reminderHeading"
                 android:fontFamily="@font/poppins_regular"
-                android:textSize="20sp"
                 android:textAlignment="center"
-                android:text="Before We Get Moving... \nLet’s Get Set Up! \n" />
-           <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/reminderHeading"
-                android:fontFamily="@font/poppins_regular"
                 android:textSize="20sp"
-                android:text="👕 What to Wear" />
+                android:text="👀 Almost Ready\nJust a Quick Check! " />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
                 android:justificationMode="inter_word"
                 android:textColor="@color/white"
-                android:text="Slip into something comfy! Think breathable clothes you can stretch in. Sneakers are cool, or go barefoot — just make sure it's safe and steady.
-\n" />
+                android:text="Before we start, let’s make sure everything’s in place! Your camera will need a clear view of your whole body, so double-check your setup: Good lighting (not too bright or dark), a clutter-free background, and comfy clothes that let you move.\n"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/reminderHeading"
-                android:fontFamily="@font/poppins_regular"
-                android:textSize="20sp"
-                android:text="📸 Your Space Setup " />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_regular"
-                android:justificationMode="inter_word"
-                android:textColor="@color/white"
-                android:text="Find your sweet spot! Not too dark, not too bright — your camera needs to see you clearly. Set it up at a good angle and try to keep your background tidy so we can track your moves like a pro.\n"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/reminderHeading"
-                android:fontFamily="@font/poppins_regular"
-                android:textSize="20sp"
-                android:text="🎧 Audio Cues " />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_regular"
-                android:justificationMode="inter_word"
-                android:textColor="@color/white"
-                android:text="You’ll hear “aligned” when you nail the right pose,“resting” when it’s chill time, and A little ding! to mark the end of a rep — time to move to the next pose! \n" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_regular"
                 android:textAlignment="center"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="20sp"
+                android:text="😄 Heads-up" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:justificationMode="inter_word"
                 android:textColor="@color/white"
-                android:text="Get ready to move, groove, and improve!\n" />
-         </LinearLayout>
+                android:text="If the app later can’t detect your position, just press your phone’s back button and try setting up again — easy fix!\n" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/reminderHeading"
+                android:textAlignment="center"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="20sp"
+                android:text="✅ Quick check" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:justificationMode="inter_word"
+                android:textColor="@color/white"
+                android:text="Did you follow the setup tips for clothing, lighting, and camera placement?\n" />
 
-        <Button
-            android:id="@+id/proceed_button"
-            android:layout_width="wrap_content"
-            android:fontFamily="@font/poppins_regular"
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Proceed  ❯"/>
-    </LinearLayout>
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp">
+            <Button
+                android:id="@+id/confirmation_no_button"
+                android:layout_width="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="❮  Nope, Take Me Back"/>
+            <Button
+                android:id="@+id/confirmation_yes_button"
+                android:layout_width="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Yes, I'm All Set!  ❯"/>
 
+        </LinearLayout>
+    </LinearLayout>
 
 </FrameLayout>

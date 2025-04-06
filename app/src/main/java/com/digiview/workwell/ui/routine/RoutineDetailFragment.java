@@ -32,6 +32,7 @@ import com.digiview.workwell.ui.routine.execution.RoutineActivity;
 import com.digiview.workwell.ui.routine.viewmodel.RoutineDetailViewModel;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GetTokenResult;
@@ -46,7 +47,7 @@ public class RoutineDetailFragment extends Fragment implements RoutineDetailAdap
     private RecyclerView rvRoutineDetail;
     private RoutineDetailAdapter routineDetailAdapter;
     private RoutineDetailViewModel mViewModel;
-    private FloatingActionButton fabPlay;
+    private ExtendedFloatingActionButton fabPlay;
 //    List<RoutineExercise> exercises;
     public static RoutineDetailFragment newInstance() {
         return new RoutineDetailFragment();

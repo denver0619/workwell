@@ -42,6 +42,7 @@
     <string name="routine_add_fab">Add Routine Floating Action Button</string>
     <string name="placeholder_routine_name">Target Area Routine 1</string>
     <string name="placeholder_routine_date">YYYY-MM-DD hh:mm tt</string>
+    <string name="placeholder_frequency">Frequency: %d per day</string>
     <string name="placeholder_routine_detail">Routine Name 1</string>
     <string name="placeholder_exercise_name">Exercise Name</string>
     <string name="exercise_label">Exercises</string>
@@ -93,6 +94,7 @@
     <string name="profile_email"><b>Email:</b> %s</string>
     <string name="profile_name"><b>Name:</b> %s</string>
     <string name="profile_age"><b>Age:</b> %d</string>
+    <string name="profile_sex"><b>Sex:</b> %s</string>
     <string name="profile_contact"><b>Contact:</b> %s</string>
     <string name="profile_height"><b>Height:</b> %.1f cm</string>
     <string name="profile_weight"><b>Weight:</b> %.1f kg</string>

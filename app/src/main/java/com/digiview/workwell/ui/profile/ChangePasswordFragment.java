@@ -63,8 +63,8 @@ public class ChangePasswordFragment extends Fragment {
             return;
         }
 
-        if (newPassword.length() < 6) {
-            Toast.makeText(getContext(), "New password must be at least 6 characters.", Toast.LENGTH_SHORT).show();
+        if (newPassword.length() < 8) {
+            Toast.makeText(getContext(), "New password must be at least 8 characters.", Toast.LENGTH_SHORT).show();
             return;
         }
 

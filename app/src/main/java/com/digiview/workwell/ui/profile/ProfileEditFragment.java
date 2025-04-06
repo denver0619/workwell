@@ -16,6 +16,7 @@ import com.digiview.workwell.data.service.UserService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +43,8 @@ public class ProfileEditFragment extends Fragment {
 
         // Get references to Material TextInputEditText fields
         TextInputEditText etContact = view.findViewById(R.id.etContact);
+//        TextInputEditText etFirstName = view.findViewById(R.id.etFirstName);
+//        TextInputEditText etLastName = view.findViewById(R.id.etLastName);
         TextInputEditText etHeight = view.findViewById(R.id.etHeight);
         TextInputEditText etWeight = view.findViewById(R.id.etWeight);
         TextInputEditText etBirthDate = view.findViewById(R.id.etBirthDate);
@@ -52,6 +55,8 @@ public class ProfileEditFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             etContact.setText(args.getString("contact", "Contact"));
+//            etFirstName.setText(args.getString("firstName", ""));
+//            etLastName.setText(args.getString("lastName", ""));
             etHeight.setText(args.getString("height", "Height"));
             etWeight.setText(args.getString("weight", "Weight"));
             etBirthDate.setText(args.getString("birthDate", "Birth Date"));
@@ -62,10 +67,31 @@ public class ProfileEditFragment extends Fragment {
         btnSave.setOnClickListener(v -> {
             // Use entered text directly
             String updatedContact = etContact.getText().toString().trim();
+//            String updatedFirstName = etFirstName.getText().toString().trim();
+//            String updatedLastName = etLastName.getText().toString().trim();
             String updatedHeight = etHeight.getText().toString().trim();
             String updatedWeight = etWeight.getText().toString().trim();
             String updatedBirthDate = etBirthDate.getText().toString().trim();
             String updatedAddress = etAddress.getText().toString().trim();
+
+            // Validate contact format: "09xx xxx xxxx"
+            if (!updatedContact.matches("^09\\d{2} \\d{3} \\d{4}$")) {
+                Toast.makeText(getContext(), "Invalid contact format. Please use 09xx xxx xxxx", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+//            // Validate first name: only letters allowed
+//            if (!updatedFirstName.matches("^[A-Za-z]+$")) {
+//                Toast.makeText(getContext(), "Invalid first name. Only alphabets allowed.", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+//
+//            // Validate first name: allow multiple words (only alphabets and spaces allowed)
+//            if (!updatedFirstName.matches("^[A-Za-z]+(?: [A-Za-z]+)*$")) {
+//                Toast.makeText(getContext(), "Invalid first name. Only alphabets and spaces allowed.", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+
 
             // Convert the birth date string (in format "yyyy/MM/dd") to a Date
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -78,9 +104,24 @@ public class ProfileEditFragment extends Fragment {
                 return;
             }
 
+            // Calculate age
+            Calendar birthCalendar = Calendar.getInstance();
+            birthCalendar.setTime(birthDate);
+            Calendar now = Calendar.getInstance();
+            int age = now.get(Calendar.YEAR) - birthCalendar.get(Calendar.YEAR);
+            if (now.get(Calendar.DAY_OF_YEAR) < birthCalendar.get(Calendar.DAY_OF_YEAR)) {
+                age--;
+            }
+            if (age < 18 || age > 24) {
+                Toast.makeText(getContext(), "Age must be between 18 and 24 years. Your age: " + age, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             // Prepare the data for Firestore update
             Map<String, Object> updates = new HashMap<>();
             updates.put("Contact", updatedContact);
+//            updates.put("FirstName", updatedFirstName);
+//            updates.put("LastName", updatedLastName);
             try {
                 updates.put("Height", Double.parseDouble(updatedHeight));
             } catch (NumberFormatException e) {
@@ -106,6 +147,5 @@ public class ProfileEditFragment extends Fragment {
                         Toast.makeText(getContext(), "Failed to update profile: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
         });
-
     }
 }
