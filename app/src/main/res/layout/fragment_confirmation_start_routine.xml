@@ -56,7 +56,7 @@
                 android:textAlignment="center"
                 android:fontFamily="@font/poppins_regular"
                 android:textSize="20sp"
-                android:text="✅ Quick check" />
+                android:text="🏃‍️ Ready?" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
