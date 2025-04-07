@@ -24,6 +24,12 @@
         <item name="android:color">@color/secondary_color</item> <!--ACTIVE INDICATOR-->
     </style>
 
+    <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">24sp</item> <!-- Increase the text size -->
+        <item name="android:textColor">?attr/colorControlNormal</item>
+    </style>
+
+
 
     <!-- Theme Overlay for Bottom Navigation -->
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
