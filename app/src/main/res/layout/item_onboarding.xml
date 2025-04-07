@@ -8,6 +8,17 @@
     android:gravity="center"
     android:padding="16dp">
 
+    <!-- Title (visible only on the first page) -->
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="32sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="Welcome" />
+
     <ImageView
         android:id="@+id/imageOnboarding"
         android:layout_width="match_parent"

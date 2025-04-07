@@ -5,13 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.digiview.workwell.R;
 import com.digiview.workwell.data.models.OnboardingItem;
-
 import java.util.List;
 
 public class OnboardingAdapter extends RecyclerView.Adapter<OnboardingAdapter.ViewHolder> {
@@ -34,7 +31,15 @@ public class OnboardingAdapter extends RecyclerView.Adapter<OnboardingAdapter.Vi
     public void onBindViewHolder(@NonNull OnboardingAdapter.ViewHolder holder, int position) {
         OnboardingItem item = onboardingItems.get(position);
         holder.imageView.setImageResource(item.getImageResId());
-        holder.textView.setText(item.getDescription());
+
+        // Only show the title on the first page
+        if (position == 0 && item.getTitle() != null && !item.getTitle().isEmpty()) {
+            holder.titleView.setVisibility(View.VISIBLE);
+            holder.titleView.setText(item.getTitle());
+        } else {
+            holder.titleView.setVisibility(View.GONE);
+        }
+        holder.descriptionView.setText(item.getDescription());
     }
 
     @Override
@@ -44,12 +49,14 @@ public class OnboardingAdapter extends RecyclerView.Adapter<OnboardingAdapter.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView textView;
+        TextView titleView;
+        TextView descriptionView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageOnboarding);
-            textView = itemView.findViewById(R.id.textDescription);
+            titleView = itemView.findViewById(R.id.textTitle);
+            descriptionView = itemView.findViewById(R.id.textDescription);
         }
     }
 }

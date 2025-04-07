@@ -2,19 +2,16 @@ package com.digiview.workwell.ui.onboarding;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
-
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
 import com.digiview.workwell.R;
 import com.digiview.workwell.data.models.OnboardingItem;
 import com.digiview.workwell.ui.main.MainActivity;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +20,6 @@ public class OnboardingActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
     private Button btnSkip, btnNext;
-
     private OnboardingAdapter onboardingAdapter;
     private List<OnboardingItem> onboardingItems;
 
@@ -31,14 +27,13 @@ public class OnboardingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Check if first time launch before setting the layout
+        // Check if onboarding has already been completed.
         if (!isFirstTimeLaunch()) {
             launchMainActivity();
             finish();
             return;
         }
 
-        // Set the layout
         setContentView(R.layout.activity_onboarding);
 
         // Initialize views
@@ -49,37 +44,49 @@ public class OnboardingActivity extends AppCompatActivity {
 
         // Prepare onboarding items
         onboardingItems = new ArrayList<>();
+        // First page with a welcome title
+        onboardingItems.add(new OnboardingItem(
+                R.drawable.img_onboarding_0,
+                "WELCOME TO\nWORKWELL!",
+                "Ready to dive in? Here’s a quick guide to help you get started."
+        ));
+        // Subsequent pages (title hidden in adapter)
         onboardingItems.add(new OnboardingItem(
                 R.drawable.img_onboarding_1,
+                "",
                 "This Home Tab gives you a quick overview of your personal health details."
         ));
         onboardingItems.add(new OnboardingItem(
                 R.drawable.img_onboarding_2,
+                "",
                 "This Routine Tab shows your list of Active and Inactive routines. Click \"Start Routine\" to begin."
         ));
         onboardingItems.add(new OnboardingItem(
                 R.drawable.img_onboarding_3,
+                "",
                 "This Progress Log Tab displays a list of your previously completed routines."
         ));
         onboardingItems.add(new OnboardingItem(
                 R.drawable.img_onboarding_4,
+                "",
                 "This Care Plan Tab shows a list of diagnoses provided by your healthcare professional."
         ));
         onboardingItems.add(new OnboardingItem(
                 R.drawable.img_onboarding_5,
+                "",
                 "This Profile Tab allows you to manage your settings and sign out of your account."
         ));
 
-        // Set up adapter & ViewPager
+        // Set up the adapter and ViewPager2
         onboardingAdapter = new OnboardingAdapter(onboardingItems);
         viewPager.setAdapter(onboardingAdapter);
 
-        // Attach TabLayout with ViewPager2 to show dots
+        // Attach TabLayoutMediator to show bullet dots.
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             tab.setText("•");
         }).attach();
 
-        // Set up button listeners
+        // Skip button listener
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,6 +96,7 @@ public class OnboardingActivity extends AppCompatActivity {
             }
         });
 
+        // Next button listener
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
