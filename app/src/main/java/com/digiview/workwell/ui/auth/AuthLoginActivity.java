@@ -175,10 +175,19 @@ public class AuthLoginActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void proceedToApp() {
-        Intent intent = new Intent(AuthLoginActivity.this, MainActivity.class);
-        startActivity(intent);
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        // Check if the user has seen onboarding. Default is true (first time).
+        boolean isFirstTimeOnboarding = sharedPreferences.getBoolean("isFirstTimeOnboarding", true);
+        if (isFirstTimeOnboarding) {
+            Intent intent = new Intent(AuthLoginActivity.this, com.digiview.workwell.ui.onboarding.OnboardingActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(AuthLoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
         finish();
     }
+
 
     private void denyAccess(String message) {
         Log.d("FirebaseAuthTest", "Access denied: " + message);
