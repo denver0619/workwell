@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.digiview.workwell.services.TTSHelper;
-import com.digiview.workwell.services.mediapipe.TTSInitializationListener;
+import com.digiview.workwell.services.tts.TTSHelper;
+import com.digiview.workwell.services.tts.TTSInitializationListener;
 
 import java.io.File;
 

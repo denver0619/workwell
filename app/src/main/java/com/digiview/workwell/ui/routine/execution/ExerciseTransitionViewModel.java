@@ -2,22 +2,19 @@ package com.digiview.workwell.ui.routine.execution;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
-import android.media.AudioAttributes;
 import android.os.CountDownTimer;
 import android.media.MediaPlayer;
-import android.speech.tts.TextToSpeech;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.digiview.workwell.data.models.RoutineExerciseDetailDTO;
-import com.digiview.workwell.services.TTSHelper;
-import com.digiview.workwell.services.mediapipe.TTSInitializationListener;
+import com.digiview.workwell.services.tts.TTSHelper;
+import com.digiview.workwell.services.tts.TTSInitializationListener;
+import com.digiview.workwell.services.tts.TTSSpeakListener;
 
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Objects;
 
 public class ExerciseTransitionViewModel extends ViewModel {
@@ -66,7 +63,19 @@ public class ExerciseTransitionViewModel extends ViewModel {
     }
 
     public void startSpeaking() {
-        Objects.requireNonNull(ttsHelper.getValue()).speak("Prepare for" + Objects.requireNonNull(getExerciseDetailDTO().getValue()).getExerciseName());
+        Objects.requireNonNull(ttsHelper.getValue())
+                .speak("Prepare for" + Objects.requireNonNull(getExerciseDetailDTO().getValue()).getExerciseName()
+                        , new TTSSpeakListener() {
+                            @Override
+                            public void onSpeakingFinished() {
+                                Objects.requireNonNull(ttsHelper.getValue())
+                                        .speak(
+                                                Objects.requireNonNull(getExerciseDetailDTO().getValue())
+                                                        .getExerciseDeviceSetup()
+                                        );
+                            }
+                        },
+                        Objects.requireNonNull(getExerciseDetailDTO().getValue()).getExerciseId());
     }
 
     public void startTransition() {
