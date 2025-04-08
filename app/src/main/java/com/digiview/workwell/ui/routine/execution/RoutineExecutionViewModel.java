@@ -5,19 +5,17 @@ import android.content.res.AssetFileDescriptor;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.digiview.workwell.services.TTSHelper;
+import com.digiview.workwell.services.tts.TTSHelper;
 import com.digiview.workwell.services.exercises.AbstractExercise;
 import com.digiview.workwell.services.exercises.BaseExerciseDynamic;
 import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarkerResult;
 
 import java.io.IOException;
-import java.util.Base64;
 import java.util.Objects;
 
 public class RoutineExecutionViewModel extends ViewModel {// TODO: Implement the ViewModel
