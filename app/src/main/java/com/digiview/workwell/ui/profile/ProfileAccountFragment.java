@@ -114,7 +114,7 @@ public class ProfileAccountFragment extends Fragment {
                 tvWeight.setText(getBoldFormattedText("Weight:", user.getWeight() + " kg"));
                 tvSex.setText(getBoldFormattedText("Sex:", user.getSex()));
                 tvAddress.setText(getBoldFormattedText("Address:", user.getAddress()));
-                tvAssignedProfessional.setText(getBoldFormattedText("Assigned Professional:", user.getAssignedProfessionalName()));
+                tvAssignedProfessional.setText(getBoldFormattedText("Assigned Healthcare Professional:\n", user.getAssignedProfessionalName()));
             }
         }).exceptionally(ex -> {
             Log.e("ProfileFragment", "Error fetching user data", ex);
