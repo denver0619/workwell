@@ -1,16 +1,15 @@
-package com.digiview.workwell.services;
+package com.digiview.workwell.services.tts;
 
 import android.content.Context;
-import android.media.AudioAttributes;
 import android.speech.tts.TextToSpeech;
-
-import com.digiview.workwell.services.mediapipe.TTSInitializationListener;
+import android.speech.tts.UtteranceProgressListener;
 
 import java.util.Locale;
 
 public class TTSHelper {
     private TextToSpeech tts;
     private boolean isInitialized = false;
+
 
     // Constructor
     public TTSHelper(Context context) {
@@ -60,6 +59,28 @@ public class TTSHelper {
     public void speak(String text) {
         if (isInitialized) {
             tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+        }
+    }
+    public void speak(String text, TTSSpeakListener ttsSpeakListener, String utteranceId) {
+        if (isInitialized) {
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, utteranceId);
+            tts.setOnUtteranceProgressListener(
+                    new UtteranceProgressListener() {
+                        @Override
+                        public void onStart(String utteranceId) {
+                        }
+
+                        @Override
+                        public void onDone(String utteranceId) {
+                            ttsSpeakListener.onSpeakingFinished();
+                        }
+
+                        @Override
+                        public void onError(String utteranceId) {
+
+                        }
+                    }
+            );
         }
     }
 

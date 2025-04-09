@@ -1,6 +1,5 @@
 package com.digiview.workwell.ui.routine.execution;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -13,16 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.arthenica.ffmpegkit.FFmpegKit;
-import com.digiview.workwell.R;
-import com.digiview.workwell.data.service.RoutineLogService;
 import com.digiview.workwell.data.service.VideoService;
 import com.digiview.workwell.databinding.FragmentVideoConvertBinding;
-import com.digiview.workwell.services.mediapipe.TTSInitializationListener;
+import com.digiview.workwell.services.tts.TTSInitializationListener;
 
-import java.io.Console;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

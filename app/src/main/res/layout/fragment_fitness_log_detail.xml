@@ -415,7 +415,7 @@
                         android:id="@+id/tvDoctorCommentTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Doctor's Note"
+                        android:text="Healthcare Professional's Note"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="@color/neutral_white_color"
@@ -426,7 +426,7 @@
                         android:id="@+id/tvDoctorComment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="No doctor's note available."
+                        android:text="No healthcare professional's note available."
                         android:textColor="@color/neutral_white_color"
                         android:paddingBottom="8dp"
                     />

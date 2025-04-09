@@ -1,9 +1,7 @@
 package com.digiview.workwell.ui.routine.execution;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,12 +11,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.digiview.workwell.R;
 import com.digiview.workwell.data.models.RoutineExerciseDetailDTO;
 import com.digiview.workwell.databinding.FragmentExerciseTransitionBinding;
-import com.digiview.workwell.services.mediapipe.TTSInitializationListener;
+import com.digiview.workwell.services.tts.TTSInitializationListener;
 
 import java.util.Objects;
 
@@ -123,6 +119,16 @@ public class ExerciseTransitionFragment extends Fragment {
                     }
                 }
         );
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+            if(exerciseTransitionViewModel!=null) {
+                if (Objects.requireNonNull(exerciseTransitionViewModel.getTtsHelper().getValue()).isInitialized()){
+                    exerciseTransitionViewModel.getTtsHelper().getValue().stop();
+                }
+            }
     }
 
 }

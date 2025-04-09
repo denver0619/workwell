@@ -22,7 +22,7 @@
     <string name="height_placeholder">%s cm</string>
     <string name="weight_label">Weight</string>
     <string name="weight_placeholder">%s kg</string>
-    <string name="professional_label">Assigned Doctor</string>
+    <string name="professional_label">Assigned Healthcare Professional</string>
     <string name="professional_placeholder">%s</string>
 
     <string name="doctor_comment_title">Doctor\'s Comment</string>
