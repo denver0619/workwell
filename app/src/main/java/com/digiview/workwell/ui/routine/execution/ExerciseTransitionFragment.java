@@ -121,4 +121,14 @@ public class ExerciseTransitionFragment extends Fragment {
         );
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+            if(exerciseTransitionViewModel!=null) {
+                if (Objects.requireNonNull(exerciseTransitionViewModel.getTtsHelper().getValue()).isInitialized()){
+                    exerciseTransitionViewModel.getTtsHelper().getValue().stop();
+                }
+            }
+    }
+
 }

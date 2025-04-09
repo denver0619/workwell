@@ -10,6 +10,7 @@ public class TTSHelper {
     private TextToSpeech tts;
     private boolean isInitialized = false;
 
+
     // Constructor
     public TTSHelper(Context context) {
         tts = new TextToSpeech(context, status -> {
