@@ -71,7 +71,18 @@ public class ExerciseTransitionViewModel extends ViewModel {
                                 Objects.requireNonNull(ttsHelper.getValue())
                                         .speak(
                                                 Objects.requireNonNull(getExerciseDetailDTO().getValue())
-                                                        .getExerciseDeviceSetup()
+                                                        .getExerciseDeviceSetup(),
+                                                new TTSSpeakListener() {
+                                                    @Override
+                                                    public void onSpeakingFinished() {
+                                                        Objects.requireNonNull(ttsHelper.getValue())
+                                                                .speak(
+                                                                        "Tap the proceed button to start the exercise."
+                                                                );
+                                                    }
+                                                },
+                                                "Proceed Button"
+
                                         );
                             }
                         },
