@@ -46,8 +46,9 @@ public class FitnessLogDetailFragment extends Fragment {
     private TextView tvReflectionContent;
     private EditText etReflectionContentInput;
     private ImageButton btnBack;
-    private Button btnSubmit;
+    private Button btnSubmit, btnEditJournal;
     private RecyclerView rvExerciseList;
+
 
 //    private TextView tvStiffnessLogValue;
 //    private TextView tvPainLogValue;
@@ -58,7 +59,6 @@ public class FitnessLogDetailFragment extends Fragment {
     private ExoPlayer exoPlayer;
     private ProgressBar loadingIndicator;
     private TextView tvDoctorComment, tvDoctorCommentTitle;
-
     private static final String TAG = "FitnessLogDetailFragment";
 
     public static FitnessLogDetailFragment newInstance() {
@@ -82,6 +82,8 @@ public class FitnessLogDetailFragment extends Fragment {
         etReflectionContentInput = view.findViewById(R.id.etReflectionContentInput);
         btnBack = view.findViewById(R.id.btnBack);
         btnSubmit = view.findViewById(R.id.btnSubmit);
+        btnEditJournal = view.findViewById(R.id.btnEditJournal);
+
 //        tvStiffnessLogValue = view.findViewById(R.id.tvStiffnessLogValue);
 //        tvPainLogValue = view.findViewById(R.id.tvPainLogValue);
 //        tvDifficultyLogValue = view.findViewById(R.id.tvDifficultyLogValue);
@@ -140,6 +142,18 @@ public class FitnessLogDetailFragment extends Fragment {
             viewModel.fetchRoutineExercises(routineLog.getRoutineId());
         }
 
+        btnEditJournal.setOnClickListener(v -> {
+            if (routineLog.getJournal() != null) {
+                // Prepopulate the input field with the existing journal content
+                etReflectionContentInput.setText(routineLog.getJournal().getContent());
+            }
+            // Toggle to editing mode: hide the TextView and Edit button, show the EditText and Submit button
+            tvReflectionContent.setVisibility(View.GONE);
+            btnEditJournal.setVisibility(View.GONE);
+            etReflectionContentInput.setVisibility(View.VISIBLE);
+            btnSubmit.setVisibility(View.VISIBLE);
+        });
+
 
         // Back button click listener
         btnBack.setOnClickListener(v -> requireActivity().onBackPressed());
@@ -161,16 +175,18 @@ public class FitnessLogDetailFragment extends Fragment {
 
         // Handle journal content
         if (routineLog.getJournal() != null) {
-            // Display existing journal content
+            // Journal exists: show the journal content and the edit button
             tvReflectionContent.setText(routineLog.getJournal().getContent());
             tvReflectionContent.setVisibility(View.VISIBLE);
-            etReflectionContentInput.setVisibility(View.GONE); // Hide input field
-            btnSubmit.setVisibility(View.GONE); // Hide Submit button since journal exists
+            etReflectionContentInput.setVisibility(View.GONE);
+            btnSubmit.setVisibility(View.GONE);
+            btnEditJournal.setVisibility(View.VISIBLE);
         } else {
-            // Allow user to input new journal
+            // No journal exists: allow user to input new journal content
             tvReflectionContent.setVisibility(View.GONE);
             etReflectionContentInput.setVisibility(View.VISIBLE);
-            btnSubmit.setVisibility(View.VISIBLE); // Show Submit button
+            btnSubmit.setVisibility(View.VISIBLE);
+            btnEditJournal.setVisibility(View.GONE);
         }
 
         // ✅ Display doctor's comment if available
@@ -252,30 +268,49 @@ public class FitnessLogDetailFragment extends Fragment {
             return;
         }
 
-        // Create a new Journal
-        Journal newJournal = new Journal();
-        newJournal.setContent(journalContent);
+        // Check if a journal already exists for this RoutineLog
+        if (routineLog.getJournal() != null) {
+            // Editing existing journal: update its content
+            Journal existingJournal = routineLog.getJournal();
+            existingJournal.setContent(journalContent);
 
-        journalService.createJournal(newJournal).thenAccept(aVoid -> {
-            Log.d(TAG, "Journal created successfully with ID: " + newJournal.getJournalId());
-
-            // Update RoutineLog with the new JournalId
-            routineLogService.updateRoutineLogJournalId(routineLog.getRoutineLogId(), newJournal.getJournalId())
-                    .addOnSuccessListener(aVoid2 -> {
-                        Log.d(TAG, "RoutineLog updated successfully with new JournalId");
-
-                        // Update RoutineLog object locally
-                        routineLog.setJournal(newJournal);
-
-                        // Refresh UI
+            journalService.updateJournal(existingJournal)
+                    .thenAccept(aVoid -> {
+                        Log.d(TAG, "Journal updated successfully");
+                        // Update the RoutineLog locally if needed
+                        routineLog.setJournal(existingJournal);
+                        // Refresh UI on the main thread
                         getActivity().runOnUiThread(this::populateDetails);
                     })
-                    .addOnFailureListener(e -> Log.e(TAG, "Failed to update RoutineLog with JournalId", e));
-        }).exceptionally(e -> {
-            Log.e(TAG, "Failed to create Journal", e);
-            return null;
-        });
+                    .exceptionally(e -> {
+                        Log.e(TAG, "Failed to update journal", e);
+                        return null;
+                    });
+        } else {
+            // No existing journal: create a new one
+            Journal newJournal = new Journal();
+            newJournal.setContent(journalContent);
+
+            journalService.createJournal(newJournal)
+                    .thenAccept(aVoid -> {
+                        Log.d(TAG, "Journal created successfully with ID: " + newJournal.getJournalId());
+                        // Update RoutineLog with the new JournalId
+                        routineLogService.updateRoutineLogJournalId(routineLog.getRoutineLogId(), newJournal.getJournalId())
+                                .addOnSuccessListener(aVoid2 -> {
+                                    Log.d(TAG, "RoutineLog updated successfully with new JournalId");
+                                    routineLog.setJournal(newJournal);
+                                    // Refresh UI on the main thread
+                                    getActivity().runOnUiThread(this::populateDetails);
+                                })
+                                .addOnFailureListener(e -> Log.e(TAG, "Failed to update RoutineLog with JournalId", e));
+                    })
+                    .exceptionally(e -> {
+                        Log.e(TAG, "Failed to create Journal", e);
+                        return null;
+                    });
+        }
     }
+
 
     @Override
     public void onDestroyView() {

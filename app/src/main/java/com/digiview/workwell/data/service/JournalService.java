@@ -41,4 +41,15 @@ public class JournalService {
                     return repository.createJournal(journal);
                 });
     }
+
+    /**
+     * Update an existing journal.
+     *
+     * @param journal The journal object to update.
+     * @return A CompletableFuture representing the operation.
+     */
+    public CompletableFuture<Void> updateJournal(Journal journal) {
+        // Optionally, if you need to refresh the OrganizationId, you could do that here.
+        return repository.updateJournal(journal);
+    }
 }

@@ -346,19 +346,31 @@
                         android:textColor="@color/neutral_white_color"
                         android:paddingBottom="8dp" />
 
-                    <!-- Reflection Content (Visible if there is existing reflection) -->
+                    <!-- Reflection Content (shown when journal exists) -->
                     <TextView
                         android:id="@+id/tvReflectionContent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="No journal entry available."
                         android:textColor="@color/neutral_white_color"
-                        android:visibility="gone"
                         android:textSize="14sp"
                         android:paddingBottom="8dp"
-                        android:paddingHorizontal="8dp"/>
+                        android:paddingHorizontal="8dp"
+                        android:visibility="gone"/>
 
-                    <!-- Reflection Input (Visible if there is no reflection) -->
+                    <!-- Edit Journal Button (shown only when journal exists) -->
+                    <Button
+                        android:id="@+id/btnEditJournal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Edit Journal"
+                        android:backgroundTint="@color/accent_color"
+                        android:textColor="@android:color/white"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="8dp"
+                        android:visibility="gone" />
+
+                    <!-- Reflection Input (shown when creating or editing journal) -->
                     <EditText
                         android:id="@+id/etReflectionContentInput"
                         android:layout_width="match_parent"
@@ -371,23 +383,21 @@
                         android:inputType="textMultiLine"
                         android:minLines="4"
                         android:maxLines="8"
-                        android:visibility="gone"
+                        android:padding="8dp"
+                        android:visibility="gone" />
 
-                        android:padding="8dp"/>
-
-                    <!-- Submit Button (Only shown if reflection input is available) -->
+                    <!-- Submit Button (shown when input field is visible) -->
                     <Button
                         android:id="@+id/btnSubmit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Submit"
                         android:layout_gravity="center"
-                        android:visibility="gone"
+                        android:textStyle="bold"
                         android:backgroundTint="@color/accent_color"
                         android:textColor="@android:color/white"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp"/>
-
+                        android:layout_marginTop="8dp"
+                        android:visibility="gone"/>
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
