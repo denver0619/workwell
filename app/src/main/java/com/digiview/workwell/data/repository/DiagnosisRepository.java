@@ -4,7 +4,7 @@ import com.digiview.workwell.data.models.Diagnosis;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
+import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -37,7 +37,19 @@ public class DiagnosisRepository {
 
     public CompletableFuture<List<Diagnosis>> getAllDiagnosis() {
         CompletableFuture<List<Diagnosis>> future = new CompletableFuture<>();
-        diagnosisRef.get()
+
+        // Get the current user's UID from Firebase Authentication
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String userUid = auth.getCurrentUser() != null ? auth.getCurrentUser().getUid() : null;
+
+        // If no user is authenticated, complete the future with an empty list or error
+        if (userUid == null) {
+            future.completeExceptionally(new Exception("No authenticated user found"));
+            return future;
+        }
+
+        diagnosisRef.whereEqualTo("Uid", userUid)  // Filter diagnoses by the user's Uid
+                .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     List<Diagnosis> diagnosisList = new ArrayList<>();
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
@@ -47,6 +59,8 @@ public class DiagnosisRepository {
                     future.complete(diagnosisList);
                 })
                 .addOnFailureListener(future::completeExceptionally);
+
         return future;
     }
+
 }

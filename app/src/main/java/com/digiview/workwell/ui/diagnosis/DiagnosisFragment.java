@@ -69,6 +69,15 @@ public class DiagnosisFragment extends Fragment {
 
         diagnosisService.getAllDiagnosis().thenAccept(diagnosisList -> {
             if (diagnosisList != null) {
+                // Sort diagnoses by DiagnosisDate (ascending order)
+                diagnosisList.sort(new java.util.Comparator<Diagnosis>() {
+                    @Override
+                    public int compare(Diagnosis d1, Diagnosis d2) {
+                        // Sorting by DiagnosisDate field
+                        return d1.getDiagnosisDate().compareTo(d2.getDiagnosisDate());
+                    }
+                });
+
                 adapter.setDiagnosisList(diagnosisList);
             }
 
