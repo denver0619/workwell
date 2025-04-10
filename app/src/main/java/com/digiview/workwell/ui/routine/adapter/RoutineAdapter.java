@@ -58,16 +58,16 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.ViewHold
 
         int imageResId;
         switch (routine.getTargetArea()) {
-//            case "Neck":
-//                imageResId = R.drawable.img_neck;
-//                break;
-            case "Shoulder":
+            case "NeckCervicalSpine":
+                imageResId = R.drawable.img_neck;
+                break;
+            case "Shoulders":
                 imageResId = R.drawable.img_shoulder;
                 break;
-            case "Thigh":
+            case "Thighs":
                 imageResId = R.drawable.img_knees;
                 break;
-            case "LowerBack":
+            case "LowerBackLumbarSpine":
                 imageResId = R.drawable.img_lower_back;
                 break;
             default:
