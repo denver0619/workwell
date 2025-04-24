@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class RoutineViewModel extends ViewModel {
     private final MutableLiveData<List<Routine>> activeRoutines = new MutableLiveData<>();
-    private final MutableLiveData<List<Routine>> inactiveRoutines = new MutableLiveData<>();
+//    private final MutableLiveData<List<Routine>> inactiveRoutines = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>(null);
 
@@ -30,9 +30,9 @@ public class RoutineViewModel extends ViewModel {
         return activeRoutines;
     }
 
-    public LiveData<List<Routine>> getInactiveRoutines() {
-        return inactiveRoutines;
-    }
+//    public LiveData<List<Routine>> getInactiveRoutines() {
+//        return inactiveRoutines;
+//    }
 
     public LiveData<Boolean> getIsLoading() {
         return isLoading;
@@ -52,32 +52,31 @@ public class RoutineViewModel extends ViewModel {
                     Log.d("RoutineDebug", "Current Date: " + currentDate);
 
                     List<Routine> activeList = new ArrayList<>();
-                    List<Routine> inactiveList = new ArrayList<>();
+//                    List<Routine> inactiveList = new ArrayList<>();
 
-                    for (Routine routine : routines) {
-                        Log.d("RoutineDebug", "Processing Routine: " + routine.getName());
-                        Log.d("RoutineDebug", "Start Date: " + routine.getStartDate());
-                        Log.d("RoutineDebug", "End Date: " + routine.getEndDate());
+                    //                        Log.d("RoutineDebug", "Processing Routine: " + routine.getName());
+                    //                        Log.d("RoutineDebug", "Start Date: " + routine.getStartDate());
+                    //                        Log.d("RoutineDebug", "End Date: " + routine.getEndDate());
+                    //
+                    //                        if (routine.getStartDate() != null && routine.getEndDate() != null) {
+                    //                            if (!currentDate.before(routine.getStartDate()) && !currentDate.after(routine.getEndDate())) {
+                    //                                Log.d("RoutineDebug", "Routine is ACTIVE");
+                    //                                activeList.add(routine);
+                    //                            } else {
+                    //                                Log.d("RoutineDebug", "Routine is INACTIVE");
+                    //                                inactiveList.add(routine);
+                    //                            }
+                    //                        } else {
+                    //                            Log.d("RoutineDebug", "Routine has NULL dates, marking as INACTIVE");
+                    //                            inactiveList.add(routine);
+                    //                        }
+                    activeList.addAll(routines);
 
-                        if (routine.getStartDate() != null && routine.getEndDate() != null) {
-                            if (!currentDate.before(routine.getStartDate()) && !currentDate.after(routine.getEndDate())) {
-                                Log.d("RoutineDebug", "Routine is ACTIVE");
-                                activeList.add(routine);
-                            } else {
-                                Log.d("RoutineDebug", "Routine is INACTIVE");
-                                inactiveList.add(routine);
-                            }
-                        } else {
-                            Log.d("RoutineDebug", "Routine has NULL dates, marking as INACTIVE");
-                            inactiveList.add(routine);
-                        }
-                    }
-
-                    Log.d("RoutineDebug", "Active Count: " + activeList.size());
-                    Log.d("RoutineDebug", "Inactive Count: " + inactiveList.size());
+//                    Log.d("RoutineDebug", "Active Count: " + activeList.size());
+//                    Log.d("RoutineDebug", "Inactive Count: " + inactiveList.size());
 
                     activeRoutines.postValue(activeList);
-                    inactiveRoutines.postValue(inactiveList);
+//                    inactiveRoutines.postValue(inactiveList);
                     isLoading.postValue(false);
                 })
                 .exceptionally(e -> {

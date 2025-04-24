@@ -30,8 +30,8 @@ import java.util.ArrayList;
 
 public class RoutineFragment extends Fragment implements RoutineAdapter.OnRoutineClickListener {
 
-    private RecyclerView rvActiveRoutine, rvInactiveRoutine;
-    private RoutineAdapter activeAdapter, inactiveAdapter;
+    private RecyclerView rvActiveRoutine;
+    private RoutineAdapter activeAdapter;
     private RoutineViewModel routineViewModel;
 //    private ProgressBar progressBar;
     private ImageView progressBar;
@@ -43,17 +43,17 @@ public class RoutineFragment extends Fragment implements RoutineAdapter.OnRoutin
 
         // Initialize RecyclerViews
         rvActiveRoutine = view.findViewById(R.id.rvActiveRoutine);
-        rvInactiveRoutine = view.findViewById(R.id.rvInactiveRoutine);
+//        rvInactiveRoutine = view.findViewById(R.id.rvInactiveRoutine);
         progressBar = view.findViewById(R.id.progressBar);
 
         rvActiveRoutine.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvInactiveRoutine.setLayoutManager(new LinearLayoutManager(getContext()));
+//        rvInactiveRoutine.setLayoutManager(new LinearLayoutManager(getContext()));
 
         activeAdapter = new RoutineAdapter(new ArrayList<>(), this, true);  // true = show button
-        inactiveAdapter = new RoutineAdapter(new ArrayList<>(), this, false); // false = hide button
+//        inactiveAdapter = new RoutineAdapter(new ArrayList<>(), this, false); // false = hide button
 
         rvActiveRoutine.setAdapter(activeAdapter);
-        rvInactiveRoutine.setAdapter(inactiveAdapter);
+//        rvInactiveRoutine.setAdapter(inactiveAdapter);
 
         // Initialize ViewModel
         routineViewModel = new ViewModelProvider(this).get(RoutineViewModel.class);
@@ -66,7 +66,7 @@ public class RoutineFragment extends Fragment implements RoutineAdapter.OnRoutin
 
         // Initialize empty message TextViews
         TextView tvNoActiveRoutines = view.findViewById(R.id.tvNoActiveRoutines);
-        TextView tvNoInactiveRoutines = view.findViewById(R.id.tvNoInactiveRoutines);
+//        TextView tvNoInactiveRoutines = view.findViewById(R.id.tvNoInactiveRoutines);
 
         // Observe Active Routines
         routineViewModel.getActiveRoutines().observe(getViewLifecycleOwner(), activeList -> {
@@ -87,22 +87,22 @@ public class RoutineFragment extends Fragment implements RoutineAdapter.OnRoutin
         });
 
         // Observe Inactive Routines
-        routineViewModel.getInactiveRoutines().observe(getViewLifecycleOwner(), inactiveList -> {
-            Log.d("RoutineFragment", "Inactive Routines Count: " + inactiveList.size());
-            inactiveAdapter.updateDataList(inactiveList);
-
-            // Show message if empty
-            if (inactiveList.isEmpty()) {
-                rvInactiveRoutine.setVisibility(View.GONE);
-                tvNoInactiveRoutines.setVisibility(View.VISIBLE);
-            } else {
-                rvInactiveRoutine.setVisibility(View.VISIBLE);
-                tvNoInactiveRoutines.setVisibility(View.GONE);
-            }
-
-            rvActiveRoutine.post(() -> setRecyclerViewHeightBasedOnChildren(rvInactiveRoutine));
-
-        });
+//        routineViewModel.getInactiveRoutines().observe(getViewLifecycleOwner(), inactiveList -> {
+//            Log.d("RoutineFragment", "Inactive Routines Count: " + inactiveList.size());
+//            inactiveAdapter.updateDataList(inactiveList);
+//
+//            // Show message if empty
+//            if (inactiveList.isEmpty()) {
+//                rvInactiveRoutine.setVisibility(View.GONE);
+////                tvNoInactiveRoutines.setVisibility(View.VISIBLE);
+//            } else {
+//                rvInactiveRoutine.setVisibility(View.VISIBLE);
+////                tvNoInactiveRoutines.setVisibility(View.GONE);
+//            }
+//
+//            rvActiveRoutine.post(() -> setRecyclerViewHeightBasedOnChildren(rvInactiveRoutine));
+//
+//        });
 
 
 
@@ -110,7 +110,7 @@ public class RoutineFragment extends Fragment implements RoutineAdapter.OnRoutin
         routineViewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
             progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
             rvActiveRoutine.setVisibility(isLoading ? View.GONE : View.VISIBLE);
-            rvInactiveRoutine.setVisibility(isLoading ? View.GONE : View.VISIBLE);
+//            rvInactiveRoutine.setVisibility(isLoading ? View.GONE : View.VISIBLE);
         });
 
         // Fetch Data

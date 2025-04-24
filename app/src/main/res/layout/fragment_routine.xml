@@ -85,43 +85,43 @@
                 android:paddingBottom="8dp"/>
 
             <!-- Inactive Routines Header -->
-            <TextView
-                android:id="@+id/tvInactiveRoutines"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Inactive Routines"
-                android:textColor="@color/neutral_white_color"
-                android:textSize="16sp"/>
+<!--            <TextView-->
+<!--                android:id="@+id/tvInactiveRoutines"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:text="Inactive Routines"-->
+<!--                android:textColor="@color/neutral_white_color"-->
+<!--                android:textSize="16sp"/>-->
 
             <!-- No Inactive Routines Message -->
-            <TextView
-                android:id="@+id/tvNoInactiveRoutines"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="4dp"
-                android:text="No inactive routines available."
-                android:textColor="@color/blue_gray"
-                android:textSize="14sp"
-                android:visibility="gone"/>
+<!--            <TextView-->
+<!--                android:id="@+id/tvNoInactiveRoutines"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:text="No inactive routines available."-->
+<!--                android:textColor="@color/blue_gray"-->
+<!--                android:textSize="14sp"-->
+<!--                android:visibility="gone"/>-->
 
             <!-- Inactive Routines RecyclerView -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvInactiveRoutine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                android:paddingBottom="8dp"/>
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/rvInactiveRoutine"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:nestedScrollingEnabled="false"-->
+<!--                android:paddingBottom="8dp"/>-->
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text=""
-                android:textColor="@color/transparent"
-                android:textSize="16sp"/>
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:text=""-->
+<!--                android:textColor="@color/transparent"-->
+<!--                android:textSize="16sp"/>-->
 
         </LinearLayout>
 
