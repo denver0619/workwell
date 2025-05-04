@@ -15,46 +15,46 @@ public class Routine implements Serializable {
     private List<String> Users;
     private List<RoutineExercise> Exercises;
     private String AssignedName;
-    @PropertyName("StartDate")
-    private Date StartDate;
-    @PropertyName("EndDate")
-    private Date EndDate;
+//    @PropertyName("StartDate")
+//    private Date StartDate;
+//    @PropertyName("EndDate")
+//    private Date EndDate;
 
-    public String getFormattedStartDate() {
-        if (StartDate != null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-            return dateFormat.format(StartDate);
-        }
-        return null;
-    }
-
-    public void setFormattedStartDate(String formattedStartDate) {
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-            this.StartDate = dateFormat.parse(formattedStartDate);
-        } catch (Exception e) {
-            e.printStackTrace(); // Handle parsing errors
-            this.StartDate = null;
-        }
-    }
-
-    public String getFormattedEndDate() {
-        if (EndDate != null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-            return dateFormat.format(EndDate);
-        }
-        return null;
-    }
-
-    public void setFormattedEndDate(String formattedEndDate) {
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-            this.EndDate = dateFormat.parse(formattedEndDate);
-        } catch (Exception e) {
-            e.printStackTrace(); // Handle parsing errors
-            this.EndDate = null;
-        }
-    }
+//    public String getFormattedStartDate() {
+//        if (StartDate != null) {
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+//            return dateFormat.format(StartDate);
+//        }
+//        return null;
+//    }
+//
+//    public void setFormattedStartDate(String formattedStartDate) {
+//        try {
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+//            this.StartDate = dateFormat.parse(formattedStartDate);
+//        } catch (Exception e) {
+//            e.printStackTrace(); // Handle parsing errors
+//            this.StartDate = null;
+//        }
+//    }
+//
+//    public String getFormattedEndDate() {
+//        if (EndDate != null) {
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+//            return dateFormat.format(EndDate);
+//        }
+//        return null;
+//    }
+//
+//    public void setFormattedEndDate(String formattedEndDate) {
+//        try {
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+//            this.EndDate = dateFormat.parse(formattedEndDate);
+//        } catch (Exception e) {
+//            e.printStackTrace(); // Handle parsing errors
+//            this.EndDate = null;
+//        }
+//    }
 
     // Getters and setters
     public String getRoutineId() {
@@ -82,21 +82,21 @@ public class Routine implements Serializable {
         this.Frequency = Frequency;
     }
 
-    public Date getStartDate() {
-        return StartDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.StartDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return EndDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.EndDate = endDate;
-    }
+//    public Date getStartDate() {
+//        return StartDate;
+//    }
+//
+//    public void setStartDate(Date startDate) {
+//        this.StartDate = startDate;
+//    }
+//
+//    public Date getEndDate() {
+//        return EndDate;
+//    }
+//
+//    public void setEndDate(Date endDate) {
+//        this.EndDate = endDate;
+//    }
 
     @PropertyName("TargetArea")
     public String getTargetArea() {

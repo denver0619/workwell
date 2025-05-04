@@ -48,7 +48,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.ViewHold
         Routine routine = routineList.get(position);
         Log.d("AdapterDebug", "Binding Routine: " + routine.getName() + " at position " + position);
         holder.itemTitle.setText(routine.getName());
-        holder.routineDate.setText(String.format("%s - %s", routine.getFormattedStartDate(), routine.getFormattedEndDate()));
+//        holder.routineDate.setText(String.format("%s - %s", routine.getFormattedStartDate(), routine.getFormattedEndDate()));
         // Format frequency using the string resource
         String formattedFrequency = String.format(holder.itemView.getContext().getString(R.string.placeholder_frequency), routine.getFrequency());
         holder.frequency.setText(formattedFrequency);
@@ -90,7 +90,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.ViewHold
             super(view);
             itemTitle = view.findViewById(R.id.tvItemTitle);
             frequency = view.findViewById(R.id.tvFrequency);
-            routineDate = view.findViewById(R.id.tvRoutineDate);
+//            routineDate = view.findViewById(R.id.tvRoutineDate);
             button = view.findViewById(R.id.btnStartRoutine);
             heroImage = view.findViewById(R.id.ivHero);
         }

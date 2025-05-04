@@ -49,4 +49,19 @@ public class JournalRepository {
                 .addOnFailureListener(future::completeExceptionally);
         return future;
     }
+
+    /**
+     * Update an existing journal using CompletableFuture.
+     *
+     * @param journal The journal object to update.
+     * @return A CompletableFuture representing the operation.
+     */
+    public CompletableFuture<Void> updateJournal(Journal journal) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        // Use the existing journalId; set() here will update the document
+        journalRef.document(journal.getJournalId()).set(journal)
+                .addOnSuccessListener(unused -> future.complete(null))
+                .addOnFailureListener(future::completeExceptionally);
+        return future;
+    }
 }

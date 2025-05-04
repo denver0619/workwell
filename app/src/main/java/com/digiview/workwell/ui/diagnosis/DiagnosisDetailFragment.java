@@ -15,7 +15,7 @@ import com.digiview.workwell.data.models.Diagnosis;
 public class DiagnosisDetailFragment extends Fragment {
 
     private TextView tvSymptoms, tvDiagnosis, tvSeverity;
-    private TextView tvRecommendedErgonomicAdjustment, tvPhysicalTherapyRecommendation, tvMedicationPrescription, tvDiagnosisDate;
+    private TextView tvRecommendedErgonomicAdjustment, tvPhysicalTherapyRecommendation, tvMedicationPrescription, tvDiagnosisDate, tvTreatmentStartDate;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -30,6 +30,7 @@ public class DiagnosisDetailFragment extends Fragment {
         tvPhysicalTherapyRecommendation = view.findViewById(R.id.tvPhysicalTherapyRecommendation);
         tvMedicationPrescription = view.findViewById(R.id.tvMedicationPrescription);
         tvDiagnosisDate = view.findViewById(R.id.tvDiagnosisDate);
+        tvTreatmentStartDate = view.findViewById(R.id.tvTreatmentStartDate);
         ImageButton btnBack = view.findViewById(R.id.btnBack);
 
         // Back button functionality
@@ -47,6 +48,7 @@ public class DiagnosisDetailFragment extends Fragment {
             tvRecommendedErgonomicAdjustment.setText(diagnosis.getRecommendedErgonomicAdjustments());
             tvPhysicalTherapyRecommendation.setText(diagnosis.getPhysicalTherapyRecommendations());
             tvMedicationPrescription.setText(diagnosis.getMedicationPrescriptions());
+            tvTreatmentStartDate.setText(diagnosis.getFormattedTreatmentPlanStartDate());
         }
 
         return view;
