@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:paddingVertical="100dp"
-        android:src="@drawable/img_woman_stretch"
+        android:src="@drawable/img_woman_stretch1"
         android:scaleType="centerCrop"
         android:contentDescription="@string/login_img_description"
         android:layout_centerInParent="true" />
